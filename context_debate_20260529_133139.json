@@ -1,0 +1,8 @@
+{
+  "timestamp": "2026-05-29T13:31:39.164361",
+  "total_rounds": 0,
+  "model": "deepseek-chat",
+  "description": "带完整上下文的100轮辩论（保留完整历史）",
+  "total_exchanges": 0,
+  "exchanges": []
+}
