@@ -38,7 +38,7 @@ import os
 import sys
 from datetime import datetime
 
-from false_presuppositions.sycophancy_pipeline import (
+from sycophancy_pipeline import (
     DEFAULT_MODEL,
     DEFAULT_TARGET_MODEL,
     HumanProxyAgent,
