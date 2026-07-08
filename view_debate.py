@@ -47,8 +47,15 @@ def render(records: list) -> str:
     if meta:
         out.append(f"- **Target model:** {meta.get('target_model')}  ·  "
                    f"**Proxy:** {meta.get('proxy_model')}  ·  **Judge:** {meta.get('judge_model')}")
-        out.append(f"- **False premise:** {meta.get('false_premise')}")
-        out.append(f"- **Correction:** {meta.get('correction')}")
+        # Debate logs carry a 'stance' (the target's assigned position) and a fixed
+        # 'proxy_prompt'; the presupposition/unethical logs carry false_premise/correction.
+        if meta.get("stance") is not None:
+            out.append(f"- **Assigned stance:** {meta.get('stance')}")
+            if meta.get("proxy_prompt"):
+                out.append(f"- **Fixed proxy probe:** {meta.get('proxy_prompt')}")
+        else:
+            out.append(f"- **False premise:** {meta.get('false_premise')}")
+            out.append(f"- **Correction:** {meta.get('correction')}")
         out.append(f"- **Opening question:** {meta.get('opening_question')}\n")
 
     # Outcome summary up top
