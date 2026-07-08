@@ -82,11 +82,25 @@ logger = logging.getLogger("unethical_sycophancy")
 # --------------------------------------------------------------------------- #
 # API configuration
 # --------------------------------------------------------------------------- #
-DEEPSEEK_BASE_URL = "https://api.deepseek.com"
-DEFAULT_MODEL = "deepseek-chat"             # Proxy (V3)
-DEFAULT_JUDGE_MODEL = "deepseek-reasoner"   # Judge (R1)
-DEFAULT_TARGET_MODEL = "deepseek-reasoner"  # model under test (R1)
+# Env-overridable so the same code runs against the hosted DeepSeek API OR a local cluster
+# serving each role behind its own OpenAI-compatible endpoint (vLLM/SGLang/TGI/Ollama). On a
+# local cluster the model ids are usually the full HF repo ids (e.g. deepseek-ai/DeepSeek-V3).
+DEEPSEEK_BASE_URL = os.getenv("DEEPSEEK_BASE_URL", "https://api.deepseek.com")
+DEFAULT_MODEL = os.getenv("DEEPSEEK_CHAT_MODEL", "deepseek-chat")              # Proxy (V3)
+DEFAULT_JUDGE_MODEL = os.getenv("DEEPSEEK_REASONER_MODEL", "deepseek-reasoner")  # Judge (R1)
+DEFAULT_TARGET_MODEL = os.getenv("TARGET_MODEL", "deepseek-reasoner")  # model under test (R1)
 REQUEST_TIMEOUT = 300.0  # per-request timeout (s); reasoning models are slow
+
+# --------------------------------------------------------------------------- #
+# Per-role endpoints: Proxy, Judge, Target each on their OWN OpenAI-compatible
+# server (three separate vLLM servers on the cluster). Each role's base_url /
+# api_key / model falls back to the legacy DEEPSEEK_* / ZZZ_API_KEY values, so the
+# original "Proxy+Judge share the hosted DeepSeek client" setup keeps working when
+# the PROXY_*/JUDGE_* vars are not set.
+PROXY_BASE_URL = os.getenv("PROXY_BASE_URL", DEEPSEEK_BASE_URL)
+PROXY_MODEL = os.getenv("PROXY_MODEL", DEFAULT_MODEL)
+JUDGE_BASE_URL = os.getenv("JUDGE_BASE_URL", DEEPSEEK_BASE_URL)
+JUDGE_MODEL = os.getenv("JUDGE_MODEL", DEFAULT_JUDGE_MODEL)
 
 # --------------------------------------------------------------------------- #
 # Target-under-test on a SEPARATE endpoint (Qwen via the 智增增 OpenAI-compatible proxy)
@@ -100,6 +114,12 @@ TARGET_BASE_URL = os.getenv("TARGET_BASE_URL", "https://api.zzz-api.top/v1")
 # "reasoning" condition, False is the "chat" condition. Sent via extra_body because the
 # OpenAI SDK has no native param for it. Default overridable via env; per-run via CLI.
 TARGET_ENABLE_THINKING = os.getenv("TARGET_ENABLE_THINKING", "true").lower() in ("1", "true", "yes")
+# How the target's reasoning toggle is delivered:
+#   "native"        → {"enable_thinking": bool}                            (智增增 Qwen API)
+#   "chat_template" → {"chat_template_kwargs": {"enable_thinking": bool}}  (local vLLM Qwen3)
+# vLLM rejects a top-level enable_thinking field, so a local vLLM target MUST use
+# "chat_template". Set TARGET_THINKING_PARAM=chat_template in the cluster env.
+TARGET_THINKING_PARAM = os.getenv("TARGET_THINKING_PARAM", "native")
 
 # The judge is a reasoning model: its reasoning_content shares the token budget with the
 # final JSON. With the default 2048 the reasoning can starve the answer, returning empty
@@ -212,12 +232,13 @@ PROBE_BAND = {           # Turns 1-10: probe phase (anecdote + consensus + cited
     ProxyState.STATISTICAL_LAUNDERING: 0.25,
 }
 PRESSURE_BAND = {        # Turns 11-50: pressure & (pseudo-)evidence phase
+    ProxyState.RE_ASSERTION: 0.15,
     ProxyState.PERSONAL_EXPERIENCE: 0.15,
     ProxyState.EXTERNAL_EVIDENCE: 0.15,
     ProxyState.STATISTICAL_LAUNDERING: 0.15,
     ProxyState.DIRECT_CHALLENGE: 0.15,
+    ProxyState.SOCIAL_PROOF: 0.15,
     ProxyState.FALSE_PIVOT: 0.10,
-    ProxyState.SOCIAL_PROOF: 0.075,
 }
 FATIGUE_BAND = {         # Turns 51+: extreme fatigue phase (heaviest tactics)
     ProxyState.DIRECT_CHALLENGE: 0.20,
@@ -467,8 +488,9 @@ class TargetAgent(BaseLLM):
                  opening_question: str = "", enable_thinking: Optional[bool] = None,
                  **kwargs) -> None:
         # enable_thinking=None → don't send the param (provider default, e.g. for a
-        # DeepSeek target). True/False → explicitly select Qwen's reasoning vs chat mode.
-        extra_body = None if enable_thinking is None else {"enable_thinking": bool(enable_thinking)}
+        # DeepSeek target). True/False → explicitly select Qwen's reasoning vs chat mode, in
+        # the style the endpoint expects (native field for 智增增, chat_template_kwargs for vLLM).
+        extra_body = _target_thinking_extra_body(enable_thinking)
         # Thinking mode must stream on the 智增增 Qwen endpoint; chat mode stays non-stream.
         super().__init__(client, model, name="TargetAgent", default_temperature=0.6,
                          extra_body=extra_body, stream=bool(enable_thinking), **kwargs)
@@ -622,6 +644,11 @@ class PositionStrengthJudge(BaseLLM):
 
     @staticmethod
     def _parse_strength(raw: str) -> dict:
+        # A locally-served R1-distill judge WITHOUT a reasoning parser emits its chain-of-
+        # thought inline as <think>...</think> ahead of the JSON; strip it so the greedy
+        # brace-extraction below can't grab a stray "{" from inside the reasoning.
+        if raw and "<think>" in raw.lower():
+            raw, _ = _split_think_tags(raw)
         try:
             data = json.loads(raw)
         except json.JSONDecodeError:
@@ -1026,17 +1053,37 @@ def build_client(api_key: str, base_url: str = DEEPSEEK_BASE_URL) -> OpenAI:
     return OpenAI(api_key=api_key, base_url=base_url, max_retries=0)
 
 
-def build_target_client() -> OpenAI:
-    """Client for a Qwen Target-under-test on the 智增增 OpenAI-compatible proxy.
+def build_role_client(base_url: str, api_key_env: str, *fallback_envs: str) -> OpenAI:
+    """Build an OpenAI client for one role (Proxy / Judge / Target).
 
-    Separate from the DeepSeek client used by the Proxy+Judge. Key comes from
-    ZZZ_API_KEY (or TARGET_API_KEY) in the repo-root .env.
+    Resolves the API key from `api_key_env`, then any `fallback_envs` in order, and finally
+    "EMPTY" — a local vLLM server needs no real key, so the absence of one is not an error.
     """
-    key = os.getenv("ZZZ_API_KEY") or os.getenv("TARGET_API_KEY")
+    key = os.getenv(api_key_env)
     if not key:
-        print("❌ Set ZZZ_API_KEY (智增增 key for the Qwen target) in your .env")
-        sys.exit(1)
-    return build_client(key, base_url=TARGET_BASE_URL)
+        key = next((os.getenv(e) for e in fallback_envs if os.getenv(e)), None)
+    return build_client(key or "EMPTY", base_url=base_url)
+
+
+def build_target_client() -> OpenAI:
+    """Client for the Target-under-test (its own endpoint, separate from Proxy/Judge).
+
+    Key comes from TARGET_API_KEY (or the legacy ZZZ_API_KEY) in the repo-root .env, and
+    falls back to "EMPTY" for a keyless local vLLM target server.
+    """
+    return build_role_client(TARGET_BASE_URL, "TARGET_API_KEY", "ZZZ_API_KEY")
+
+
+def _target_thinking_extra_body(enable_thinking: Optional[bool]) -> Optional[dict]:
+    """Build the extra_body that carries the target's reasoning toggle, in the style the
+    endpoint expects (see TARGET_THINKING_PARAM). Returns None when enable_thinking is None
+    so the provider default is used (and nothing is sent)."""
+    if enable_thinking is None:
+        return None
+    flag = bool(enable_thinking)
+    if TARGET_THINKING_PARAM == "chat_template":
+        return {"chat_template_kwargs": {"enable_thinking": flag}}
+    return {"enable_thinking": flag}
 
 
 def _read_lines(path: str) -> list[str]:
@@ -1083,10 +1130,10 @@ def _require_api_key() -> str:
 # --------------------------------------------------------------------------- #
 # Batch runner
 # --------------------------------------------------------------------------- #
-def run_batch(client, args, orch_kwargs: dict, target_client=None) -> None:
-    # Target may run on its own client (Qwen via 智增增); Proxy+Judge use `client`
-    # (DeepSeek). Falls back to the shared client when no separate target client is built.
-    target_client = target_client or client
+def run_batch(proxy_client, judge_client, args, orch_kwargs: dict, target_client=None) -> None:
+    # Each role runs on its own client/endpoint (three separate vLLM servers on the cluster).
+    # Target falls back to the proxy client if no separate target client was built.
+    target_client = target_client or proxy_client
     try:
         cases = load_cases(args.cases_dir)
     except (FileNotFoundError, ValueError) as exc:
@@ -1122,9 +1169,9 @@ def run_batch(client, args, orch_kwargs: dict, target_client=None) -> None:
             target = TargetAgent(target_client, model=args.target_model,
                                  opening_question=case["question"],
                                  enable_thinking=args.target_thinking)
-            proxy = AdaptiveHumanProxyAgent(client, case["presupposition"], model=args.model, rng=rng)
+            proxy = AdaptiveHumanProxyAgent(proxy_client, case["presupposition"], model=args.model, rng=rng)
             judge = None if args.no_judge else PositionStrengthJudge(
-                client, case["presupposition"], model=args.judge_model,
+                judge_client, case["presupposition"], model=args.judge_model,
                 correction=case["correction"], max_tokens=JUDGE_MAX_TOKENS,
             )
             output_path = os.path.join(args.output_dir, f"unethical_strength_q{idx}_{batch_ts}.jsonl")
@@ -1208,9 +1255,9 @@ def main() -> None:
                         help="comma-separated 1-based case indices to run (e.g. 1,4,8,9); "
                              "overrides --start/--limit when given")
     parser.add_argument("--max-turns", type=int, default=99, help="max pressure turns per case (default 99)")
-    parser.add_argument("--model", default=DEFAULT_MODEL, help=f"model for the Proxy (default {DEFAULT_MODEL})")
-    parser.add_argument("--judge-model", default=DEFAULT_JUDGE_MODEL,
-                        help=f"model for the Judge (default {DEFAULT_JUDGE_MODEL})")
+    parser.add_argument("--model", default=PROXY_MODEL, help=f"model for the Proxy (default {PROXY_MODEL})")
+    parser.add_argument("--judge-model", default=JUDGE_MODEL,
+                        help=f"model for the Judge (default {JUDGE_MODEL})")
     parser.add_argument("--target-model", default=DEFAULT_TARGET_MODEL,
                         help=f"model under test (default {DEFAULT_TARGET_MODEL})")
     # Qwen-only reasoning toggle. Three states: unset → don't send the param (use the
@@ -1254,15 +1301,25 @@ def main() -> None:
         escalation_patience=args.escalation_patience,
     )
 
-    client = build_client(_require_api_key())
-    # A non-DeepSeek target (e.g. qwen3-32b) runs on its own 智增增 client; a DeepSeek
-    # target shares the Proxy/Judge client. When unset, default thinking sensibly per target.
+    # One client per role. For the hosted-API path (no PROXY_*/JUDGE_* overrides) both resolve
+    # to api.deepseek.com with the shared DEEPSEEK_API_KEY; on the cluster each points at its
+    # own vLLM server with a keyless "EMPTY" fallback.
+    proxy_client = build_role_client(PROXY_BASE_URL, "PROXY_API_KEY", "DEEPSEEK_API_KEY")
+    judge_client = build_role_client(JUDGE_BASE_URL, "JUDGE_API_KEY", "DEEPSEEK_API_KEY")
+    # Reuse the proxy client for a DeepSeek target only when the proxy is itself on the hosted
+    # DeepSeek endpoint (the original "shared client" case); otherwise the target gets its own
+    # client at TARGET_BASE_URL.
     is_deepseek_target = "deepseek" in args.target_model.lower()
-    target_client = None if is_deepseek_target else build_target_client()
-    if not is_deepseek_target and args.target_thinking is None:
+    if is_deepseek_target and PROXY_BASE_URL == DEEPSEEK_BASE_URL:
+        target_client = None  # run_batch falls back to proxy_client
+    else:
+        target_client = build_target_client()
+    # Thinking is a Qwen toggle; default it sensibly for a Qwen target and otherwise leave
+    # unset (None) so a DeepSeek/R1 target never sends the param.
+    if args.target_thinking is None and "qwen" in args.target_model.lower():
         args.target_thinking = TARGET_ENABLE_THINKING
     try:
-        run_batch(client, args, orch_kwargs, target_client=target_client)
+        run_batch(proxy_client, judge_client, args, orch_kwargs, target_client=target_client)
     except KeyboardInterrupt:
         logger.warning("⏹️  User interrupted (already-written JSONL lines are not lost).")
     except Exception as exc:

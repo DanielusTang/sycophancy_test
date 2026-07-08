@@ -36,6 +36,27 @@ def fmt_judge(j: dict) -> str:
     return "\n".join(lines) + "\n"
 
 
+def _fmt_prob(x) -> str:
+    return f"{x:.4f}" if isinstance(x, (int, float)) else "?"
+
+
+def fmt_logprob(m: dict) -> str:
+    """One-line render of the judge-free logprob metric (empty string when absent)."""
+    if not m:
+        return ""
+    return (f"**P(presup):** {_fmt_prob(m.get('p_presup'))}  ·  "
+            f"P(endorse): {_fmt_prob(m.get('p_endorse'))}  _({m.get('method', '')})_\n")
+
+
+def _fmt_traj(traj: list, fmt=str, keep_head: int = 6, keep_tail: int = 4) -> str:
+    """Compress a per-turn trajectory into a readable arrow string for the index table."""
+    cells = [fmt(s) for s in traj]
+    if len(cells) > (keep_head + keep_tail):
+        return (" → ".join(cells[:keep_head]) + " → … → "
+                + " → ".join(cells[-keep_tail:]) + f"  ({len(cells)} turns)")
+    return " → ".join(cells)
+
+
 def render(records: list) -> str:
     out = []
     meta = next((r for r in records if r.get("type") == "meta"), {})
@@ -62,6 +83,11 @@ def render(records: list) -> str:
         if result.get("strength_trajectory"):
             traj = " → ".join(str(s) for s in result["strength_trajectory"])
             out.append(f"> Strength trajectory: {traj}")
+        pp_traj = result.get("p_presup_trajectory")
+        if pp_traj and any(x is not None for x in pp_traj):
+            traj = " → ".join(f"{x:.2f}" if isinstance(x, (int, float)) else "·"
+                              for x in pp_traj)
+            out.append(f"> P(presup) trajectory: {traj}")
         out.append("")
 
     # Turns
@@ -82,25 +108,25 @@ def render(records: list) -> str:
         out.append(f"### 🟩 Answer\n\n{t.get('target_output', '').strip()}\n")
 
         out.append(fmt_judge(t.get("judge")))
+        lp_line = fmt_logprob(t.get("logprob_metric"))
+        if lp_line:
+            out.append(lp_line)
 
     return "\n".join(out)
 
 
 def load(path: Path) -> list:
-    return [json.loads(l) for l in path.read_text().splitlines() if l.strip()]
+    return [json.loads(l) for l in path.read_text(encoding="utf-8").splitlines() if l.strip()]
 
 
 def summarize(records: list) -> dict:
     """Pull the one-line summary used in INDEX.md."""
     meta = next((r for r in records if r.get("type") == "meta"), {})
     result = next((r for r in records if r.get("type") == "result"), {})
-    traj = result.get("strength_trajectory") or []
-    if len(traj) > 14:  # keep the index table readable for long runs
-        traj_str = (" → ".join(str(s) for s in traj[:6]) + " → … → "
-                    + " → ".join(str(s) for s in traj[-4:])
-                    + f"  ({len(traj)} turns)")
-    else:
-        traj_str = " → ".join(str(s) for s in traj)
+    traj_str = _fmt_traj(result.get("strength_trajectory") or [])
+    pp_traj = result.get("p_presup_trajectory") or []
+    pp_str = (_fmt_traj(pp_traj, fmt=lambda x: f"{x:.2f}" if isinstance(x, (int, float)) else "·")
+              if any(x is not None for x in pp_traj) else "")
     return {
         "topic": meta.get("topic", "?"),
         "variant": meta.get("variant", ""),
@@ -108,20 +134,21 @@ def summarize(records: list) -> dict:
         "outcome": result.get("outcome", "?"),
         "collapsed_at": result.get("collapsed_at_turn"),
         "trajectory": traj_str,
+        "p_presup": pp_str,
     }
 
 
 def build_index(rows: list, index_path: Path) -> None:
     """rows: list of (md_path_relative_to_index, summary_dict)."""
     out = ["# Debate transcripts — index\n",
-           "| Log | Topic | Variant | Outcome | Collapsed turn | Strength trajectory |",
-           "|---|---|---|---|---|---|"]
+           "| Log | Topic | Variant | Outcome | Collapsed turn | Strength trajectory | P(presup) trajectory |",
+           "|---|---|---|---|---|---|---|"]
     for rel, s in sorted(rows, key=lambda x: x[0]):
         badge = "🔴 collapsed" if s["outcome"] == "collapsed" else f"🟢 {s['outcome']}"
         at = s["collapsed_at"] if s["collapsed_at"] is not None else ""
         out.append(f"| [{rel}]({rel}) | {s['topic']} | {s['variant']} | {badge} "
-                   f"| {at} | {s['trajectory']} |")
-    index_path.write_text("\n".join(out) + "\n")
+                   f"| {at} | {s['trajectory']} | {s.get('p_presup', '')} |")
+    index_path.write_text("\n".join(out) + "\n", encoding="utf-8")
     print(f"Wrote {index_path}  ({len(rows)} logs)")
 
 
@@ -132,7 +159,7 @@ def convert_one(path: Path, output: Path = None, to_stdout: bool = False):
         sys.stdout.write(md)
         return None, None
     out = output or path.with_suffix(".md")
-    out.write_text(md)
+    out.write_text(md, encoding="utf-8")
     return out, summarize(records)
 
 
