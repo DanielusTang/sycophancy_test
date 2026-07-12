@@ -94,7 +94,7 @@ def render(records: list) -> str:
 
 
 def load(path: Path) -> list:
-    return [json.loads(l) for l in path.read_text().splitlines() if l.strip()]
+    return [json.loads(l) for l in path.read_text(encoding="utf-8").splitlines() if l.strip()]
 
 
 def summarize(records: list) -> dict:
@@ -128,7 +128,7 @@ def build_index(rows: list, index_path: Path) -> None:
         at = s["collapsed_at"] if s["collapsed_at"] is not None else ""
         out.append(f"| [{rel}]({rel}) | {s['topic']} | {s['variant']} | {badge} "
                    f"| {at} | {s['trajectory']} |")
-    index_path.write_text("\n".join(out) + "\n")
+    index_path.write_text("\n".join(out) + "\n", encoding="utf-8")
     print(f"Wrote {index_path}  ({len(rows)} logs)")
 
 
@@ -139,7 +139,7 @@ def convert_one(path: Path, output: Path = None, to_stdout: bool = False):
         sys.stdout.write(md)
         return None, None
     out = output or path.with_suffix(".md")
-    out.write_text(md)
+    out.write_text(md, encoding="utf-8")
     return out, summarize(records)
 
 

@@ -1,0 +1,2787 @@
+{
+  ".claude/settings.local.json": {
+    "mtime": 1783553034.9789157,
+    "ast_hash": "5a1169d9a9c109b199281b1fb9539146",
+    "semantic_hash": "5a1169d9a9c109b199281b1fb9539146"
+  },
+  ".claude/skills/analyze-collapse/extract_collapse.py": {
+    "mtime": 1783552925.1251962,
+    "ast_hash": "3d461a00863c436990eec5faec4c13b4",
+    "semantic_hash": "3d461a00863c436990eec5faec4c13b4"
+  },
+  "debate_setting/debate_setting.py": {
+    "mtime": 1783552926.400705,
+    "ast_hash": "fff7500022f770585746946163307806",
+    "semantic_hash": "fff7500022f770585746946163307806"
+  },
+  "debate_setting/debate_setting_fixedpompt.py": {
+    "mtime": 1783552926.4022088,
+    "ast_hash": "46591b0db48a95ebe9e1345a3accf8c0",
+    "semantic_hash": "46591b0db48a95ebe9e1345a3accf8c0"
+  },
+  "debate_setting/outputs/deepseek_r1/batch_debate_summary_20260615_224021_q10.json": {
+    "mtime": 1783552926.4061964,
+    "ast_hash": "c02ae2ae604e2bbf58a33365b3483f3c",
+    "semantic_hash": "c02ae2ae604e2bbf58a33365b3483f3c"
+  },
+  "debate_setting/outputs/deepseek_r1/batch_debate_summary_20260615_224021_q17.json": {
+    "mtime": 1783552926.4076982,
+    "ast_hash": "6a3ebb26e9ddb8dc46ae499dff16f865",
+    "semantic_hash": "6a3ebb26e9ddb8dc46ae499dff16f865"
+  },
+  "debate_setting/outputs/deepseek_r1/batch_debate_summary_20260615_224022_q1.json": {
+    "mtime": 1783552926.4091983,
+    "ast_hash": "09293d712b900b2416777aaddf1bec4a",
+    "semantic_hash": "09293d712b900b2416777aaddf1bec4a"
+  },
+  "debate_setting/outputs/deepseek_r1/batch_debate_summary_20260615_224022_q11.json": {
+    "mtime": 1783552926.410699,
+    "ast_hash": "2196cd5ba3f30ab408ebf54988e0e850",
+    "semantic_hash": "2196cd5ba3f30ab408ebf54988e0e850"
+  },
+  "debate_setting/outputs/deepseek_r1/batch_debate_summary_20260615_224022_q12.json": {
+    "mtime": 1783552926.4121974,
+    "ast_hash": "929dcaabec6e7f258ddf8617066a5c4b",
+    "semantic_hash": "929dcaabec6e7f258ddf8617066a5c4b"
+  },
+  "debate_setting/outputs/deepseek_r1/batch_debate_summary_20260615_224022_q13.json": {
+    "mtime": 1783552926.4136963,
+    "ast_hash": "ba956811c2ffb2739d41d1eb12e9fae3",
+    "semantic_hash": "ba956811c2ffb2739d41d1eb12e9fae3"
+  },
+  "debate_setting/outputs/deepseek_r1/batch_debate_summary_20260615_224022_q14.json": {
+    "mtime": 1783552926.4146967,
+    "ast_hash": "1bf06848455a111f0dcfa317ed9233b4",
+    "semantic_hash": "1bf06848455a111f0dcfa317ed9233b4"
+  },
+  "debate_setting/outputs/deepseek_r1/batch_debate_summary_20260615_224022_q15.json": {
+    "mtime": 1783552926.416197,
+    "ast_hash": "8256448f9688440caae356830836d0a6",
+    "semantic_hash": "8256448f9688440caae356830836d0a6"
+  },
+  "debate_setting/outputs/deepseek_r1/batch_debate_summary_20260615_224022_q16.json": {
+    "mtime": 1783552926.4171977,
+    "ast_hash": "06f4f83aa97c4c06ca8df2406876f8cd",
+    "semantic_hash": "06f4f83aa97c4c06ca8df2406876f8cd"
+  },
+  "debate_setting/outputs/deepseek_r1/batch_debate_summary_20260615_224022_q18.json": {
+    "mtime": 1783552926.4187067,
+    "ast_hash": "b4f67b1dca270c349eea1c9cb7df99dc",
+    "semantic_hash": "b4f67b1dca270c349eea1c9cb7df99dc"
+  },
+  "debate_setting/outputs/deepseek_r1/batch_debate_summary_20260615_224022_q19.json": {
+    "mtime": 1783552926.4201984,
+    "ast_hash": "48801b0c4472e90ece83fbf5703d8f86",
+    "semantic_hash": "48801b0c4472e90ece83fbf5703d8f86"
+  },
+  "debate_setting/outputs/deepseek_r1/batch_debate_summary_20260615_224022_q20.json": {
+    "mtime": 1783552926.4211988,
+    "ast_hash": "fd3837740f406bc31ae273ffa2f39726",
+    "semantic_hash": "fd3837740f406bc31ae273ffa2f39726"
+  },
+  "debate_setting/outputs/deepseek_r1/batch_debate_summary_20260615_224022_q4.json": {
+    "mtime": 1783552926.4232116,
+    "ast_hash": "be7b5e32e6171c253fc45d7d39b798fd",
+    "semantic_hash": "be7b5e32e6171c253fc45d7d39b798fd"
+  },
+  "debate_setting/outputs/deepseek_r1/batch_debate_summary_20260615_224022_q5.json": {
+    "mtime": 1783552926.4242287,
+    "ast_hash": "555606fbf3429e4f54cf205ffa846455",
+    "semantic_hash": "555606fbf3429e4f54cf205ffa846455"
+  },
+  "debate_setting/outputs/deepseek_r1/batch_debate_summary_20260615_224022_q6.json": {
+    "mtime": 1783552926.425212,
+    "ast_hash": "ea43fd61bd090c8d9836991597029c3c",
+    "semantic_hash": "ea43fd61bd090c8d9836991597029c3c"
+  },
+  "debate_setting/outputs/deepseek_r1/batch_debate_summary_20260615_224022_q7.json": {
+    "mtime": 1783552926.4262123,
+    "ast_hash": "90016d93cd1f768d62c86802fa8ca080",
+    "semantic_hash": "90016d93cd1f768d62c86802fa8ca080"
+  },
+  "debate_setting/outputs/deepseek_r1/batch_debate_summary_20260615_224022_q8.json": {
+    "mtime": 1783552926.4277337,
+    "ast_hash": "b8c3cbdf1ea1c2b2aed299f372169e66",
+    "semantic_hash": "b8c3cbdf1ea1c2b2aed299f372169e66"
+  },
+  "debate_setting/outputs/deepseek_r1/batch_debate_summary_20260615_224022_q9.json": {
+    "mtime": 1783552926.429199,
+    "ast_hash": "b03691f5f451e89517aca4fe76153d3f",
+    "semantic_hash": "b03691f5f451e89517aca4fe76153d3f"
+  },
+  "debate_setting/outputs/deepseek_r1_fixedprompt/batch_debate_summary_20260616_162449_q9.json": {
+    "mtime": 1783552926.5027065,
+    "ast_hash": "0baf6ef3ed8dbb7c180c556edd45f5bb",
+    "semantic_hash": "0baf6ef3ed8dbb7c180c556edd45f5bb"
+  },
+  "debate_setting/outputs/deepseek_r1_fixedprompt/batch_debate_summary_20260616_162450_q1.json": {
+    "mtime": 1783552926.5042005,
+    "ast_hash": "fbbdb8fb1544b4046d086579b521536f",
+    "semantic_hash": "fbbdb8fb1544b4046d086579b521536f"
+  },
+  "debate_setting/outputs/deepseek_r1_fixedprompt/batch_debate_summary_20260616_162450_q10.json": {
+    "mtime": 1783552926.5061977,
+    "ast_hash": "3b2cb0b390956115205b024ad8a2428a",
+    "semantic_hash": "3b2cb0b390956115205b024ad8a2428a"
+  },
+  "debate_setting/outputs/deepseek_r1_fixedprompt/batch_debate_summary_20260616_162450_q11.json": {
+    "mtime": 1783552926.5081973,
+    "ast_hash": "c47f5d4d86bdce3f72f54f70048e11c1",
+    "semantic_hash": "c47f5d4d86bdce3f72f54f70048e11c1"
+  },
+  "debate_setting/outputs/deepseek_r1_fixedprompt/batch_debate_summary_20260616_162450_q12.json": {
+    "mtime": 1783552926.5091975,
+    "ast_hash": "61eac17303c02b26b5b821983cb25b0c",
+    "semantic_hash": "61eac17303c02b26b5b821983cb25b0c"
+  },
+  "debate_setting/outputs/deepseek_r1_fixedprompt/batch_debate_summary_20260616_162450_q13.json": {
+    "mtime": 1783552926.5106988,
+    "ast_hash": "d2d5332e9b6576be4d19c4be853c8aaa",
+    "semantic_hash": "d2d5332e9b6576be4d19c4be853c8aaa"
+  },
+  "debate_setting/outputs/deepseek_r1_fixedprompt/batch_debate_summary_20260616_162450_q14.json": {
+    "mtime": 1783552926.512199,
+    "ast_hash": "a38abee6810187e53e34981e0b21fa13",
+    "semantic_hash": "a38abee6810187e53e34981e0b21fa13"
+  },
+  "debate_setting/outputs/deepseek_r1_fixedprompt/batch_debate_summary_20260616_162450_q15.json": {
+    "mtime": 1783552926.513697,
+    "ast_hash": "a12eed0694f9945f27ada64a489287c1",
+    "semantic_hash": "a12eed0694f9945f27ada64a489287c1"
+  },
+  "debate_setting/outputs/deepseek_r1_fixedprompt/batch_debate_summary_20260616_162450_q16.json": {
+    "mtime": 1783552926.5146961,
+    "ast_hash": "02ba3f7f3ff5ffad888997f20d2946ff",
+    "semantic_hash": "02ba3f7f3ff5ffad888997f20d2946ff"
+  },
+  "debate_setting/outputs/deepseek_r1_fixedprompt/batch_debate_summary_20260616_162450_q17.json": {
+    "mtime": 1783552926.5161982,
+    "ast_hash": "e5232c2e0a21198b1ffa90b1dfc379c6",
+    "semantic_hash": "e5232c2e0a21198b1ffa90b1dfc379c6"
+  },
+  "debate_setting/outputs/deepseek_r1_fixedprompt/batch_debate_summary_20260616_162450_q18.json": {
+    "mtime": 1783552926.5171986,
+    "ast_hash": "19a153e2bf5fc5137abf247ffc5721d2",
+    "semantic_hash": "19a153e2bf5fc5137abf247ffc5721d2"
+  },
+  "debate_setting/outputs/deepseek_r1_fixedprompt/batch_debate_summary_20260616_162450_q19.json": {
+    "mtime": 1783552926.518708,
+    "ast_hash": "dc8f5a72019e7439b413b84675ab2457",
+    "semantic_hash": "dc8f5a72019e7439b413b84675ab2457"
+  },
+  "debate_setting/outputs/deepseek_r1_fixedprompt/batch_debate_summary_20260616_162450_q2.json": {
+    "mtime": 1783552926.5202136,
+    "ast_hash": "64180897bec9f2e4f90b18a7714fc8f2",
+    "semantic_hash": "64180897bec9f2e4f90b18a7714fc8f2"
+  },
+  "debate_setting/outputs/deepseek_r1_fixedprompt/batch_debate_summary_20260616_162450_q20.json": {
+    "mtime": 1783552926.5211978,
+    "ast_hash": "df85216381dcf4acb5089e666304d062",
+    "semantic_hash": "df85216381dcf4acb5089e666304d062"
+  },
+  "debate_setting/outputs/deepseek_r1_fixedprompt/batch_debate_summary_20260616_162450_q3.json": {
+    "mtime": 1783552926.522199,
+    "ast_hash": "aa291ab36425f5fa9b4d54043d1c35a0",
+    "semantic_hash": "aa291ab36425f5fa9b4d54043d1c35a0"
+  },
+  "debate_setting/outputs/deepseek_r1_fixedprompt/batch_debate_summary_20260616_162450_q4.json": {
+    "mtime": 1783552926.5236962,
+    "ast_hash": "18b7bdbc9d67856a82ecd5f7e7d0cb8b",
+    "semantic_hash": "18b7bdbc9d67856a82ecd5f7e7d0cb8b"
+  },
+  "debate_setting/outputs/deepseek_r1_fixedprompt/batch_debate_summary_20260616_162450_q5.json": {
+    "mtime": 1783552926.5246978,
+    "ast_hash": "052550880e4eee4ce93152d25c61d898",
+    "semantic_hash": "052550880e4eee4ce93152d25c61d898"
+  },
+  "debate_setting/outputs/deepseek_r1_fixedprompt/batch_debate_summary_20260616_162450_q6.json": {
+    "mtime": 1783552926.5261974,
+    "ast_hash": "ea4da19f76f2f1235e85795ac886428f",
+    "semantic_hash": "ea4da19f76f2f1235e85795ac886428f"
+  },
+  "debate_setting/outputs/deepseek_r1_fixedprompt/batch_debate_summary_20260616_162450_q8.json": {
+    "mtime": 1783552926.527199,
+    "ast_hash": "ee307b2e2d944032beafdd08e2391e1b",
+    "semantic_hash": "ee307b2e2d944032beafdd08e2391e1b"
+  },
+  "debate_setting/outputs/deepseek_r1_fixedprompt/batch_debate_summary_20260616_162451_q7.json": {
+    "mtime": 1783552926.5281975,
+    "ast_hash": "aeec8597ee373642ecea220135279442",
+    "semantic_hash": "aeec8597ee373642ecea220135279442"
+  },
+  "debate_setting/outputs/deepseek_v3/batch_debate_summary_20260615_225832_q4.json": {
+    "mtime": 1783552926.622697,
+    "ast_hash": "cc8ba9b5676dae202308f83abbba0425",
+    "semantic_hash": "cc8ba9b5676dae202308f83abbba0425"
+  },
+  "debate_setting/outputs/deepseek_v3/batch_debate_summary_20260615_225833_q1.json": {
+    "mtime": 1783552926.6242146,
+    "ast_hash": "f073688027f40949c47a958f77274980",
+    "semantic_hash": "f073688027f40949c47a958f77274980"
+  },
+  "debate_setting/outputs/deepseek_v3/batch_debate_summary_20260615_225833_q10.json": {
+    "mtime": 1783552926.651696,
+    "ast_hash": "0a96f9bb5162cbe15c3b825ef023cd73",
+    "semantic_hash": "0a96f9bb5162cbe15c3b825ef023cd73"
+  },
+  "debate_setting/outputs/deepseek_v3/batch_debate_summary_20260615_225833_q11.json": {
+    "mtime": 1783552926.6531956,
+    "ast_hash": "201e4fde674e8a08d139bc9bc0ab114e",
+    "semantic_hash": "201e4fde674e8a08d139bc9bc0ab114e"
+  },
+  "debate_setting/outputs/deepseek_v3/batch_debate_summary_20260615_225833_q12.json": {
+    "mtime": 1783552926.6541967,
+    "ast_hash": "609914b0d2af71c3467fbab8148b4865",
+    "semantic_hash": "609914b0d2af71c3467fbab8148b4865"
+  },
+  "debate_setting/outputs/deepseek_v3/batch_debate_summary_20260615_225833_q13.json": {
+    "mtime": 1783552926.6551974,
+    "ast_hash": "ce797925f38a3bd2476d3e6d5ff5e27b",
+    "semantic_hash": "ce797925f38a3bd2476d3e6d5ff5e27b"
+  },
+  "debate_setting/outputs/deepseek_v3/batch_debate_summary_20260615_225833_q14.json": {
+    "mtime": 1783552926.6566973,
+    "ast_hash": "2c1652919f4e94446e051da60ffc6d32",
+    "semantic_hash": "2c1652919f4e94446e051da60ffc6d32"
+  },
+  "debate_setting/outputs/deepseek_v3/batch_debate_summary_20260615_225833_q15.json": {
+    "mtime": 1783552926.657697,
+    "ast_hash": "513f53e8484e32c61f53ea728d5d1029",
+    "semantic_hash": "513f53e8484e32c61f53ea728d5d1029"
+  },
+  "debate_setting/outputs/deepseek_v3/batch_debate_summary_20260615_225833_q16.json": {
+    "mtime": 1783552926.658698,
+    "ast_hash": "e3d799f0eafeaa021266113aaeaa0fbf",
+    "semantic_hash": "e3d799f0eafeaa021266113aaeaa0fbf"
+  },
+  "debate_setting/outputs/deepseek_v3/batch_debate_summary_20260615_225833_q17.json": {
+    "mtime": 1783552926.660199,
+    "ast_hash": "8b438ef7a22011fd155cc02dd6ca8681",
+    "semantic_hash": "8b438ef7a22011fd155cc02dd6ca8681"
+  },
+  "debate_setting/outputs/deepseek_v3/batch_debate_summary_20260615_225833_q18.json": {
+    "mtime": 1783552926.6616979,
+    "ast_hash": "aa9fddcd62e145f1febfccac26e7d6b5",
+    "semantic_hash": "aa9fddcd62e145f1febfccac26e7d6b5"
+  },
+  "debate_setting/outputs/deepseek_v3/batch_debate_summary_20260615_225833_q19.json": {
+    "mtime": 1783552926.6626985,
+    "ast_hash": "44b6f61978026c8e94c78371e51b7b65",
+    "semantic_hash": "44b6f61978026c8e94c78371e51b7b65"
+  },
+  "debate_setting/outputs/deepseek_v3/batch_debate_summary_20260615_225833_q2.json": {
+    "mtime": 1783552926.663699,
+    "ast_hash": "881e982b058571e27053a89fc74a3d84",
+    "semantic_hash": "881e982b058571e27053a89fc74a3d84"
+  },
+  "debate_setting/outputs/deepseek_v3/batch_debate_summary_20260615_225833_q20.json": {
+    "mtime": 1783552926.6647153,
+    "ast_hash": "fcea6a907d5da58e9c9f435c72ff23f2",
+    "semantic_hash": "fcea6a907d5da58e9c9f435c72ff23f2"
+  },
+  "debate_setting/outputs/deepseek_v3/batch_debate_summary_20260615_225833_q3.json": {
+    "mtime": 1783552926.6662078,
+    "ast_hash": "ec044ce852133ffacb4c49b55c2831ad",
+    "semantic_hash": "ec044ce852133ffacb4c49b55c2831ad"
+  },
+  "debate_setting/outputs/deepseek_v3/batch_debate_summary_20260615_225833_q5.json": {
+    "mtime": 1783552926.6671975,
+    "ast_hash": "8221ecb76ee3cf7a924e8dc1dbb6e0cd",
+    "semantic_hash": "8221ecb76ee3cf7a924e8dc1dbb6e0cd"
+  },
+  "debate_setting/outputs/deepseek_v3/batch_debate_summary_20260615_225833_q6.json": {
+    "mtime": 1783552926.6686964,
+    "ast_hash": "ef71a884526f443c52d8b18a7441cc2b",
+    "semantic_hash": "ef71a884526f443c52d8b18a7441cc2b"
+  },
+  "debate_setting/outputs/deepseek_v3/batch_debate_summary_20260615_225833_q7.json": {
+    "mtime": 1783552926.6696975,
+    "ast_hash": "83abc79ff80cc8d59c0e2d543cf396e8",
+    "semantic_hash": "83abc79ff80cc8d59c0e2d543cf396e8"
+  },
+  "debate_setting/outputs/deepseek_v3/batch_debate_summary_20260615_225833_q8.json": {
+    "mtime": 1783552926.7061956,
+    "ast_hash": "a559b97f0579ff33fb79a91dfcd4f470",
+    "semantic_hash": "a559b97f0579ff33fb79a91dfcd4f470"
+  },
+  "debate_setting/outputs/deepseek_v3/batch_debate_summary_20260615_225833_q9.json": {
+    "mtime": 1783552926.7077005,
+    "ast_hash": "d65f11ea2d7a3160c4ebde89b29d2172",
+    "semantic_hash": "d65f11ea2d7a3160c4ebde89b29d2172"
+  },
+  "debate_setting/outputs/deepseek_v3_fixedprompt/batch_debate_summary_20260615_225949_q10.json": {
+    "mtime": 1783552926.8171988,
+    "ast_hash": "7f82de465582e284d47103c7c962f1d2",
+    "semantic_hash": "7f82de465582e284d47103c7c962f1d2"
+  },
+  "debate_setting/outputs/deepseek_v3_fixedprompt/batch_debate_summary_20260615_225950_q1.json": {
+    "mtime": 1783552926.819701,
+    "ast_hash": "4166d53a55aa0f1046817569e57fb69d",
+    "semantic_hash": "4166d53a55aa0f1046817569e57fb69d"
+  },
+  "debate_setting/outputs/deepseek_v3_fixedprompt/batch_debate_summary_20260615_225950_q11.json": {
+    "mtime": 1783552926.8211994,
+    "ast_hash": "5579f1e02863995863aa56233bc31651",
+    "semantic_hash": "5579f1e02863995863aa56233bc31651"
+  },
+  "debate_setting/outputs/deepseek_v3_fixedprompt/batch_debate_summary_20260615_225950_q12.json": {
+    "mtime": 1783552926.8231997,
+    "ast_hash": "367a98e816448d7e3896a56790199f29",
+    "semantic_hash": "367a98e816448d7e3896a56790199f29"
+  },
+  "debate_setting/outputs/deepseek_v3_fixedprompt/batch_debate_summary_20260615_225950_q13.json": {
+    "mtime": 1783552926.8247006,
+    "ast_hash": "b86a5d26a0c5e0250858749e4704ee71",
+    "semantic_hash": "b86a5d26a0c5e0250858749e4704ee71"
+  },
+  "debate_setting/outputs/deepseek_v3_fixedprompt/batch_debate_summary_20260615_225950_q14.json": {
+    "mtime": 1783552926.8266985,
+    "ast_hash": "9266e93136704d5fb08a7ade883dd568",
+    "semantic_hash": "9266e93136704d5fb08a7ade883dd568"
+  },
+  "debate_setting/outputs/deepseek_v3_fixedprompt/batch_debate_summary_20260615_225950_q15.json": {
+    "mtime": 1783552926.8282056,
+    "ast_hash": "79920e1491c44d34f667cf59c75646c3",
+    "semantic_hash": "79920e1491c44d34f667cf59c75646c3"
+  },
+  "debate_setting/outputs/deepseek_v3_fixedprompt/batch_debate_summary_20260615_225950_q16.json": {
+    "mtime": 1783552926.8296993,
+    "ast_hash": "0c1dbff87c2586ae733de1a3ae9f46c4",
+    "semantic_hash": "0c1dbff87c2586ae733de1a3ae9f46c4"
+  },
+  "debate_setting/outputs/deepseek_v3_fixedprompt/batch_debate_summary_20260615_225950_q17.json": {
+    "mtime": 1783552926.8311992,
+    "ast_hash": "802543e14b3c27a0fff8cc9f623df512",
+    "semantic_hash": "802543e14b3c27a0fff8cc9f623df512"
+  },
+  "debate_setting/outputs/deepseek_v3_fixedprompt/batch_debate_summary_20260615_225950_q18.json": {
+    "mtime": 1783552926.8332398,
+    "ast_hash": "c2e7440f67608c71aa26bd450c007f4f",
+    "semantic_hash": "c2e7440f67608c71aa26bd450c007f4f"
+  },
+  "debate_setting/outputs/deepseek_v3_fixedprompt/batch_debate_summary_20260615_225950_q19.json": {
+    "mtime": 1783552926.8346994,
+    "ast_hash": "a78931b7f5986231843c2882735bf894",
+    "semantic_hash": "a78931b7f5986231843c2882735bf894"
+  },
+  "debate_setting/outputs/deepseek_v3_fixedprompt/batch_debate_summary_20260615_225950_q2.json": {
+    "mtime": 1783552926.8361983,
+    "ast_hash": "35cab1f2ad1fc49568d01c297b13fbb6",
+    "semantic_hash": "35cab1f2ad1fc49568d01c297b13fbb6"
+  },
+  "debate_setting/outputs/deepseek_v3_fixedprompt/batch_debate_summary_20260615_225950_q20.json": {
+    "mtime": 1783552926.8376987,
+    "ast_hash": "822069377787eb8fd3cda22a1d8f3fe0",
+    "semantic_hash": "822069377787eb8fd3cda22a1d8f3fe0"
+  },
+  "debate_setting/outputs/deepseek_v3_fixedprompt/batch_debate_summary_20260615_225950_q3.json": {
+    "mtime": 1783552926.839204,
+    "ast_hash": "d49ced673dd0d3e77c808144ddd7a120",
+    "semantic_hash": "d49ced673dd0d3e77c808144ddd7a120"
+  },
+  "debate_setting/outputs/deepseek_v3_fixedprompt/batch_debate_summary_20260615_225950_q4.json": {
+    "mtime": 1783552926.841201,
+    "ast_hash": "a5330d2665d51783d9e978bf67649f50",
+    "semantic_hash": "a5330d2665d51783d9e978bf67649f50"
+  },
+  "debate_setting/outputs/deepseek_v3_fixedprompt/batch_debate_summary_20260615_225950_q5.json": {
+    "mtime": 1783552926.8422012,
+    "ast_hash": "63ed8aa77cbd98411c48284346b540c4",
+    "semantic_hash": "63ed8aa77cbd98411c48284346b540c4"
+  },
+  "debate_setting/outputs/deepseek_v3_fixedprompt/batch_debate_summary_20260615_225950_q6.json": {
+    "mtime": 1783552926.843197,
+    "ast_hash": "95c967aa7c71c48ef0ae1e9fb3677c42",
+    "semantic_hash": "95c967aa7c71c48ef0ae1e9fb3677c42"
+  },
+  "debate_setting/outputs/deepseek_v3_fixedprompt/batch_debate_summary_20260615_225950_q7.json": {
+    "mtime": 1783552926.8452005,
+    "ast_hash": "32def628813734e888325d85ded33e36",
+    "semantic_hash": "32def628813734e888325d85ded33e36"
+  },
+  "debate_setting/outputs/deepseek_v3_fixedprompt/batch_debate_summary_20260615_225950_q8.json": {
+    "mtime": 1783552926.8462014,
+    "ast_hash": "f622ea6e57edb5952eb1ee8f9e379e34",
+    "semantic_hash": "f622ea6e57edb5952eb1ee8f9e379e34"
+  },
+  "debate_setting/outputs/deepseek_v3_fixedprompt/batch_debate_summary_20260615_225950_q9.json": {
+    "mtime": 1783552926.847699,
+    "ast_hash": "84aec40e32c73228e2a9c223f7e7ce41",
+    "semantic_hash": "84aec40e32c73228e2a9c223f7e7ce41"
+  },
+  "false_presuppositions/ablasion_r1_outputs/qwen235r1_off/batch_strength_naturalistic_summary_20260630_124431_qwen235r1_off.json": {
+    "mtime": 1783552928.6377003,
+    "ast_hash": "089e1439d555011fa444c8f1522a1972",
+    "semantic_hash": "089e1439d555011fa444c8f1522a1972"
+  },
+  "false_presuppositions/ablasion_r1_outputs/qwen235r1_off/batch_strength_naturalistic_summary_20260630_133018_qwen235r1_off.json": {
+    "mtime": 1783552928.6392014,
+    "ast_hash": "8f7a99c85abbd0caff28dcc4438ef90b",
+    "semantic_hash": "8f7a99c85abbd0caff28dcc4438ef90b"
+  },
+  "false_presuppositions/ablasion_r1_outputs/qwen235r1_off/batch_strength_naturalistic_summary_20260630_133019_qwen235r1_off.json": {
+    "mtime": 1783552928.6416993,
+    "ast_hash": "f014eabf881b20ab427ee18d8ee542d7",
+    "semantic_hash": "f014eabf881b20ab427ee18d8ee542d7"
+  },
+  "false_presuppositions/ablasion_r1_outputs/qwen235r1_off/batch_strength_naturalistic_summary_20260630_133020_qwen235r1_off.json": {
+    "mtime": 1783552928.643202,
+    "ast_hash": "45b3816b3acc88e834490b2ae6929aa8",
+    "semantic_hash": "45b3816b3acc88e834490b2ae6929aa8"
+  },
+  "false_presuppositions/ablasion_r1_outputs/qwen235r1_off/batch_strength_naturalistic_summary_20260630_133021_qwen235r1_off.json": {
+    "mtime": 1783552928.6446993,
+    "ast_hash": "bab27c2d562e19ea01950cc4e211b210",
+    "semantic_hash": "bab27c2d562e19ea01950cc4e211b210"
+  },
+  "false_presuppositions/ablasion_r1_outputs/qwen235r1_off/batch_strength_naturalistic_summary_20260630_133022_qwen235r1_off.json": {
+    "mtime": 1783552928.6462014,
+    "ast_hash": "a41d38a4862301165d56246a6cedfb21",
+    "semantic_hash": "a41d38a4862301165d56246a6cedfb21"
+  },
+  "false_presuppositions/ablasion_r1_outputs/qwen235r1_on/batch_strength_naturalistic_summary_20260630_124431_qwen235r1_on.json": {
+    "mtime": 1783552928.7826996,
+    "ast_hash": "952a8fc65fef6df1cd6f68dfaa7dd9af",
+    "semantic_hash": "952a8fc65fef6df1cd6f68dfaa7dd9af"
+  },
+  "false_presuppositions/ablasion_r1_outputs/qwen235r1_on/batch_strength_naturalistic_summary_20260630_133016_qwen235r1_on.json": {
+    "mtime": 1783552928.784199,
+    "ast_hash": "f05cc5fdf03c5ba82892c13321343cec",
+    "semantic_hash": "f05cc5fdf03c5ba82892c13321343cec"
+  },
+  "false_presuppositions/ablasion_r1_outputs/qwen235r1_on/batch_strength_naturalistic_summary_20260630_133018_qwen235r1_on.json": {
+    "mtime": 1783552928.786199,
+    "ast_hash": "e55a7176f3e6d9ef80db9193cb6b9094",
+    "semantic_hash": "e55a7176f3e6d9ef80db9193cb6b9094"
+  },
+  "false_presuppositions/ablasion_r1_outputs/qwen235r1_on/batch_strength_naturalistic_summary_20260630_133019_qwen235r1_on.json": {
+    "mtime": 1783552928.7881992,
+    "ast_hash": "8b9c7b1ff53a81532e75d1b0eb78205b",
+    "semantic_hash": "8b9c7b1ff53a81532e75d1b0eb78205b"
+  },
+  "false_presuppositions/ablasion_r1_outputs/qwen235r1_on/batch_strength_naturalistic_summary_20260630_133020_qwen235r1_on.json": {
+    "mtime": 1783552928.7896998,
+    "ast_hash": "6c4873a511b4932715341da229ea7423",
+    "semantic_hash": "6c4873a511b4932715341da229ea7423"
+  },
+  "false_presuppositions/ablasion_r1_outputs/qwen235r1_on/batch_strength_naturalistic_summary_20260630_133021_qwen235r1_on.json": {
+    "mtime": 1783552928.7917,
+    "ast_hash": "f0f1d0418b52249b46ed890d41e257c0",
+    "semantic_hash": "f0f1d0418b52249b46ed890d41e257c0"
+  },
+  "false_presuppositions/ablasion_r1_outputs/qwen235r1_on/batch_strength_naturalistic_summary_20260630_133022_qwen235r1_on.json": {
+    "mtime": 1783552928.7931998,
+    "ast_hash": "ce5de9bd2ec8f2cb3ef6abe0a33d0a60",
+    "semantic_hash": "ce5de9bd2ec8f2cb3ef6abe0a33d0a60"
+  },
+  "false_presuppositions/ablation_outputs/_archive/deepseek_r1_adversarial/batch_strength_adversarial_summary_20260626_005722_q1.json": {
+    "mtime": 1783552929.0082176,
+    "ast_hash": "542fc1edb1463169a510a4f4674ab6ce",
+    "semantic_hash": "542fc1edb1463169a510a4f4674ab6ce"
+  },
+  "false_presuppositions/ablation_outputs/_archive/deepseek_r1_adversarial/batch_strength_adversarial_summary_20260626_005744_q2.json": {
+    "mtime": 1783552929.0096998,
+    "ast_hash": "2a6e782dbfe6329f9f8fdd7b02654262",
+    "semantic_hash": "2a6e782dbfe6329f9f8fdd7b02654262"
+  },
+  "false_presuppositions/ablation_outputs/_archive/deepseek_r1_adversarial/batch_strength_adversarial_summary_20260626_005746_q3.json": {
+    "mtime": 1783552929.0111992,
+    "ast_hash": "415165c124aa3d3e17a2fefb9283a976",
+    "semantic_hash": "415165c124aa3d3e17a2fefb9283a976"
+  },
+  "false_presuppositions/ablation_outputs/_archive/deepseek_r1_adversarial/batch_strength_adversarial_summary_20260626_005748_q4.json": {
+    "mtime": 1783552929.0131981,
+    "ast_hash": "edb02326482dc08e935d08b336a343d2",
+    "semantic_hash": "edb02326482dc08e935d08b336a343d2"
+  },
+  "false_presuppositions/ablation_outputs/_archive/deepseek_r1_adversarial/batch_strength_adversarial_summary_20260626_005753_q5.json": {
+    "mtime": 1783552929.0146985,
+    "ast_hash": "c39576513cfab994e502f6db6ecb1b97",
+    "semantic_hash": "c39576513cfab994e502f6db6ecb1b97"
+  },
+  "false_presuppositions/ablation_outputs/_archive/deepseek_r1_adversarial/batch_strength_adversarial_summary_20260626_005753_q6.json": {
+    "mtime": 1783552929.0157,
+    "ast_hash": "c28b76177f4539d638287934af4dc7c7",
+    "semantic_hash": "c28b76177f4539d638287934af4dc7c7"
+  },
+  "false_presuppositions/ablation_outputs/_archive/deepseek_r1_adversarial/batch_strength_adversarial_summary_20260626_005754_q7.json": {
+    "mtime": 1783552929.0172193,
+    "ast_hash": "bb3ce2f0e54b752004499902d3e5d6f7",
+    "semantic_hash": "bb3ce2f0e54b752004499902d3e5d6f7"
+  },
+  "false_presuppositions/ablation_outputs/_archive/deepseek_r1_adversarial/batch_strength_adversarial_summary_20260626_005755_q8.json": {
+    "mtime": 1783552929.0187142,
+    "ast_hash": "bb3e17575649d1023071830fd64433bd",
+    "semantic_hash": "bb3e17575649d1023071830fd64433bd"
+  },
+  "false_presuppositions/ablation_outputs/_archive/deepseek_r1_adversarial/batch_strength_adversarial_summary_20260626_005756_q9.json": {
+    "mtime": 1783552929.020199,
+    "ast_hash": "8a7ad45f39fde5899614f53dfa01f32d",
+    "semantic_hash": "8a7ad45f39fde5899614f53dfa01f32d"
+  },
+  "false_presuppositions/ablation_outputs/_archive/deepseek_r1_adversarial/batch_strength_adversarial_summary_20260626_005758_q10.json": {
+    "mtime": 1783552929.0217123,
+    "ast_hash": "76885f5b2d10a86fea03f7615b210803",
+    "semantic_hash": "76885f5b2d10a86fea03f7615b210803"
+  },
+  "false_presuppositions/ablation_outputs/_archive/deepseek_r1_adversarial/batch_strength_adversarial_summary_20260626_005759_q11.json": {
+    "mtime": 1783552929.0231998,
+    "ast_hash": "73671f062c046b01596d22c13f487b71",
+    "semantic_hash": "73671f062c046b01596d22c13f487b71"
+  },
+  "false_presuppositions/ablation_outputs/_archive/deepseek_r1_adversarial/batch_strength_adversarial_summary_20260626_005801_q12.json": {
+    "mtime": 1783552929.0246975,
+    "ast_hash": "802ca94c99cd7456c8bd3168d39f80f3",
+    "semantic_hash": "802ca94c99cd7456c8bd3168d39f80f3"
+  },
+  "false_presuppositions/ablation_outputs/_archive/deepseek_r1_adversarial/batch_strength_adversarial_summary_20260626_005803_q13.json": {
+    "mtime": 1783552929.0261996,
+    "ast_hash": "569efee5be0a80235c0837c408eeedf7",
+    "semantic_hash": "569efee5be0a80235c0837c408eeedf7"
+  },
+  "false_presuppositions/ablation_outputs/_archive/deepseek_r1_adversarial/batch_strength_adversarial_summary_20260626_005805_q14.json": {
+    "mtime": 1783552929.0277119,
+    "ast_hash": "675b56a7e2166e7737b631f0634fdfa1",
+    "semantic_hash": "675b56a7e2166e7737b631f0634fdfa1"
+  },
+  "false_presuppositions/ablation_outputs/_archive/deepseek_r1_adversarial/batch_strength_adversarial_summary_20260626_005806_q15.json": {
+    "mtime": 1783552929.0297148,
+    "ast_hash": "d5e798e2b2f34fa482898cd85cbf444e",
+    "semantic_hash": "d5e798e2b2f34fa482898cd85cbf444e"
+  },
+  "false_presuppositions/ablation_outputs/_archive/deepseek_r1_adversarial/batch_strength_adversarial_summary_20260626_005808_q16.json": {
+    "mtime": 1783552929.0311992,
+    "ast_hash": "8478337f6074705d5cf45dca5aad3709",
+    "semantic_hash": "8478337f6074705d5cf45dca5aad3709"
+  },
+  "false_presuppositions/ablation_outputs/_archive/deepseek_r1_adversarial/batch_strength_adversarial_summary_20260626_005810_q17.json": {
+    "mtime": 1783552929.0327182,
+    "ast_hash": "4cec65522e306496c4421175ee3a56ca",
+    "semantic_hash": "4cec65522e306496c4421175ee3a56ca"
+  },
+  "false_presuppositions/ablation_outputs/_archive/deepseek_r1_adversarial/batch_strength_adversarial_summary_20260626_005812_q18.json": {
+    "mtime": 1783552929.0337155,
+    "ast_hash": "e2b9e494925ab8aa90ebfe9fb0b4b344",
+    "semantic_hash": "e2b9e494925ab8aa90ebfe9fb0b4b344"
+  },
+  "false_presuppositions/ablation_outputs/_archive/deepseek_r1_adversarial/batch_strength_adversarial_summary_20260626_005814_q19.json": {
+    "mtime": 1783552929.035199,
+    "ast_hash": "5979a7134238b7879c3c62d40949b586",
+    "semantic_hash": "5979a7134238b7879c3c62d40949b586"
+  },
+  "false_presuppositions/ablation_outputs/_archive/deepseek_r1_adversarial/batch_strength_adversarial_summary_20260626_005819_q20.json": {
+    "mtime": 1783552929.0366974,
+    "ast_hash": "bc7a894d4580e6754528e1b3dc365a78",
+    "semantic_hash": "bc7a894d4580e6754528e1b3dc365a78"
+  },
+  "false_presuppositions/ablation_outputs/_archive/deepseek_r1_adversarial/batch_strength_adversarial_summary_20260626_005820_q21.json": {
+    "mtime": 1783552929.0391963,
+    "ast_hash": "13f54ad857b8ff8a24c95c1c019df2a2",
+    "semantic_hash": "13f54ad857b8ff8a24c95c1c019df2a2"
+  },
+  "false_presuppositions/ablation_outputs/_archive/deepseek_r1_adversarial/batch_strength_adversarial_summary_20260626_005820_q22.json": {
+    "mtime": 1783552929.0406969,
+    "ast_hash": "78d00371c77a3cbfbe6ae4c4b3d4bc68",
+    "semantic_hash": "78d00371c77a3cbfbe6ae4c4b3d4bc68"
+  },
+  "false_presuppositions/ablation_outputs/_archive/deepseek_r1_adversarial/batch_strength_adversarial_summary_20260626_005821_q23.json": {
+    "mtime": 1783552929.042198,
+    "ast_hash": "f1c346da5815ad1eb1ee5e5c2f11b2ee",
+    "semantic_hash": "f1c346da5815ad1eb1ee5e5c2f11b2ee"
+  },
+  "false_presuppositions/ablation_outputs/_archive/deepseek_r1_adversarial/batch_strength_adversarial_summary_20260626_005822_q24.json": {
+    "mtime": 1783552929.0442119,
+    "ast_hash": "3283c148847512c05a81e4fdc2331c26",
+    "semantic_hash": "3283c148847512c05a81e4fdc2331c26"
+  },
+  "false_presuppositions/ablation_outputs/_archive/deepseek_r1_adversarial/batch_strength_adversarial_summary_20260626_005824_q25.json": {
+    "mtime": 1783552929.0456984,
+    "ast_hash": "51afe205fdd33e4ecb7075400009a54a",
+    "semantic_hash": "51afe205fdd33e4ecb7075400009a54a"
+  },
+  "false_presuppositions/ablation_outputs/_archive/deepseek_r1_adversarial/batch_strength_adversarial_summary_20260626_010825_q18.json": {
+    "mtime": 1783552929.0466986,
+    "ast_hash": "22ad363d0db078ceeb1bd0bd4671632a",
+    "semantic_hash": "22ad363d0db078ceeb1bd0bd4671632a"
+  },
+  "false_presuppositions/ablation_outputs/adversarial/A1/batch_strength_adversarial_summary_20260627_225908_A1.json": {
+    "mtime": 1783552929.220201,
+    "ast_hash": "1886c650e63bc0cd0e209fcc4564c914",
+    "semantic_hash": "1886c650e63bc0cd0e209fcc4564c914"
+  },
+  "false_presuppositions/ablation_outputs/adversarial/A2/batch_strength_adversarial_summary_20260627_225908_A2.json": {
+    "mtime": 1783552929.3056989,
+    "ast_hash": "50f58f905b0a6ff38f0fea44c131e592",
+    "semantic_hash": "50f58f905b0a6ff38f0fea44c131e592"
+  },
+  "false_presuppositions/ablation_outputs/adversarial/A3/batch_strength_adversarial_summary_20260627_225908_A3.json": {
+    "mtime": 1783552929.3916993,
+    "ast_hash": "8754bf35415f1e838ecb8ee680116af5",
+    "semantic_hash": "8754bf35415f1e838ecb8ee680116af5"
+  },
+  "false_presuppositions/ablation_outputs/adversarial/A4/batch_strength_adversarial_summary_20260627_225908_A4.json": {
+    "mtime": 1783552929.4632025,
+    "ast_hash": "0887277704af387c79ba1a9da789f161",
+    "semantic_hash": "0887277704af387c79ba1a9da789f161"
+  },
+  "false_presuppositions/ablation_outputs/adversarial/A4/batch_strength_adversarial_summary_20260628_205523_A4.json": {
+    "mtime": 1783552929.4646971,
+    "ast_hash": "35887592fe190c254fc7e5570a82e8ff",
+    "semantic_hash": "35887592fe190c254fc7e5570a82e8ff"
+  },
+  "false_presuppositions/ablation_outputs/adversarial/D0/batch_strength_adversarial_summary_20260627_225908_D0.json": {
+    "mtime": 1783552929.5661976,
+    "ast_hash": "d3fe3d9f34f424d17fde98ca2da90936",
+    "semantic_hash": "d3fe3d9f34f424d17fde98ca2da90936"
+  },
+  "false_presuppositions/ablation_outputs/adversarial/D0/batch_strength_adversarial_summary_20260628_205523_D0.json": {
+    "mtime": 1783552929.567199,
+    "ast_hash": "918ecf4b4baae5cadab223511f7cd8f1",
+    "semantic_hash": "918ecf4b4baae5cadab223511f7cd8f1"
+  },
+  "false_presuppositions/ablation_outputs/adversarial/claude_sonnet5/batch_strength_adversarial_summary_20260630_175804_claude_sonnet5.json": {
+    "mtime": 1783552929.6711988,
+    "ast_hash": "ecb98f6980c338f0025f67ad6709fde4",
+    "semantic_hash": "ecb98f6980c338f0025f67ad6709fde4"
+  },
+  "false_presuppositions/ablation_outputs/adversarial/claude_sonnet5/batch_strength_adversarial_summary_20260630_190105_claude_sonnet5.json": {
+    "mtime": 1783552929.672199,
+    "ast_hash": "ae5357bb852685800aeead7611101e33",
+    "semantic_hash": "ae5357bb852685800aeead7611101e33"
+  },
+  "false_presuppositions/ablation_outputs/adversarial/claude_sonnet5/batch_strength_adversarial_summary_20260630_190711_claude_sonnet5.json": {
+    "mtime": 1783552929.6742,
+    "ast_hash": "5a85ba2d8f64e3a9bfa78581d8229464",
+    "semantic_hash": "5a85ba2d8f64e3a9bfa78581d8229464"
+  },
+  "false_presuppositions/ablation_outputs/adversarial/claude_sonnet5/batch_strength_adversarial_summary_20260630_190712_claude_sonnet5.json": {
+    "mtime": 1783552929.6752007,
+    "ast_hash": "ac685f55dae3a9f6e4f989088fbfaaf2",
+    "semantic_hash": "ac685f55dae3a9f6e4f989088fbfaaf2"
+  },
+  "false_presuppositions/ablation_outputs/adversarial/claude_sonnet5/batch_strength_adversarial_summary_20260630_190713_claude_sonnet5.json": {
+    "mtime": 1783552929.6762,
+    "ast_hash": "9ae642f5156ac36d24941151d9316b2e",
+    "semantic_hash": "9ae642f5156ac36d24941151d9316b2e"
+  },
+  "false_presuppositions/ablation_outputs/adversarial/claude_sonnet5/batch_strength_adversarial_summary_20260701_150712_claude_sonnet5.json": {
+    "mtime": 1783552929.6776993,
+    "ast_hash": "323cd54b778e6d297448379e1557a35c",
+    "semantic_hash": "323cd54b778e6d297448379e1557a35c"
+  },
+  "false_presuppositions/ablation_outputs/adversarial/r1_current/batch_strength_adversarial_summary_20260630_181218_r1_current.json": {
+    "mtime": 1783552929.9546988,
+    "ast_hash": "13cce3e9f61d8b2533d1a486fcb44a2e",
+    "semantic_hash": "13cce3e9f61d8b2533d1a486fcb44a2e"
+  },
+  "false_presuppositions/ablation_outputs/adversarial/r1_current/batch_strength_adversarial_summary_20260630_181219_r1_current.json": {
+    "mtime": 1783552929.9571998,
+    "ast_hash": "4811c0f8d90cbd39b1365a4a21ba3d14",
+    "semantic_hash": "4811c0f8d90cbd39b1365a4a21ba3d14"
+  },
+  "false_presuppositions/ablation_outputs/adversarial/v3_current/batch_strength_adversarial_summary_20260630_181219_v3_current.json": {
+    "mtime": 1783552930.0291967,
+    "ast_hash": "512277f26993bb11e175207aa9bd4172",
+    "semantic_hash": "512277f26993bb11e175207aa9bd4172"
+  },
+  "false_presuppositions/ablation_outputs/adversarial/v4pro/batch_strength_adversarial_summary_20260630_173039_v4pro.json": {
+    "mtime": 1783552930.162699,
+    "ast_hash": "6e2dcd27247c871e1d2b3186b74eeebc",
+    "semantic_hash": "6e2dcd27247c871e1d2b3186b74eeebc"
+  },
+  "false_presuppositions/ablation_outputs/adversarial/v4pro/batch_strength_adversarial_summary_20260630_173250_v4pro.json": {
+    "mtime": 1783552930.1652062,
+    "ast_hash": "afe0ea683e3cd366be92f523dd89127c",
+    "semantic_hash": "afe0ea683e3cd366be92f523dd89127c"
+  },
+  "false_presuppositions/ablation_outputs/adversarial/v4pro/batch_strength_adversarial_summary_20260630_173251_v4pro.json": {
+    "mtime": 1783552930.1687045,
+    "ast_hash": "edaaf1c7fed7afa0ba259660caea0c43",
+    "semantic_hash": "edaaf1c7fed7afa0ba259660caea0c43"
+  },
+  "false_presuppositions/ablation_outputs/adversarial/v4pro/batch_strength_adversarial_summary_20260630_173252_v4pro.json": {
+    "mtime": 1783552930.1712,
+    "ast_hash": "f5545fff3ffb2e6219dbe8c6701497ce",
+    "semantic_hash": "f5545fff3ffb2e6219dbe8c6701497ce"
+  },
+  "false_presuppositions/ablation_outputs/adversarial/v4pro/batch_strength_adversarial_summary_20260630_173253_v4pro.json": {
+    "mtime": 1783552930.1736991,
+    "ast_hash": "9979d9070328a851434cfcf88ca84481",
+    "semantic_hash": "9979d9070328a851434cfcf88ca84481"
+  },
+  "false_presuppositions/ablation_outputs/adversarial/v4pro/batch_strength_adversarial_summary_20260630_173255_v4pro.json": {
+    "mtime": 1783552930.1756985,
+    "ast_hash": "eaacc558c2a949fabb37f23481418a59",
+    "semantic_hash": "eaacc558c2a949fabb37f23481418a59"
+  },
+  "false_presuppositions/ablation_outputs/adversarial/v4pro/batch_strength_adversarial_summary_20260630_173256_v4pro.json": {
+    "mtime": 1783552930.1776981,
+    "ast_hash": "5c19ecd46a70266737c4b070f35d3890",
+    "semantic_hash": "5c19ecd46a70266737c4b070f35d3890"
+  },
+  "false_presuppositions/ablation_outputs/adversarial/v4pro/batch_strength_adversarial_summary_20260630_173257_v4pro.json": {
+    "mtime": 1783552930.1797006,
+    "ast_hash": "1a31fee0d592a25b161354d21a664f5d",
+    "semantic_hash": "1a31fee0d592a25b161354d21a664f5d"
+  },
+  "false_presuppositions/ablation_outputs/adversarial/v4pro/batch_strength_adversarial_summary_20260630_173258_v4pro.json": {
+    "mtime": 1783552930.1816983,
+    "ast_hash": "ec7f33de09bebd3d08e86da0f1e177c6",
+    "semantic_hash": "ec7f33de09bebd3d08e86da0f1e177c6"
+  },
+  "false_presuppositions/ablation_outputs/naturalistic/deepseek_r1_naturalistic/batch_strength_naturalistic_summary_20260626_002951_q6.json": {
+    "mtime": 1783552932.1297042,
+    "ast_hash": "7caaa08185fc24de7e59d033825b7290",
+    "semantic_hash": "7caaa08185fc24de7e59d033825b7290"
+  },
+  "false_presuppositions/ablation_outputs/naturalistic/deepseek_r1_naturalistic/batch_strength_naturalistic_summary_20260626_002953_q11.json": {
+    "mtime": 1783552932.131198,
+    "ast_hash": "d798f8ef76ccac71623d300145a6258c",
+    "semantic_hash": "d798f8ef76ccac71623d300145a6258c"
+  },
+  "false_presuppositions/ablation_outputs/naturalistic/deepseek_r1_naturalistic/batch_strength_naturalistic_summary_20260626_002954_q10.json": {
+    "mtime": 1783552932.1332002,
+    "ast_hash": "7238ed4f313900164b779d24b6797118",
+    "semantic_hash": "7238ed4f313900164b779d24b6797118"
+  },
+  "false_presuppositions/ablation_outputs/naturalistic/deepseek_r1_naturalistic/batch_strength_naturalistic_summary_20260626_002954_q12.json": {
+    "mtime": 1783552932.1352,
+    "ast_hash": "fbc7d53a4e1afb094061ba473d383caa",
+    "semantic_hash": "fbc7d53a4e1afb094061ba473d383caa"
+  },
+  "false_presuppositions/ablation_outputs/naturalistic/deepseek_r1_naturalistic/batch_strength_naturalistic_summary_20260626_002954_q13.json": {
+    "mtime": 1783552932.1367004,
+    "ast_hash": "09230a9632ceafdc488f569a8c8e1b4c",
+    "semantic_hash": "09230a9632ceafdc488f569a8c8e1b4c"
+  },
+  "false_presuppositions/ablation_outputs/naturalistic/deepseek_r1_naturalistic/batch_strength_naturalistic_summary_20260626_002954_q14.json": {
+    "mtime": 1783552932.1381981,
+    "ast_hash": "6de9ede1b291668051231243002c21c7",
+    "semantic_hash": "6de9ede1b291668051231243002c21c7"
+  },
+  "false_presuppositions/ablation_outputs/naturalistic/deepseek_r1_naturalistic/batch_strength_naturalistic_summary_20260626_002954_q15.json": {
+    "mtime": 1783552932.1407008,
+    "ast_hash": "a0a3013dad49f9e003f7cb38199bcec1",
+    "semantic_hash": "a0a3013dad49f9e003f7cb38199bcec1"
+  },
+  "false_presuppositions/ablation_outputs/naturalistic/deepseek_r1_naturalistic/batch_strength_naturalistic_summary_20260626_002954_q16.json": {
+    "mtime": 1783552932.1422005,
+    "ast_hash": "599ee2a97f9a2a288d80cd30013e8962",
+    "semantic_hash": "599ee2a97f9a2a288d80cd30013e8962"
+  },
+  "false_presuppositions/ablation_outputs/naturalistic/deepseek_r1_naturalistic/batch_strength_naturalistic_summary_20260626_002954_q17.json": {
+    "mtime": 1783552932.1432,
+    "ast_hash": "43fe22b75e6269dd1de9e42b5061863e",
+    "semantic_hash": "43fe22b75e6269dd1de9e42b5061863e"
+  },
+  "false_presuppositions/ablation_outputs/naturalistic/deepseek_r1_naturalistic/batch_strength_naturalistic_summary_20260626_002954_q18.json": {
+    "mtime": 1783552932.1446996,
+    "ast_hash": "d773ffed6e9961fe887259f6a8a79e1c",
+    "semantic_hash": "d773ffed6e9961fe887259f6a8a79e1c"
+  },
+  "false_presuppositions/ablation_outputs/naturalistic/deepseek_r1_naturalistic/batch_strength_naturalistic_summary_20260626_002954_q19.json": {
+    "mtime": 1783552932.1466985,
+    "ast_hash": "0fa607ed04f7e795279d7d037812e562",
+    "semantic_hash": "0fa607ed04f7e795279d7d037812e562"
+  },
+  "false_presuppositions/ablation_outputs/naturalistic/deepseek_r1_naturalistic/batch_strength_naturalistic_summary_20260626_002954_q2.json": {
+    "mtime": 1783552932.1482005,
+    "ast_hash": "c5d4dc11e712538a8d641a1fe84aa2e7",
+    "semantic_hash": "c5d4dc11e712538a8d641a1fe84aa2e7"
+  },
+  "false_presuppositions/ablation_outputs/naturalistic/deepseek_r1_naturalistic/batch_strength_naturalistic_summary_20260626_002954_q20.json": {
+    "mtime": 1783552932.1497002,
+    "ast_hash": "84d87c85caab602884bab0bcce3beea2",
+    "semantic_hash": "84d87c85caab602884bab0bcce3beea2"
+  },
+  "false_presuppositions/ablation_outputs/naturalistic/deepseek_r1_naturalistic/batch_strength_naturalistic_summary_20260626_002954_q21.json": {
+    "mtime": 1783552932.1517003,
+    "ast_hash": "5d381a2177e5d5063b14065a76bafa3a",
+    "semantic_hash": "5d381a2177e5d5063b14065a76bafa3a"
+  },
+  "false_presuppositions/ablation_outputs/naturalistic/deepseek_r1_naturalistic/batch_strength_naturalistic_summary_20260626_002954_q22.json": {
+    "mtime": 1783552932.1542122,
+    "ast_hash": "ba3875a6928c56cdebc9f5e12c25e1ed",
+    "semantic_hash": "ba3875a6928c56cdebc9f5e12c25e1ed"
+  },
+  "false_presuppositions/ablation_outputs/naturalistic/deepseek_r1_naturalistic/batch_strength_naturalistic_summary_20260626_002954_q25.json": {
+    "mtime": 1783552932.1556995,
+    "ast_hash": "6a128f495d1a91250e0d43eb7290511b",
+    "semantic_hash": "6a128f495d1a91250e0d43eb7290511b"
+  },
+  "false_presuppositions/ablation_outputs/naturalistic/deepseek_r1_naturalistic/batch_strength_naturalistic_summary_20260626_002954_q4.json": {
+    "mtime": 1783552932.1581998,
+    "ast_hash": "a81ebc3e162aae35601c7992cb1af2da",
+    "semantic_hash": "a81ebc3e162aae35601c7992cb1af2da"
+  },
+  "false_presuppositions/ablation_outputs/naturalistic/deepseek_r1_naturalistic/batch_strength_naturalistic_summary_20260626_002954_q5.json": {
+    "mtime": 1783552932.1596997,
+    "ast_hash": "208943de10bbc39e6969f734dc21454d",
+    "semantic_hash": "208943de10bbc39e6969f734dc21454d"
+  },
+  "false_presuppositions/ablation_outputs/naturalistic/deepseek_r1_naturalistic/batch_strength_naturalistic_summary_20260626_002954_q8.json": {
+    "mtime": 1783552932.1617005,
+    "ast_hash": "d35db7e16b647d5245589af778f2d7a0",
+    "semantic_hash": "d35db7e16b647d5245589af778f2d7a0"
+  },
+  "false_presuppositions/ablation_outputs/naturalistic/deepseek_r1_naturalistic/batch_strength_naturalistic_summary_20260626_002954_q9.json": {
+    "mtime": 1783552932.163698,
+    "ast_hash": "4e1417a1fc277d9909f8884a41aa0f07",
+    "semantic_hash": "4e1417a1fc277d9909f8884a41aa0f07"
+  },
+  "false_presuppositions/ablation_outputs/naturalistic/deepseek_r1_naturalistic/batch_strength_naturalistic_summary_20260626_002955_q1.json": {
+    "mtime": 1783552932.1652012,
+    "ast_hash": "0ee1b03aa41d83e1b9a0fdc19488ad09",
+    "semantic_hash": "0ee1b03aa41d83e1b9a0fdc19488ad09"
+  },
+  "false_presuppositions/ablation_outputs/naturalistic/deepseek_r1_naturalistic/batch_strength_naturalistic_summary_20260626_002955_q23.json": {
+    "mtime": 1783552932.1666985,
+    "ast_hash": "cd93387f20d89b91ec407deb36e4bcbb",
+    "semantic_hash": "cd93387f20d89b91ec407deb36e4bcbb"
+  },
+  "false_presuppositions/ablation_outputs/naturalistic/deepseek_r1_naturalistic/batch_strength_naturalistic_summary_20260626_002955_q24.json": {
+    "mtime": 1783552932.1687014,
+    "ast_hash": "27c6774455ca504ce16ab24df99ad5cc",
+    "semantic_hash": "27c6774455ca504ce16ab24df99ad5cc"
+  },
+  "false_presuppositions/ablation_outputs/naturalistic/deepseek_r1_naturalistic/batch_strength_naturalistic_summary_20260626_002955_q3.json": {
+    "mtime": 1783552932.1697023,
+    "ast_hash": "7903e69c0d393fa7b1f6a1c271ed2db6",
+    "semantic_hash": "7903e69c0d393fa7b1f6a1c271ed2db6"
+  },
+  "false_presuppositions/ablation_outputs/naturalistic/deepseek_r1_naturalistic/batch_strength_naturalistic_summary_20260626_002955_q7.json": {
+    "mtime": 1783552932.1711996,
+    "ast_hash": "4462e5b689bd11cd72b631789dc4cfa3",
+    "semantic_hash": "4462e5b689bd11cd72b631789dc4cfa3"
+  },
+  "false_presuppositions/ablation_outputs/naturalistic/sincere_R1proxy/batch_strength_naturalistic_summary_20260629_195249_sincere_R1.json": {
+    "mtime": 1783552932.325202,
+    "ast_hash": "e46bbe7fbcb32aeebefa28395043d477",
+    "semantic_hash": "e46bbe7fbcb32aeebefa28395043d477"
+  },
+  "false_presuppositions/ablation_outputs/naturalistic/sincere_R1proxy/batch_strength_naturalistic_summary_20260629_195250_sincere_R1.json": {
+    "mtime": 1783552932.3272028,
+    "ast_hash": "23bfade887b6c478b10a89aed2072307",
+    "semantic_hash": "23bfade887b6c478b10a89aed2072307"
+  },
+  "false_presuppositions/ablation_outputs/naturalistic/sincere_R1proxy/batch_strength_naturalistic_summary_20260629_195251_sincere_R1.json": {
+    "mtime": 1783552932.3292005,
+    "ast_hash": "0af6cba5f53adb706167ddce73d872f6",
+    "semantic_hash": "0af6cba5f53adb706167ddce73d872f6"
+  },
+  "false_presuppositions/calibrate_judges.py": {
+    "mtime": 1783552932.5171988,
+    "ast_hash": "7853985523c64d4f6db25564d60990cb",
+    "semantic_hash": "7853985523c64d4f6db25564d60990cb"
+  },
+  "false_presuppositions/check_progress.py": {
+    "mtime": 1783552932.5187,
+    "ast_hash": "82216b95a77519f5f80569a235bf714a",
+    "semantic_hash": "82216b95a77519f5f80569a235bf714a"
+  },
+  "false_presuppositions/false_presuppositions.py": {
+    "mtime": 1783552932.534199,
+    "ast_hash": "9f415adca24b48d902a4c75b87eaaf3e",
+    "semantic_hash": "9f415adca24b48d902a4c75b87eaaf3e"
+  },
+  "false_presuppositions/false_presuppositions_adversarial.py": {
+    "mtime": 1783552932.5402007,
+    "ast_hash": "c6a19c781e98124d9836af7057614151",
+    "semantic_hash": "c6a19c781e98124d9836af7057614151"
+  },
+  "false_presuppositions/false_presuppositions_naturalistic.py": {
+    "mtime": 1783552932.5426986,
+    "ast_hash": "1603040d079c7b7e5ec33cd37efe62cf",
+    "semantic_hash": "1603040d079c7b7e5ec33cd37efe62cf"
+  },
+  "false_presuppositions/false_presuppositions_newjudge.py": {
+    "mtime": 1783552932.5467007,
+    "ast_hash": "b8fbd363dc3bc5c7205b067a9332c40d",
+    "semantic_hash": "b8fbd363dc3bc5c7205b067a9332c40d"
+  },
+  "false_presuppositions/per_condition_driver.sh": {
+    "mtime": 1783552932.548201,
+    "ast_hash": "3c6af5b482b14bed8c16b6a2f025210b",
+    "semantic_hash": "3c6af5b482b14bed8c16b6a2f025210b"
+  },
+  "false_presuppositions/run_q6_q25_driver.sh": {
+    "mtime": 1783552932.641198,
+    "ast_hash": "cfbbd7d587066d74a28108097d343789",
+    "semantic_hash": "cfbbd7d587066d74a28108097d343789"
+  },
+  "false_presuppositions/scratch_dsv4pro_judge.py": {
+    "mtime": 1783552932.6427069,
+    "ast_hash": "665c4c72bdf214b593e51f9584993d98",
+    "semantic_hash": "665c4c72bdf214b593e51f9584993d98"
+  },
+  "false_presuppositions/scratch_haiku_judge.py": {
+    "mtime": 1783552932.6442215,
+    "ast_hash": "dd5e255b4eb1fb2267d9d4a9d323b756",
+    "semantic_hash": "dd5e255b4eb1fb2267d9d4a9d323b756"
+  },
+  "false_presuppositions/scratch_sonnet5_judge.py": {
+    "mtime": 1783552932.6452003,
+    "ast_hash": "b715c8a35de6d1595eb8273715dd17a3",
+    "semantic_hash": "b715c8a35de6d1595eb8273715dd17a3"
+  },
+  "unethical_setting/outputs/qwen3-32b_nonthinking/batch_unethical_summary_20260611_171448_q4.json": {
+    "mtime": 1781300694.819085,
+    "ast_hash": "3ab2b70552c0b18b41a650ae0889cfe1",
+    "semantic_hash": "3ab2b70552c0b18b41a650ae0889cfe1"
+  },
+  "unethical_setting/outputs/qwen3-32b_nonthinking/batch_unethical_summary_20260611_171448_q7.json": {
+    "mtime": 1781300694.820093,
+    "ast_hash": "301b8f5e5fac49c8b45726b6e11db84a",
+    "semantic_hash": "301b8f5e5fac49c8b45726b6e11db84a"
+  },
+  "unethical_setting/outputs/qwen3-32b_nonthinking/batch_unethical_summary_20260611_171449_q10.json": {
+    "mtime": 1781300694.8215926,
+    "ast_hash": "309534ab9f02a09b211766485f8343fc",
+    "semantic_hash": "309534ab9f02a09b211766485f8343fc"
+  },
+  "unethical_setting/outputs/qwen3-32b_nonthinking/batch_unethical_summary_20260611_171449_q11.json": {
+    "mtime": 1781300694.831085,
+    "ast_hash": "0f52346097fc45ff87c91af894c494bc",
+    "semantic_hash": "0f52346097fc45ff87c91af894c494bc"
+  },
+  "unethical_setting/outputs/qwen3-32b_nonthinking/batch_unethical_summary_20260611_171449_q12.json": {
+    "mtime": 1781300694.8325877,
+    "ast_hash": "91217f79d197e05289d5a04aeefedafc",
+    "semantic_hash": "91217f79d197e05289d5a04aeefedafc"
+  },
+  "unethical_setting/outputs/qwen3-32b_nonthinking/batch_unethical_summary_20260611_171449_q14.json": {
+    "mtime": 1781300694.8335872,
+    "ast_hash": "888104a9eb0796d832f1a4abdd9eac18",
+    "semantic_hash": "888104a9eb0796d832f1a4abdd9eac18"
+  },
+  "unethical_setting/outputs/qwen3-32b_nonthinking/batch_unethical_summary_20260611_171449_q16.json": {
+    "mtime": 1781300694.8350885,
+    "ast_hash": "adb352e92469547345676b34e478dfd5",
+    "semantic_hash": "adb352e92469547345676b34e478dfd5"
+  },
+  "unethical_setting/outputs/qwen3-32b_nonthinking/batch_unethical_summary_20260611_171449_q17.json": {
+    "mtime": 1781300694.8370857,
+    "ast_hash": "1f32339f195383a83a963afa5b958b62",
+    "semantic_hash": "1f32339f195383a83a963afa5b958b62"
+  },
+  "unethical_setting/outputs/qwen3-32b_nonthinking/batch_unethical_summary_20260611_171449_q19.json": {
+    "mtime": 1781300694.8385868,
+    "ast_hash": "5b314af5aa121b7effb958efb7dfb40d",
+    "semantic_hash": "5b314af5aa121b7effb958efb7dfb40d"
+  },
+  "unethical_setting/outputs/qwen3-32b_nonthinking/batch_unethical_summary_20260611_171449_q2.json": {
+    "mtime": 1781300694.8395867,
+    "ast_hash": "71fd84fed83a7335b381118b71b1dbe9",
+    "semantic_hash": "71fd84fed83a7335b381118b71b1dbe9"
+  },
+  "unethical_setting/outputs/qwen3-32b_nonthinking/batch_unethical_summary_20260611_171449_q20.json": {
+    "mtime": 1781300694.8410873,
+    "ast_hash": "05574366048483210a736ee38b946761",
+    "semantic_hash": "05574366048483210a736ee38b946761"
+  },
+  "unethical_setting/outputs/qwen3-32b_nonthinking/batch_unethical_summary_20260611_171449_q5.json": {
+    "mtime": 1781300694.8425896,
+    "ast_hash": "56444aa3c249043f4055ec33f2048e1b",
+    "semantic_hash": "56444aa3c249043f4055ec33f2048e1b"
+  },
+  "unethical_setting/outputs/qwen3-32b_nonthinking/batch_unethical_summary_20260611_171449_q6.json": {
+    "mtime": 1781300694.8440864,
+    "ast_hash": "2aa42db10f02b0e489ce4a47d23b4f47",
+    "semantic_hash": "2aa42db10f02b0e489ce4a47d23b4f47"
+  },
+  "unethical_setting/outputs/qwen3-32b_nonthinking/batch_unethical_summary_20260611_171450_q15.json": {
+    "mtime": 1781300694.8450875,
+    "ast_hash": "0f56775e69851ffce775dc512fe6a4e8",
+    "semantic_hash": "0f56775e69851ffce775dc512fe6a4e8"
+  },
+  "unethical_setting/outputs/qwen3-32b_nonthinking/batch_unethical_summary_20260611_171450_q3.json": {
+    "mtime": 1781300694.851588,
+    "ast_hash": "40b4fdaaa8565dcd7a7ab84fe92f569a",
+    "semantic_hash": "40b4fdaaa8565dcd7a7ab84fe92f569a"
+  },
+  "unethical_setting/outputs/qwen3-32b_nonthinking/batch_unethical_summary_20260611_171450_q9.json": {
+    "mtime": 1781300694.8740854,
+    "ast_hash": "96aabc9e000ae50b7b75712bd67391b5",
+    "semantic_hash": "96aabc9e000ae50b7b75712bd67391b5"
+  },
+  "unethical_setting/outputs/qwen3-32b_nonthinking/batch_unethical_summary_20260611_200608_q13.json": {
+    "mtime": 1781300694.8755887,
+    "ast_hash": "54d454494cf2e31a5e45987defe913a6",
+    "semantic_hash": "54d454494cf2e31a5e45987defe913a6"
+  },
+  "unethical_setting/outputs/qwen3-32b_nonthinking/batch_unethical_summary_20260611_200608_q18.json": {
+    "mtime": 1781300694.8770869,
+    "ast_hash": "9a33064378b36891b5809fbdb3e1e99e",
+    "semantic_hash": "9a33064378b36891b5809fbdb3e1e99e"
+  },
+  "unethical_setting/outputs/qwen3-32b_nonthinking/batch_unethical_summary_20260611_200608_q8.json": {
+    "mtime": 1781300694.8785887,
+    "ast_hash": "aae70776e41677f3b34a3948f2e32edb",
+    "semantic_hash": "aae70776e41677f3b34a3948f2e32edb"
+  },
+  "unethical_setting/outputs/qwen3-32b_nonthinking/batch_unethical_summary_20260611_200609_q1.json": {
+    "mtime": 1781300694.8800855,
+    "ast_hash": "3a84c5d4c0fb62cf198e2a01bc21e17b",
+    "semantic_hash": "3a84c5d4c0fb62cf198e2a01bc21e17b"
+  },
+  "unethical_setting/outputs/qwen3-32b_thinking/batch_unethical_summary_20260611_171449_q11.json": {
+    "mtime": 1781300694.9655876,
+    "ast_hash": "625ac96cf610efb5eb3ac8d5978a3e5a",
+    "semantic_hash": "625ac96cf610efb5eb3ac8d5978a3e5a"
+  },
+  "unethical_setting/outputs/qwen3-32b_thinking/batch_unethical_summary_20260611_171449_q16.json": {
+    "mtime": 1781300694.9670863,
+    "ast_hash": "0860b76936478ce15399f301fa183125",
+    "semantic_hash": "0860b76936478ce15399f301fa183125"
+  },
+  "unethical_setting/outputs/qwen3-32b_thinking/batch_unethical_summary_20260611_171449_q3.json": {
+    "mtime": 1781300694.9685879,
+    "ast_hash": "c787c94852834da1e771928fd0ac2ab4",
+    "semantic_hash": "c787c94852834da1e771928fd0ac2ab4"
+  },
+  "unethical_setting/outputs/qwen3-32b_thinking/batch_unethical_summary_20260611_171449_q6.json": {
+    "mtime": 1781300694.9750867,
+    "ast_hash": "5651e00642d5e435ad1e5b072488d226",
+    "semantic_hash": "5651e00642d5e435ad1e5b072488d226"
+  },
+  "unethical_setting/outputs/qwen3-32b_thinking/batch_unethical_summary_20260611_171449_q9.json": {
+    "mtime": 1781300694.976586,
+    "ast_hash": "43c31344ba498a0feb1fed860a74115f",
+    "semantic_hash": "43c31344ba498a0feb1fed860a74115f"
+  },
+  "unethical_setting/outputs/qwen3-32b_thinking/batch_unethical_summary_20260611_171450_q14.json": {
+    "mtime": 1781300694.9780855,
+    "ast_hash": "50c36800edd723ba6b3df26226ea6fda",
+    "semantic_hash": "50c36800edd723ba6b3df26226ea6fda"
+  },
+  "unethical_setting/outputs/qwen3-32b_thinking/batch_unethical_summary_20260611_171450_q15.json": {
+    "mtime": 1781300694.9815886,
+    "ast_hash": "142efc5075a9b6eb8abd294e1a3355c2",
+    "semantic_hash": "142efc5075a9b6eb8abd294e1a3355c2"
+  },
+  "unethical_setting/outputs/qwen3-32b_thinking/batch_unethical_summary_20260611_171450_q17.json": {
+    "mtime": 1781300694.9825876,
+    "ast_hash": "e0964b5ce29ac26bfaa69878ddbfd010",
+    "semantic_hash": "e0964b5ce29ac26bfaa69878ddbfd010"
+  },
+  "unethical_setting/outputs/qwen3-32b_thinking/batch_unethical_summary_20260611_171450_q19.json": {
+    "mtime": 1781300694.9845881,
+    "ast_hash": "66b61494450dc1925e57d044a6687795",
+    "semantic_hash": "66b61494450dc1925e57d044a6687795"
+  },
+  "unethical_setting/outputs/qwen3-32b_thinking/batch_unethical_summary_20260611_200608_q5.json": {
+    "mtime": 1781300694.9865875,
+    "ast_hash": "9d4435a3a0d0049c04e8d21e852c7725",
+    "semantic_hash": "9d4435a3a0d0049c04e8d21e852c7725"
+  },
+  "unethical_setting/outputs/qwen3-32b_thinking/batch_unethical_summary_20260611_200609_q2.json": {
+    "mtime": 1781300694.989087,
+    "ast_hash": "b4d32811b84e9c9e3b644226b5f7bc33",
+    "semantic_hash": "b4d32811b84e9c9e3b644226b5f7bc33"
+  },
+  "unethical_setting/unethical_settings.py": {
+    "mtime": 1783552932.648214,
+    "ast_hash": "0020b11abe232c4b7870386004a60749",
+    "semantic_hash": "0020b11abe232c4b7870386004a60749"
+  },
+  "view_debate.py": {
+    "mtime": 1783623659.5489974,
+    "ast_hash": "5ac970401abf93f56277d9fc7d50a701",
+    "semantic_hash": "5ac970401abf93f56277d9fc7d50a701"
+  },
+  ".claude/skills/analyze-collapse/SKILL.md": {
+    "mtime": 1783552925.1236987,
+    "ast_hash": "845aa0b87138420d24c05c33ca6ff949",
+    "semantic_hash": "845aa0b87138420d24c05c33ca6ff949"
+  },
+  "debate_setting/questions/arguments.txt": {
+    "mtime": 1783552926.901698,
+    "ast_hash": "342d08e87af926727b3619d1c4e38a0e",
+    "semantic_hash": "342d08e87af926727b3619d1c4e38a0e"
+  },
+  "debate_setting/questions/questions.txt": {
+    "mtime": 1783552926.9036975,
+    "ast_hash": "5a65ffb975f11104efe9912cda18751d",
+    "semantic_hash": "5a65ffb975f11104efe9912cda18751d"
+  },
+  "false_presuppositions/Prior_20_runs/outputs/claude_haiku_4.5/sycophancy_strength_q1_20260623_140414.md": {
+    "mtime": 1783552926.9116979,
+    "ast_hash": "a99a4d30ef0b5fa567ad332b1917a67e",
+    "semantic_hash": "a99a4d30ef0b5fa567ad332b1917a67e"
+  },
+  "false_presuppositions/Prior_20_runs/outputs/claude_haiku_4.5/sycophancy_strength_q20_20260623_140415.md": {
+    "mtime": 1783552926.9152052,
+    "ast_hash": "f47a865124525c143ecf44fc089be613",
+    "semantic_hash": "f47a865124525c143ecf44fc089be613"
+  },
+  "false_presuppositions/Prior_20_runs/outputs/claude_haiku_4.5/sycophancy_strength_q4_20260623_140414.md": {
+    "mtime": 1783552926.9216964,
+    "ast_hash": "10c26e118c4bb817483f6b5cbff4e7b1",
+    "semantic_hash": "10c26e118c4bb817483f6b5cbff4e7b1"
+  },
+  "false_presuppositions/Prior_20_runs/outputs/claude_opus_4.8/sycophancy_strength_q1_20260623_141302.md": {
+    "mtime": 1783552926.930197,
+    "ast_hash": "cde3bd9646a927dac5da52bad514fa9b",
+    "semantic_hash": "cde3bd9646a927dac5da52bad514fa9b"
+  },
+  "false_presuppositions/Prior_20_runs/outputs/claude_opus_4.8/sycophancy_strength_q20_20260623_141304.md": {
+    "mtime": 1783552926.9367135,
+    "ast_hash": "e5a555d6ff776077fa4efd9a8e5f0668",
+    "semantic_hash": "e5a555d6ff776077fa4efd9a8e5f0668"
+  },
+  "false_presuppositions/Prior_20_runs/outputs/claude_opus_4.8/sycophancy_strength_q4_20260623_141303.md": {
+    "mtime": 1783552926.942199,
+    "ast_hash": "cc3fb3a3d3e49f2fd15f36a12f4f0712",
+    "semantic_hash": "cc3fb3a3d3e49f2fd15f36a12f4f0712"
+  },
+  "false_presuppositions/Prior_20_runs/outputs/claude_sonnet_4.6/sycophancy_strength_q1_20260623_141244.md": {
+    "mtime": 1783552926.9476995,
+    "ast_hash": "8ef5be98c818b689dc8adc7aee3be28a",
+    "semantic_hash": "8ef5be98c818b689dc8adc7aee3be28a"
+  },
+  "false_presuppositions/Prior_20_runs/outputs/claude_sonnet_4.6/sycophancy_strength_q20_20260623_141301.md": {
+    "mtime": 1783552926.95421,
+    "ast_hash": "a037d1002c4869644761b3c70844860f",
+    "semantic_hash": "a037d1002c4869644761b3c70844860f"
+  },
+  "false_presuppositions/Prior_20_runs/outputs/claude_sonnet_4.6/sycophancy_strength_q4_20260623_141244.md": {
+    "mtime": 1783552926.9596994,
+    "ast_hash": "a882538f7a8d81415edf989d8d08c944",
+    "semantic_hash": "a882538f7a8d81415edf989d8d08c944"
+  },
+  "false_presuppositions/Prior_20_runs/outputs/deepseek_r1_baseline_direct/sycophancy_strength_q10_20260623_130956.md": {
+    "mtime": 1783552926.9661984,
+    "ast_hash": "6c352d2ad3581ee9c13ecc62df20585e",
+    "semantic_hash": "6c352d2ad3581ee9c13ecc62df20585e"
+  },
+  "false_presuppositions/Prior_20_runs/outputs/deepseek_r1_baseline_direct/sycophancy_strength_q11_20260622_145350.md": {
+    "mtime": 1783552926.9716983,
+    "ast_hash": "fcb4004a56813d9adb09a3b7c76beaea",
+    "semantic_hash": "fcb4004a56813d9adb09a3b7c76beaea"
+  },
+  "false_presuppositions/Prior_20_runs/outputs/deepseek_r1_baseline_direct/sycophancy_strength_q12_20260622_153707.md": {
+    "mtime": 1783552926.9791975,
+    "ast_hash": "1752940439c4df2e33bb73333cc7f9bf",
+    "semantic_hash": "1752940439c4df2e33bb73333cc7f9bf"
+  },
+  "false_presuppositions/Prior_20_runs/outputs/deepseek_r1_baseline_direct/sycophancy_strength_q13_20260622_145350.md": {
+    "mtime": 1783552926.998697,
+    "ast_hash": "ffaea291f8be1fc415a5d1f54df76011",
+    "semantic_hash": "ffaea291f8be1fc415a5d1f54df76011"
+  },
+  "false_presuppositions/Prior_20_runs/outputs/deepseek_r1_baseline_direct/sycophancy_strength_q14_20260622_145350.md": {
+    "mtime": 1783552927.002698,
+    "ast_hash": "ff9a9ac2462baba092953c1df2041154",
+    "semantic_hash": "ff9a9ac2462baba092953c1df2041154"
+  },
+  "false_presuppositions/Prior_20_runs/outputs/deepseek_r1_baseline_direct/sycophancy_strength_q15_20260622_145349.md": {
+    "mtime": 1783552927.0071988,
+    "ast_hash": "c80597969faf0843276e36ecc3bbb210",
+    "semantic_hash": "c80597969faf0843276e36ecc3bbb210"
+  },
+  "false_presuppositions/Prior_20_runs/outputs/deepseek_r1_baseline_direct/sycophancy_strength_q16_20260622_145350.md": {
+    "mtime": 1783552927.0102003,
+    "ast_hash": "7c1a5a1e2117707482b313cecce1cd55",
+    "semantic_hash": "7c1a5a1e2117707482b313cecce1cd55"
+  },
+  "false_presuppositions/Prior_20_runs/outputs/deepseek_r1_baseline_direct/sycophancy_strength_q17_20260622_145350.md": {
+    "mtime": 1783552927.0141988,
+    "ast_hash": "f70e465267b3351fb503f67c0e1675ba",
+    "semantic_hash": "f70e465267b3351fb503f67c0e1675ba"
+  },
+  "false_presuppositions/Prior_20_runs/outputs/deepseek_r1_baseline_direct/sycophancy_strength_q18_20260622_145349.md": {
+    "mtime": 1783552927.0196977,
+    "ast_hash": "2733c35acc9876df10bf4c9e13288834",
+    "semantic_hash": "2733c35acc9876df10bf4c9e13288834"
+  },
+  "false_presuppositions/Prior_20_runs/outputs/deepseek_r1_baseline_direct/sycophancy_strength_q19_20260622_145350.md": {
+    "mtime": 1783552927.0351987,
+    "ast_hash": "c1bd8c17d148cab65c39f074d38cecbe",
+    "semantic_hash": "c1bd8c17d148cab65c39f074d38cecbe"
+  },
+  "false_presuppositions/Prior_20_runs/outputs/deepseek_r1_baseline_direct/sycophancy_strength_q1_20260622_145350.md": {
+    "mtime": 1783552927.0387094,
+    "ast_hash": "d79763516a135ff0b47d97b0c438abe4",
+    "semantic_hash": "d79763516a135ff0b47d97b0c438abe4"
+  },
+  "false_presuppositions/Prior_20_runs/outputs/deepseek_r1_baseline_direct/sycophancy_strength_q20_20260622_145349.md": {
+    "mtime": 1783552927.0427117,
+    "ast_hash": "f74a47375b84029ee73b185ad8aec4e8",
+    "semantic_hash": "f74a47375b84029ee73b185ad8aec4e8"
+  },
+  "false_presuppositions/Prior_20_runs/outputs/deepseek_r1_baseline_direct/sycophancy_strength_q2_20260622_145350.md": {
+    "mtime": 1783552927.0462008,
+    "ast_hash": "861c5db743c477589b5c274202857834",
+    "semantic_hash": "861c5db743c477589b5c274202857834"
+  },
+  "false_presuppositions/Prior_20_runs/outputs/deepseek_r1_baseline_direct/sycophancy_strength_q3_20260622_145349.md": {
+    "mtime": 1783552927.0512016,
+    "ast_hash": "eb0797731ae72b61ce9c71e6ff55cfae",
+    "semantic_hash": "eb0797731ae72b61ce9c71e6ff55cfae"
+  },
+  "false_presuppositions/Prior_20_runs/outputs/deepseek_r1_baseline_direct/sycophancy_strength_q4_20260622_145350.md": {
+    "mtime": 1783552927.055699,
+    "ast_hash": "953e0d96f0d27b407908d54e538e0279",
+    "semantic_hash": "953e0d96f0d27b407908d54e538e0279"
+  },
+  "false_presuppositions/Prior_20_runs/outputs/deepseek_r1_baseline_direct/sycophancy_strength_q5_20260622_153707.md": {
+    "mtime": 1783552927.0717006,
+    "ast_hash": "235f14de9d00aa9ab246bfb0a7fa97d8",
+    "semantic_hash": "235f14de9d00aa9ab246bfb0a7fa97d8"
+  },
+  "false_presuppositions/Prior_20_runs/outputs/deepseek_r1_baseline_direct/sycophancy_strength_q6_20260622_145350.md": {
+    "mtime": 1783552927.0747013,
+    "ast_hash": "881f54a03f2f9433f787a87bc6b5cdbb",
+    "semantic_hash": "881f54a03f2f9433f787a87bc6b5cdbb"
+  },
+  "false_presuppositions/Prior_20_runs/outputs/deepseek_r1_baseline_direct/sycophancy_strength_q7_20260622_145350.md": {
+    "mtime": 1783552927.0811985,
+    "ast_hash": "0977dfb88797e6fbcfa97ba2683719ff",
+    "semantic_hash": "0977dfb88797e6fbcfa97ba2683719ff"
+  },
+  "false_presuppositions/Prior_20_runs/outputs/deepseek_r1_baseline_direct/sycophancy_strength_q8_20260622_145349.md": {
+    "mtime": 1783552927.099704,
+    "ast_hash": "932e6f3156e0260f8d284a09e939b5be",
+    "semantic_hash": "932e6f3156e0260f8d284a09e939b5be"
+  },
+  "false_presuppositions/Prior_20_runs/outputs/deepseek_r1_baseline_direct/sycophancy_strength_q9_20260622_145350.md": {
+    "mtime": 1783552927.1096978,
+    "ast_hash": "db94cd7a821367a98abf9223f4f7910f",
+    "semantic_hash": "db94cd7a821367a98abf9223f4f7910f"
+  },
+  "false_presuppositions/Prior_20_runs/outputs/deepseek_r1_baseline_ladder/sycophancy_strength_q10_20260623_130956.md": {
+    "mtime": 1783552927.1377208,
+    "ast_hash": "902c6c43cd01003d0757e52d2491134d",
+    "semantic_hash": "902c6c43cd01003d0757e52d2491134d"
+  },
+  "false_presuppositions/Prior_20_runs/outputs/deepseek_r1_baseline_ladder/sycophancy_strength_q11_20260622_133747.md": {
+    "mtime": 1783552927.1471992,
+    "ast_hash": "424cd5147f94dcffed94f6571707173c",
+    "semantic_hash": "424cd5147f94dcffed94f6571707173c"
+  },
+  "false_presuppositions/Prior_20_runs/outputs/deepseek_r1_baseline_ladder/sycophancy_strength_q12_20260622_135217.md": {
+    "mtime": 1783552927.1522,
+    "ast_hash": "1208bd18d1fb6be96bc930dd67b2c845",
+    "semantic_hash": "1208bd18d1fb6be96bc930dd67b2c845"
+  },
+  "false_presuppositions/Prior_20_runs/outputs/deepseek_r1_baseline_ladder/sycophancy_strength_q13_20260622_133747.md": {
+    "mtime": 1783552927.1827004,
+    "ast_hash": "343c7635ee867ff8bac0f43b7c11ea3e",
+    "semantic_hash": "343c7635ee867ff8bac0f43b7c11ea3e"
+  },
+  "false_presuppositions/Prior_20_runs/outputs/deepseek_r1_baseline_ladder/sycophancy_strength_q14_20260622_133747.md": {
+    "mtime": 1783552927.189202,
+    "ast_hash": "e2308c832a2bd657f85f1090ced70c7f",
+    "semantic_hash": "e2308c832a2bd657f85f1090ced70c7f"
+  },
+  "false_presuppositions/Prior_20_runs/outputs/deepseek_r1_baseline_ladder/sycophancy_strength_q15_20260622_133747.md": {
+    "mtime": 1783552927.1942146,
+    "ast_hash": "078205e0a2d489fa96b3dfe1a8b94ced",
+    "semantic_hash": "078205e0a2d489fa96b3dfe1a8b94ced"
+  },
+  "false_presuppositions/Prior_20_runs/outputs/deepseek_r1_baseline_ladder/sycophancy_strength_q16_20260622_133747.md": {
+    "mtime": 1783552927.1992,
+    "ast_hash": "792ae51854b0b7f34da83901b4d5dc97",
+    "semantic_hash": "792ae51854b0b7f34da83901b4d5dc97"
+  },
+  "false_presuppositions/Prior_20_runs/outputs/deepseek_r1_baseline_ladder/sycophancy_strength_q17_20260622_133747.md": {
+    "mtime": 1783552927.205208,
+    "ast_hash": "dbdfba5cff8604abba45058a4f229a57",
+    "semantic_hash": "dbdfba5cff8604abba45058a4f229a57"
+  },
+  "false_presuppositions/Prior_20_runs/outputs/deepseek_r1_baseline_ladder/sycophancy_strength_q18_20260622_133747.md": {
+    "mtime": 1783552927.213698,
+    "ast_hash": "2c2329ab090e6f390b607a40a109b4d5",
+    "semantic_hash": "2c2329ab090e6f390b607a40a109b4d5"
+  },
+  "false_presuppositions/Prior_20_runs/outputs/deepseek_r1_baseline_ladder/sycophancy_strength_q19_20260622_133747.md": {
+    "mtime": 1783552927.2186997,
+    "ast_hash": "f368965486cedfcdbd507b8f0e233c0a",
+    "semantic_hash": "f368965486cedfcdbd507b8f0e233c0a"
+  },
+  "false_presuppositions/Prior_20_runs/outputs/deepseek_r1_baseline_ladder/sycophancy_strength_q1_20260622_133016.md": {
+    "mtime": 1783552927.2231977,
+    "ast_hash": "01c99e952bb0d787864c3139bedaf834",
+    "semantic_hash": "01c99e952bb0d787864c3139bedaf834"
+  },
+  "false_presuppositions/Prior_20_runs/outputs/deepseek_r1_baseline_ladder/sycophancy_strength_q20_20260622_133747.md": {
+    "mtime": 1783552927.227196,
+    "ast_hash": "82742d1de6075be7cbed5cf738a0e703",
+    "semantic_hash": "82742d1de6075be7cbed5cf738a0e703"
+  },
+  "false_presuppositions/Prior_20_runs/outputs/deepseek_r1_baseline_ladder/sycophancy_strength_q2_20260622_142459.md": {
+    "mtime": 1783552927.234701,
+    "ast_hash": "831c38074e8c312698f92a4ed04a64f8",
+    "semantic_hash": "831c38074e8c312698f92a4ed04a64f8"
+  },
+  "false_presuppositions/Prior_20_runs/outputs/deepseek_r1_baseline_ladder/sycophancy_strength_q2_20260622_144419.md": {
+    "mtime": 1783552927.2466972,
+    "ast_hash": "f0d319b22d52d0cb87af680fa5a40dfd",
+    "semantic_hash": "f0d319b22d52d0cb87af680fa5a40dfd"
+  },
+  "false_presuppositions/Prior_20_runs/outputs/deepseek_r1_baseline_ladder/sycophancy_strength_q3_20260622_133747.md": {
+    "mtime": 1783552927.2541983,
+    "ast_hash": "7d34b1e144ee588b1e8d46c6f3b73df9",
+    "semantic_hash": "7d34b1e144ee588b1e8d46c6f3b73df9"
+  },
+  "false_presuppositions/Prior_20_runs/outputs/deepseek_r1_baseline_ladder/sycophancy_strength_q4_20260622_133747.md": {
+    "mtime": 1783552927.258699,
+    "ast_hash": "2dd37cefa111495f5e80a2a11b9e4632",
+    "semantic_hash": "2dd37cefa111495f5e80a2a11b9e4632"
+  },
+  "false_presuppositions/Prior_20_runs/outputs/deepseek_r1_baseline_ladder/sycophancy_strength_q5_20260622_133747.md": {
+    "mtime": 1783552927.2647152,
+    "ast_hash": "8ebf179dd8c5360c1273ac9adfb0192f",
+    "semantic_hash": "8ebf179dd8c5360c1273ac9adfb0192f"
+  },
+  "false_presuppositions/Prior_20_runs/outputs/deepseek_r1_baseline_ladder/sycophancy_strength_q6_20260622_133747.md": {
+    "mtime": 1783552927.2681983,
+    "ast_hash": "f45dbd0c70f8e90b210b025984b7f984",
+    "semantic_hash": "f45dbd0c70f8e90b210b025984b7f984"
+  },
+  "false_presuppositions/Prior_20_runs/outputs/deepseek_r1_baseline_ladder/sycophancy_strength_q7_20260622_133747.md": {
+    "mtime": 1783552927.279715,
+    "ast_hash": "1a914176ffab433765efd555f0aab336",
+    "semantic_hash": "1a914176ffab433765efd555f0aab336"
+  },
+  "false_presuppositions/Prior_20_runs/outputs/deepseek_r1_baseline_ladder/sycophancy_strength_q8_20260622_133747.md": {
+    "mtime": 1783552927.304699,
+    "ast_hash": "9e8e3cc0e7882e67679dc415c34cccf2",
+    "semantic_hash": "9e8e3cc0e7882e67679dc415c34cccf2"
+  },
+  "false_presuppositions/Prior_20_runs/outputs/deepseek_r1_baseline_ladder/sycophancy_strength_q9_20260622_135217.md": {
+    "mtime": 1783552927.3151982,
+    "ast_hash": "bfdff705a044948117a18c467d8ada56",
+    "semantic_hash": "bfdff705a044948117a18c467d8ada56"
+  },
+  "false_presuppositions/Prior_20_runs/outputs/deepseek_r1_llmdecide/sycophancy_strength_llmdecide_q10_20260623_130956.md": {
+    "mtime": 1783552927.3356988,
+    "ast_hash": "7716402b721875454b0e0938dc5a2075",
+    "semantic_hash": "7716402b721875454b0e0938dc5a2075"
+  },
+  "false_presuppositions/Prior_20_runs/outputs/deepseek_r1_llmdecide/sycophancy_strength_llmdecide_q11_20260622_173309.md": {
+    "mtime": 1783552927.343198,
+    "ast_hash": "94916ca4e0e36a26d206401162ed6f93",
+    "semantic_hash": "94916ca4e0e36a26d206401162ed6f93"
+  },
+  "false_presuppositions/Prior_20_runs/outputs/deepseek_r1_llmdecide/sycophancy_strength_llmdecide_q12_20260622_173309.md": {
+    "mtime": 1783552927.3472004,
+    "ast_hash": "a724a20f34ab58166f125f9f94c3461a",
+    "semantic_hash": "a724a20f34ab58166f125f9f94c3461a"
+  },
+  "false_presuppositions/Prior_20_runs/outputs/deepseek_r1_llmdecide/sycophancy_strength_llmdecide_q13_20260622_173308.md": {
+    "mtime": 1783552927.3641994,
+    "ast_hash": "ac4c9733b1feb018496b2435994db913",
+    "semantic_hash": "ac4c9733b1feb018496b2435994db913"
+  },
+  "false_presuppositions/Prior_20_runs/outputs/deepseek_r1_llmdecide/sycophancy_strength_llmdecide_q14_20260622_173308.md": {
+    "mtime": 1783552927.367699,
+    "ast_hash": "90a3b177fa8b531a47d3818cbe9d5730",
+    "semantic_hash": "90a3b177fa8b531a47d3818cbe9d5730"
+  },
+  "false_presuppositions/Prior_20_runs/outputs/deepseek_r1_llmdecide/sycophancy_strength_llmdecide_q15_20260622_173308.md": {
+    "mtime": 1783552927.3752,
+    "ast_hash": "dcdf10ad61f06ce46b40c62e4d11f967",
+    "semantic_hash": "dcdf10ad61f06ce46b40c62e4d11f967"
+  },
+  "false_presuppositions/Prior_20_runs/outputs/deepseek_r1_llmdecide/sycophancy_strength_llmdecide_q16_20260622_173308.md": {
+    "mtime": 1783552927.3827,
+    "ast_hash": "97bfe3ff35d6572ade376695a873c22f",
+    "semantic_hash": "97bfe3ff35d6572ade376695a873c22f"
+  },
+  "false_presuppositions/Prior_20_runs/outputs/deepseek_r1_llmdecide/sycophancy_strength_llmdecide_q17_20260622_173308.md": {
+    "mtime": 1783552927.3877,
+    "ast_hash": "d2b8ca7d226f7c4a5704b798d6c95a5a",
+    "semantic_hash": "d2b8ca7d226f7c4a5704b798d6c95a5a"
+  },
+  "false_presuppositions/Prior_20_runs/outputs/deepseek_r1_llmdecide/sycophancy_strength_llmdecide_q18_20260622_173308.md": {
+    "mtime": 1783552927.3917003,
+    "ast_hash": "45a130db23fece77b404ad832a79ff55",
+    "semantic_hash": "45a130db23fece77b404ad832a79ff55"
+  },
+  "false_presuppositions/Prior_20_runs/outputs/deepseek_r1_llmdecide/sycophancy_strength_llmdecide_q19_20260622_173309.md": {
+    "mtime": 1783552927.3962233,
+    "ast_hash": "92e8b159ae3aaa44ae175d5a7fb73d6f",
+    "semantic_hash": "92e8b159ae3aaa44ae175d5a7fb73d6f"
+  },
+  "false_presuppositions/Prior_20_runs/outputs/deepseek_r1_llmdecide/sycophancy_strength_llmdecide_q1_20260622_173308.md": {
+    "mtime": 1783552927.4016993,
+    "ast_hash": "6fe395402305ca874c9b96a75b09324f",
+    "semantic_hash": "6fe395402305ca874c9b96a75b09324f"
+  },
+  "false_presuppositions/Prior_20_runs/outputs/deepseek_r1_llmdecide/sycophancy_strength_llmdecide_q20_20260622_173309.md": {
+    "mtime": 1783552927.4062164,
+    "ast_hash": "babb1bc426bfa4af8dbed972be7cbd40",
+    "semantic_hash": "babb1bc426bfa4af8dbed972be7cbd40"
+  },
+  "false_presuppositions/Prior_20_runs/outputs/deepseek_r1_llmdecide/sycophancy_strength_llmdecide_q2_20260622_173308.md": {
+    "mtime": 1783552927.4182003,
+    "ast_hash": "63291c34f9b1ca7c0dfc42df69f25f0d",
+    "semantic_hash": "63291c34f9b1ca7c0dfc42df69f25f0d"
+  },
+  "false_presuppositions/Prior_20_runs/outputs/deepseek_r1_llmdecide/sycophancy_strength_llmdecide_q3_20260622_173308.md": {
+    "mtime": 1783552927.4406993,
+    "ast_hash": "d0118dc411cae8383e7b8632c64b7857",
+    "semantic_hash": "d0118dc411cae8383e7b8632c64b7857"
+  },
+  "false_presuppositions/Prior_20_runs/outputs/deepseek_r1_llmdecide/sycophancy_strength_llmdecide_q4_20260622_173308.md": {
+    "mtime": 1783552927.4446983,
+    "ast_hash": "67fe75d31776d0309537bbcce60d9460",
+    "semantic_hash": "67fe75d31776d0309537bbcce60d9460"
+  },
+  "false_presuppositions/Prior_20_runs/outputs/deepseek_r1_llmdecide/sycophancy_strength_llmdecide_q5_20260622_173308.md": {
+    "mtime": 1783552927.4496982,
+    "ast_hash": "90e1d33c6fe38e6e694f8605725345a8",
+    "semantic_hash": "90e1d33c6fe38e6e694f8605725345a8"
+  },
+  "false_presuppositions/Prior_20_runs/outputs/deepseek_r1_llmdecide/sycophancy_strength_llmdecide_q6_20260622_173308.md": {
+    "mtime": 1783552927.4571993,
+    "ast_hash": "642dcfc82803cbc8efcfe4d01711b3b1",
+    "semantic_hash": "642dcfc82803cbc8efcfe4d01711b3b1"
+  },
+  "false_presuppositions/Prior_20_runs/outputs/deepseek_r1_llmdecide/sycophancy_strength_llmdecide_q7_20260622_173308.md": {
+    "mtime": 1783552927.4637275,
+    "ast_hash": "663e6af5d6a3ab1e61d51f4bb8ee5862",
+    "semantic_hash": "663e6af5d6a3ab1e61d51f4bb8ee5862"
+  },
+  "false_presuppositions/Prior_20_runs/outputs/deepseek_r1_llmdecide/sycophancy_strength_llmdecide_q8_20260622_173308.md": {
+    "mtime": 1783552927.4817088,
+    "ast_hash": "9e0f021b89b32c255f6f8b5fcbcbf68f",
+    "semantic_hash": "9e0f021b89b32c255f6f8b5fcbcbf68f"
+  },
+  "false_presuppositions/Prior_20_runs/outputs/deepseek_r1_llmdecide/sycophancy_strength_llmdecide_q8_20260622_173809.md": {
+    "mtime": 1783552927.4972,
+    "ast_hash": "599f26313fa4d0a7df0be5eeffad7162",
+    "semantic_hash": "599f26313fa4d0a7df0be5eeffad7162"
+  },
+  "false_presuppositions/Prior_20_runs/outputs/deepseek_r1_llmdecide/sycophancy_strength_llmdecide_q9_20260622_173308.md": {
+    "mtime": 1783552927.5036988,
+    "ast_hash": "0116a9c9b68ae9f85af30ebb3753f7e8",
+    "semantic_hash": "0116a9c9b68ae9f85af30ebb3753f7e8"
+  },
+  "false_presuppositions/Prior_20_runs/outputs/deepseek_v3/sycophancy_strength_q10_20260623_130527.md": {
+    "mtime": 1783552927.511698,
+    "ast_hash": "f4cae3c24a35ed815491e23b3a53f4a7",
+    "semantic_hash": "f4cae3c24a35ed815491e23b3a53f4a7"
+  },
+  "false_presuppositions/Prior_20_runs/outputs/deepseek_v3/sycophancy_strength_q11_20260610_223943.md": {
+    "mtime": 1783552927.5171995,
+    "ast_hash": "4e2d329f2aa3de6ef45526299349d116",
+    "semantic_hash": "4e2d329f2aa3de6ef45526299349d116"
+  },
+  "false_presuppositions/Prior_20_runs/outputs/deepseek_v3/sycophancy_strength_q12_20260610_211547.md": {
+    "mtime": 1783552927.521699,
+    "ast_hash": "731fe2d72dd095322b105ae9ba6e46c7",
+    "semantic_hash": "731fe2d72dd095322b105ae9ba6e46c7"
+  },
+  "false_presuppositions/Prior_20_runs/outputs/deepseek_v3/sycophancy_strength_q13_20260610_211547.md": {
+    "mtime": 1783552927.5256999,
+    "ast_hash": "6530be0a55a247ecc8942e7255edb954",
+    "semantic_hash": "6530be0a55a247ecc8942e7255edb954"
+  },
+  "false_presuppositions/Prior_20_runs/outputs/deepseek_v3/sycophancy_strength_q14_20260610_211547.md": {
+    "mtime": 1783552927.5351994,
+    "ast_hash": "1571f69f888124f90395a321e2a2e4f5",
+    "semantic_hash": "1571f69f888124f90395a321e2a2e4f5"
+  },
+  "false_presuppositions/Prior_20_runs/outputs/deepseek_v3/sycophancy_strength_q15_20260610_223943.md": {
+    "mtime": 1783552927.6222017,
+    "ast_hash": "a6d0f6ec603246b26eeaf4c42039a196",
+    "semantic_hash": "a6d0f6ec603246b26eeaf4c42039a196"
+  },
+  "false_presuppositions/Prior_20_runs/outputs/deepseek_v3/sycophancy_strength_q16_20260610_211547.md": {
+    "mtime": 1783552927.6287017,
+    "ast_hash": "b8c67ee66e41acff388fa9a851a3e88b",
+    "semantic_hash": "b8c67ee66e41acff388fa9a851a3e88b"
+  },
+  "false_presuppositions/Prior_20_runs/outputs/deepseek_v3/sycophancy_strength_q17_20260610_211547.md": {
+    "mtime": 1783552927.6581988,
+    "ast_hash": "7be0735c27f419848496c81e53b1c240",
+    "semantic_hash": "7be0735c27f419848496c81e53b1c240"
+  },
+  "false_presuppositions/Prior_20_runs/outputs/deepseek_v3/sycophancy_strength_q18_20260610_211547.md": {
+    "mtime": 1783552927.669197,
+    "ast_hash": "f0b486e623ab6ccc7f715b572acc0be4",
+    "semantic_hash": "f0b486e623ab6ccc7f715b572acc0be4"
+  },
+  "false_presuppositions/Prior_20_runs/outputs/deepseek_v3/sycophancy_strength_q19_20260610_211547.md": {
+    "mtime": 1783552927.6751978,
+    "ast_hash": "76e9418def4c9cacd19eaa3d13c77a16",
+    "semantic_hash": "76e9418def4c9cacd19eaa3d13c77a16"
+  },
+  "false_presuppositions/Prior_20_runs/outputs/deepseek_v3/sycophancy_strength_q1_20260610_211547.md": {
+    "mtime": 1783552927.6801987,
+    "ast_hash": "54d4eb84df4d87955725827af34a150c",
+    "semantic_hash": "54d4eb84df4d87955725827af34a150c"
+  },
+  "false_presuppositions/Prior_20_runs/outputs/deepseek_v3/sycophancy_strength_q1_20260611_161407.md": {
+    "mtime": 1783552927.6876972,
+    "ast_hash": "16c759ff9982f245cb7c1c1d0619ef0d",
+    "semantic_hash": "16c759ff9982f245cb7c1c1d0619ef0d"
+  },
+  "false_presuppositions/Prior_20_runs/outputs/deepseek_v3/sycophancy_strength_q20_20260610_223943.md": {
+    "mtime": 1783552927.693198,
+    "ast_hash": "4e82bbba18caade913d4d65821eb25c6",
+    "semantic_hash": "4e82bbba18caade913d4d65821eb25c6"
+  },
+  "false_presuppositions/Prior_20_runs/outputs/deepseek_v3/sycophancy_strength_q2_20260610_223943.md": {
+    "mtime": 1783552927.7066996,
+    "ast_hash": "3b980be265c4874766ae26f735aa4861",
+    "semantic_hash": "3b980be265c4874766ae26f735aa4861"
+  },
+  "false_presuppositions/Prior_20_runs/outputs/deepseek_v3/sycophancy_strength_q2_20260617_195634.md": {
+    "mtime": 1783552927.759199,
+    "ast_hash": "5309bb0c813a279f32eaa66fad96fbdf",
+    "semantic_hash": "5309bb0c813a279f32eaa66fad96fbdf"
+  },
+  "false_presuppositions/Prior_20_runs/outputs/deepseek_v3/sycophancy_strength_q3_20260610_211547.md": {
+    "mtime": 1783552927.7646978,
+    "ast_hash": "1baa9afabd05ab2bfacacbcc914eee65",
+    "semantic_hash": "1baa9afabd05ab2bfacacbcc914eee65"
+  },
+  "false_presuppositions/Prior_20_runs/outputs/deepseek_v3/sycophancy_strength_q3_20260617_195634.md": {
+    "mtime": 1783552927.7686987,
+    "ast_hash": "81dd65d5c3dc9bd3be95704fa3317423",
+    "semantic_hash": "81dd65d5c3dc9bd3be95704fa3317423"
+  },
+  "false_presuppositions/Prior_20_runs/outputs/deepseek_v3/sycophancy_strength_q4_20260610_211547.md": {
+    "mtime": 1783552927.7741985,
+    "ast_hash": "f3ab9894759bbb7a7e94d086722d5879",
+    "semantic_hash": "f3ab9894759bbb7a7e94d086722d5879"
+  },
+  "false_presuppositions/Prior_20_runs/outputs/deepseek_v3/sycophancy_strength_q5_20260610_211547.md": {
+    "mtime": 1783552927.7956982,
+    "ast_hash": "f44909854ad2b09e2384eada2647f9bf",
+    "semantic_hash": "f44909854ad2b09e2384eada2647f9bf"
+  },
+  "false_presuppositions/Prior_20_runs/outputs/deepseek_v3/sycophancy_strength_q5_20260610_223943.md": {
+    "mtime": 1783552927.8001988,
+    "ast_hash": "04a35bdd2fab7c79ad560dc8c413c785",
+    "semantic_hash": "04a35bdd2fab7c79ad560dc8c413c785"
+  },
+  "false_presuppositions/Prior_20_runs/outputs/deepseek_v3/sycophancy_strength_q6_20260610_211547.md": {
+    "mtime": 1783552927.8036997,
+    "ast_hash": "0609ab2a4841f1f4a93501bbcca8c726",
+    "semantic_hash": "0609ab2a4841f1f4a93501bbcca8c726"
+  },
+  "false_presuppositions/Prior_20_runs/outputs/deepseek_v3/sycophancy_strength_q7_20260610_223943.md": {
+    "mtime": 1783552927.8097007,
+    "ast_hash": "c4b1b700353938e87600b3246a16c6ea",
+    "semantic_hash": "c4b1b700353938e87600b3246a16c6ea"
+  },
+  "false_presuppositions/Prior_20_runs/outputs/deepseek_v3/sycophancy_strength_q8_20260610_211547.md": {
+    "mtime": 1783552927.8136997,
+    "ast_hash": "1187fd1e163526ccb53f1c509f2581d6",
+    "semantic_hash": "1187fd1e163526ccb53f1c509f2581d6"
+  },
+  "false_presuppositions/Prior_20_runs/outputs/deepseek_v3/sycophancy_strength_q9_20260610_223943.md": {
+    "mtime": 1783552927.8197117,
+    "ast_hash": "7335ac6b8e4d540d3ae13487c15de408",
+    "semantic_hash": "7335ac6b8e4d540d3ae13487c15de408"
+  },
+  "false_presuppositions/Prior_20_runs/outputs/gemini_3.1_flash_lite\uff08newjudge\uff09/sycophancy_strength_q10_20260623_130755.md": {
+    "mtime": 1783552927.8291981,
+    "ast_hash": "8691ac2b9440329fb7c0b0086107520c",
+    "semantic_hash": "8691ac2b9440329fb7c0b0086107520c"
+  },
+  "false_presuppositions/Prior_20_runs/outputs/gemini_3.1_flash_lite\uff08newjudge\uff09/sycophancy_strength_q11_20260622_144627.md": {
+    "mtime": 1783552927.835701,
+    "ast_hash": "f7c5a9ba93be9ce2a8cae9610667ab9e",
+    "semantic_hash": "f7c5a9ba93be9ce2a8cae9610667ab9e"
+  },
+  "false_presuppositions/Prior_20_runs/outputs/gemini_3.1_flash_lite\uff08newjudge\uff09/sycophancy_strength_q12_20260622_141651.md": {
+    "mtime": 1783552927.8416986,
+    "ast_hash": "cdb5b380047b346b5c2af7579e4a59ab",
+    "semantic_hash": "cdb5b380047b346b5c2af7579e4a59ab"
+  },
+  "false_presuppositions/Prior_20_runs/outputs/gemini_3.1_flash_lite\uff08newjudge\uff09/sycophancy_strength_q13_20260622_144708.md": {
+    "mtime": 1783552927.8456967,
+    "ast_hash": "611df62fe4513581dae2de5b43d87f6b",
+    "semantic_hash": "611df62fe4513581dae2de5b43d87f6b"
+  },
+  "false_presuppositions/Prior_20_runs/outputs/gemini_3.1_flash_lite\uff08newjudge\uff09/sycophancy_strength_q14_20260622_141651.md": {
+    "mtime": 1783552927.8517,
+    "ast_hash": "4be265b515a06578d011a43fbe0ca8fa",
+    "semantic_hash": "4be265b515a06578d011a43fbe0ca8fa"
+  },
+  "false_presuppositions/Prior_20_runs/outputs/gemini_3.1_flash_lite\uff08newjudge\uff09/sycophancy_strength_q15_20260622_145000.md": {
+    "mtime": 1783552927.8916996,
+    "ast_hash": "2eb77bf5c0b025c469aff212154bfa90",
+    "semantic_hash": "2eb77bf5c0b025c469aff212154bfa90"
+  },
+  "false_presuppositions/Prior_20_runs/outputs/gemini_3.1_flash_lite\uff08newjudge\uff09/sycophancy_strength_q16_20260622_141650.md": {
+    "mtime": 1783552927.8961987,
+    "ast_hash": "7d45509125d334b097cf607dd3bdb535",
+    "semantic_hash": "7d45509125d334b097cf607dd3bdb535"
+  },
+  "false_presuppositions/Prior_20_runs/outputs/gemini_3.1_flash_lite\uff08newjudge\uff09/sycophancy_strength_q17_20260622_141651.md": {
+    "mtime": 1783552927.8996992,
+    "ast_hash": "9838c7c5f778fd4de96df3028f0b6770",
+    "semantic_hash": "9838c7c5f778fd4de96df3028f0b6770"
+  },
+  "false_presuppositions/Prior_20_runs/outputs/gemini_3.1_flash_lite\uff08newjudge\uff09/sycophancy_strength_q18_20260622_145635.md": {
+    "mtime": 1783552927.903698,
+    "ast_hash": "afc74ff58ac683ce78953e3146038c8f",
+    "semantic_hash": "afc74ff58ac683ce78953e3146038c8f"
+  },
+  "false_presuppositions/Prior_20_runs/outputs/gemini_3.1_flash_lite\uff08newjudge\uff09/sycophancy_strength_q19_20260622_141651.md": {
+    "mtime": 1783552927.910199,
+    "ast_hash": "a11ee6e0c747a7abf68f9dd7138e8b9b",
+    "semantic_hash": "a11ee6e0c747a7abf68f9dd7138e8b9b"
+  },
+  "false_presuppositions/Prior_20_runs/outputs/gemini_3.1_flash_lite\uff08newjudge\uff09/sycophancy_strength_q1_20260622_132522.md": {
+    "mtime": 1783552927.9142005,
+    "ast_hash": "d107eebff27d913211d7c4bb529d5647",
+    "semantic_hash": "d107eebff27d913211d7c4bb529d5647"
+  },
+  "false_presuppositions/Prior_20_runs/outputs/gemini_3.1_flash_lite\uff08newjudge\uff09/sycophancy_strength_q20_20260622_141651.md": {
+    "mtime": 1783552927.919702,
+    "ast_hash": "a5051794aeda3e118a48e8b949273c0c",
+    "semantic_hash": "a5051794aeda3e118a48e8b949273c0c"
+  },
+  "false_presuppositions/Prior_20_runs/outputs/gemini_3.1_flash_lite\uff08newjudge\uff09/sycophancy_strength_q2_20260622_132522.md": {
+    "mtime": 1783552927.9361994,
+    "ast_hash": "4851093f3f28aa2d5f6f637d4e657cf9",
+    "semantic_hash": "4851093f3f28aa2d5f6f637d4e657cf9"
+  },
+  "false_presuppositions/Prior_20_runs/outputs/gemini_3.1_flash_lite\uff08newjudge\uff09/sycophancy_strength_q3_20260622_133725.md": {
+    "mtime": 1783552927.9407003,
+    "ast_hash": "fb8c3c6c72a5b50fa4625790774aa53b",
+    "semantic_hash": "fb8c3c6c72a5b50fa4625790774aa53b"
+  },
+  "false_presuppositions/Prior_20_runs/outputs/gemini_3.1_flash_lite\uff08newjudge\uff09/sycophancy_strength_q4_20260622_141651.md": {
+    "mtime": 1783552927.9441988,
+    "ast_hash": "71ddbe23f9ed3e07305d275b2752d7ed",
+    "semantic_hash": "71ddbe23f9ed3e07305d275b2752d7ed"
+  },
+  "false_presuppositions/Prior_20_runs/outputs/gemini_3.1_flash_lite\uff08newjudge\uff09/sycophancy_strength_q5_20260622_144022.md": {
+    "mtime": 1783552927.9537013,
+    "ast_hash": "1cda56dc25f16c0adbe31dbc5a6864ee",
+    "semantic_hash": "1cda56dc25f16c0adbe31dbc5a6864ee"
+  },
+  "false_presuppositions/Prior_20_runs/outputs/gemini_3.1_flash_lite\uff08newjudge\uff09/sycophancy_strength_q6_20260622_141650.md": {
+    "mtime": 1783552927.9581985,
+    "ast_hash": "fc1697edf1aef56adb0833957e46eca7",
+    "semantic_hash": "fc1697edf1aef56adb0833957e46eca7"
+  },
+  "false_presuppositions/Prior_20_runs/outputs/gemini_3.1_flash_lite\uff08newjudge\uff09/sycophancy_strength_q7_20260622_144022.md": {
+    "mtime": 1783552927.964701,
+    "ast_hash": "3ab8552e5c8d71ed87b7a50703a07a3b",
+    "semantic_hash": "3ab8552e5c8d71ed87b7a50703a07a3b"
+  },
+  "false_presuppositions/Prior_20_runs/outputs/gemini_3.1_flash_lite\uff08newjudge\uff09/sycophancy_strength_q8_20260622_141651.md": {
+    "mtime": 1783552927.9796996,
+    "ast_hash": "508f8ee7307773181f1c09f9ddb89644",
+    "semantic_hash": "508f8ee7307773181f1c09f9ddb89644"
+  },
+  "false_presuppositions/Prior_20_runs/outputs/gemini_3.1_flash_lite\uff08newjudge\uff09/sycophancy_strength_q9_20260622_141650.md": {
+    "mtime": 1783552927.9886978,
+    "ast_hash": "db1dfddce8945a4a627fa37b8ac34ba3",
+    "semantic_hash": "db1dfddce8945a4a627fa37b8ac34ba3"
+  },
+  "false_presuppositions/Prior_20_runs/outputs/gemini_3.1_flash_lite\uff08prejudge\uff09/sycophancy_strength_q11_20260617_183209.md": {
+    "mtime": 1783552927.9976997,
+    "ast_hash": "bbaf1924ccb6b0968743a61b5cc3fadf",
+    "semantic_hash": "bbaf1924ccb6b0968743a61b5cc3fadf"
+  },
+  "false_presuppositions/Prior_20_runs/outputs/gemini_3.1_flash_lite\uff08prejudge\uff09/sycophancy_strength_q12_20260617_184531.md": {
+    "mtime": 1783552928.0252,
+    "ast_hash": "7c9f9cd4219e53bcb69bb42ed186c430",
+    "semantic_hash": "7c9f9cd4219e53bcb69bb42ed186c430"
+  },
+  "false_presuppositions/Prior_20_runs/outputs/gemini_3.1_flash_lite\uff08prejudge\uff09/sycophancy_strength_q12_20260617_185651.md": {
+    "mtime": 1783552928.0336995,
+    "ast_hash": "758ade8d630353b9392fac53c06f4bd6",
+    "semantic_hash": "758ade8d630353b9392fac53c06f4bd6"
+  },
+  "false_presuppositions/Prior_20_runs/outputs/gemini_3.1_flash_lite\uff08prejudge\uff09/sycophancy_strength_q13_20260617_183209.md": {
+    "mtime": 1783552928.0381968,
+    "ast_hash": "d8f44a6d74d2d943d06cd7376a9a0e89",
+    "semantic_hash": "d8f44a6d74d2d943d06cd7376a9a0e89"
+  },
+  "false_presuppositions/Prior_20_runs/outputs/gemini_3.1_flash_lite\uff08prejudge\uff09/sycophancy_strength_q14_20260617_183208.md": {
+    "mtime": 1783552928.0652213,
+    "ast_hash": "b9a25f5c19412b5426a46de0e8df7c7f",
+    "semantic_hash": "b9a25f5c19412b5426a46de0e8df7c7f"
+  },
+  "false_presuppositions/Prior_20_runs/outputs/gemini_3.1_flash_lite\uff08prejudge\uff09/sycophancy_strength_q15_20260617_183209.md": {
+    "mtime": 1783552928.070707,
+    "ast_hash": "ad483dae77dbea446331f0dcb50f0588",
+    "semantic_hash": "ad483dae77dbea446331f0dcb50f0588"
+  },
+  "false_presuppositions/Prior_20_runs/outputs/gemini_3.1_flash_lite\uff08prejudge\uff09/sycophancy_strength_q16_20260617_183209.md": {
+    "mtime": 1783552928.0762002,
+    "ast_hash": "952f4b14d816627176b1f407631b0864",
+    "semantic_hash": "952f4b14d816627176b1f407631b0864"
+  },
+  "false_presuppositions/Prior_20_runs/outputs/gemini_3.1_flash_lite\uff08prejudge\uff09/sycophancy_strength_q17_20260617_184531.md": {
+    "mtime": 1783552928.0806975,
+    "ast_hash": "317a97435b81a4f606823b78dc409ceb",
+    "semantic_hash": "317a97435b81a4f606823b78dc409ceb"
+  },
+  "false_presuppositions/Prior_20_runs/outputs/gemini_3.1_flash_lite\uff08prejudge\uff09/sycophancy_strength_q18_20260617_184531.md": {
+    "mtime": 1783552928.1081982,
+    "ast_hash": "a3b2632fe535f4a7310c80afef7a1357",
+    "semantic_hash": "a3b2632fe535f4a7310c80afef7a1357"
+  },
+  "false_presuppositions/Prior_20_runs/outputs/gemini_3.1_flash_lite\uff08prejudge\uff09/sycophancy_strength_q19_20260617_185232.md": {
+    "mtime": 1783552928.1156993,
+    "ast_hash": "197da0e79adff944b398955111342c56",
+    "semantic_hash": "197da0e79adff944b398955111342c56"
+  },
+  "false_presuppositions/Prior_20_runs/outputs/gemini_3.1_flash_lite\uff08prejudge\uff09/sycophancy_strength_q1_20260617_182435.md": {
+    "mtime": 1783552928.1211996,
+    "ast_hash": "8aafa47a1c96b5ee8e11bfd5ee730b8b",
+    "semantic_hash": "8aafa47a1c96b5ee8e11bfd5ee730b8b"
+  },
+  "false_presuppositions/Prior_20_runs/outputs/gemini_3.1_flash_lite\uff08prejudge\uff09/sycophancy_strength_q20_20260617_183208.md": {
+    "mtime": 1783552928.1282003,
+    "ast_hash": "76d483ef6bd34203aefb1af2c9da6f83",
+    "semantic_hash": "76d483ef6bd34203aefb1af2c9da6f83"
+  },
+  "false_presuppositions/Prior_20_runs/outputs/gemini_3.1_flash_lite\uff08prejudge\uff09/sycophancy_strength_q2_20260617_185535.md": {
+    "mtime": 1783552928.164697,
+    "ast_hash": "7a24d079237ac51ef13ddd4e19fe0d51",
+    "semantic_hash": "7a24d079237ac51ef13ddd4e19fe0d51"
+  },
+  "false_presuppositions/Prior_20_runs/outputs/gemini_3.1_flash_lite\uff08prejudge\uff09/sycophancy_strength_q3_20260617_182556.md": {
+    "mtime": 1783552928.1711974,
+    "ast_hash": "f692a5e74b3d38c511e301c637549277",
+    "semantic_hash": "f692a5e74b3d38c511e301c637549277"
+  },
+  "false_presuppositions/Prior_20_runs/outputs/gemini_3.1_flash_lite\uff08prejudge\uff09/sycophancy_strength_q4_20260617_183209.md": {
+    "mtime": 1783552928.175697,
+    "ast_hash": "0a7b4cfbe45d3f4d91e9df444fb8f8b4",
+    "semantic_hash": "0a7b4cfbe45d3f4d91e9df444fb8f8b4"
+  },
+  "false_presuppositions/Prior_20_runs/outputs/gemini_3.1_flash_lite\uff08prejudge\uff09/sycophancy_strength_q5_20260617_183940.md": {
+    "mtime": 1783552928.1796975,
+    "ast_hash": "c40fce879594afa39c334f49c12ffcbd",
+    "semantic_hash": "c40fce879594afa39c334f49c12ffcbd"
+  },
+  "false_presuppositions/Prior_20_runs/outputs/gemini_3.1_flash_lite\uff08prejudge\uff09/sycophancy_strength_q6_20260617_183209.md": {
+    "mtime": 1783552928.1847157,
+    "ast_hash": "be9a2830c3782a2fca77c84e5f4e5421",
+    "semantic_hash": "be9a2830c3782a2fca77c84e5f4e5421"
+  },
+  "false_presuppositions/Prior_20_runs/outputs/gemini_3.1_flash_lite\uff08prejudge\uff09/sycophancy_strength_q7_20260617_183940.md": {
+    "mtime": 1783552928.1926985,
+    "ast_hash": "83f1471d2e69a3f18f07f9296c888786",
+    "semantic_hash": "83f1471d2e69a3f18f07f9296c888786"
+  },
+  "false_presuppositions/Prior_20_runs/outputs/gemini_3.1_flash_lite\uff08prejudge\uff09/sycophancy_strength_q8_20260617_183209.md": {
+    "mtime": 1783552928.2016973,
+    "ast_hash": "b652ce6a1c092d73de2449f36e2af3a5",
+    "semantic_hash": "b652ce6a1c092d73de2449f36e2af3a5"
+  },
+  "false_presuppositions/Prior_20_runs/outputs/gemini_3.1_flash_lite\uff08prejudge\uff09/sycophancy_strength_q8_20260617_185601.md": {
+    "mtime": 1783552928.2132,
+    "ast_hash": "a0d80a4f019d547b1ca4ae00bcba4265",
+    "semantic_hash": "a0d80a4f019d547b1ca4ae00bcba4265"
+  },
+  "false_presuppositions/Prior_20_runs/outputs/gemini_3.1_flash_lite\uff08prejudge\uff09/sycophancy_strength_q9_20260617_183940.md": {
+    "mtime": 1783552928.2191973,
+    "ast_hash": "e7c6ae98ffd5931426ffd9af05caea95",
+    "semantic_hash": "e7c6ae98ffd5931426ffd9af05caea95"
+  },
+  "false_presuppositions/Prior_20_runs/outputs/gemini_3.1_flash_lite\uff08prejudge\uff09/sycophancy_strength_q9_20260617_185621.md": {
+    "mtime": 1783552928.2262013,
+    "ast_hash": "4f0fda25d863bfe97b5ef3e27e785d9b",
+    "semantic_hash": "4f0fda25d863bfe97b5ef3e27e785d9b"
+  },
+  "false_presuppositions/Prior_20_runs/outputs/gemini_3.1_pro/sycophancy_strength_q13_20260623_134213.md": {
+    "mtime": 1783552928.2317004,
+    "ast_hash": "fc1776c337aa3aeceac46a806d7b6d3e",
+    "semantic_hash": "fc1776c337aa3aeceac46a806d7b6d3e"
+  },
+  "false_presuppositions/Prior_20_runs/outputs/gemini_3.1_pro/sycophancy_strength_q1_20260623_134516.md": {
+    "mtime": 1783552928.236697,
+    "ast_hash": "e1a4356486a312777a848524e6bdae39",
+    "semantic_hash": "e1a4356486a312777a848524e6bdae39"
+  },
+  "false_presuppositions/Prior_20_runs/outputs/gemini_3.1_pro/sycophancy_strength_q20_20260623_134213.md": {
+    "mtime": 1783552928.2437134,
+    "ast_hash": "6477ecee45815a011984daad8172f687",
+    "semantic_hash": "6477ecee45815a011984daad8172f687"
+  },
+  "false_presuppositions/Prior_20_runs/outputs/gemini_3.1_pro/sycophancy_strength_q4_20260623_134257.md": {
+    "mtime": 1783552928.2482016,
+    "ast_hash": "0443d2d927372a041f1674fd4858d190",
+    "semantic_hash": "0443d2d927372a041f1674fd4858d190"
+  },
+  "false_presuppositions/Prior_20_runs/outputs/gpt_5.5 (max 30 turns)/sycophancy_strength_q1_20260623_144711.md": {
+    "mtime": 1783552928.2556984,
+    "ast_hash": "2ad678f7a17e4e25b80d77e12e83a24c",
+    "semantic_hash": "2ad678f7a17e4e25b80d77e12e83a24c"
+  },
+  "false_presuppositions/Prior_20_runs/outputs/gpt_5.5 (max 30 turns)/sycophancy_strength_q20_20260623_144713.md": {
+    "mtime": 1783552928.2721987,
+    "ast_hash": "204b46fc09d4ef9336545e0c93a3bd76",
+    "semantic_hash": "204b46fc09d4ef9336545e0c93a3bd76"
+  },
+  "false_presuppositions/Prior_20_runs/outputs/gpt_5.5 (max 30 turns)/sycophancy_strength_q4_20260623_144712.md": {
+    "mtime": 1783552928.2791972,
+    "ast_hash": "84b824d4796e11030c2264553d20d236",
+    "semantic_hash": "84b824d4796e11030c2264553d20d236"
+  },
+  "false_presuppositions/Prior_20_runs/outputs/gpt_5.5/sycophancy_strength_q20_20260623_150241.md": {
+    "mtime": 1783552928.287697,
+    "ast_hash": "4df50ece2286024ca158280cdc96c0b0",
+    "semantic_hash": "4df50ece2286024ca158280cdc96c0b0"
+  },
+  "false_presuppositions/Prior_20_runs/outputs/gpt_5.5/sycophancy_strength_q4_20260623_150240.md": {
+    "mtime": 1783552928.3007052,
+    "ast_hash": "47d8d3ba65e74ac570ad3b5d8a62bda7",
+    "semantic_hash": "47d8d3ba65e74ac570ad3b5d8a62bda7"
+  },
+  "false_presuppositions/Prior_20_runs/outputs/gpt_5_mini (max 30 turns)/sycophancy_strength_q1_20260623_144337.md": {
+    "mtime": 1783552928.307202,
+    "ast_hash": "89e1a1da25123d470ba929c6781ede24",
+    "semantic_hash": "89e1a1da25123d470ba929c6781ede24"
+  },
+  "false_presuppositions/Prior_20_runs/outputs/gpt_5_mini (max 30 turns)/sycophancy_strength_q20_20260623_144339.md": {
+    "mtime": 1783552928.3136973,
+    "ast_hash": "3ff2370f4d33cec7429a7fcea6a5372d",
+    "semantic_hash": "3ff2370f4d33cec7429a7fcea6a5372d"
+  },
+  "false_presuppositions/Prior_20_runs/outputs/gpt_5_mini (max 30 turns)/sycophancy_strength_q4_20260623_144338.md": {
+    "mtime": 1783552928.3172023,
+    "ast_hash": "3a44bfcd358a60c3a757404e27fabf79",
+    "semantic_hash": "3a44bfcd358a60c3a757404e27fabf79"
+  },
+  "false_presuppositions/Prior_20_runs/outputs/gpt_5_mini/sycophancy_strength_q1_20260623_150237.md": {
+    "mtime": 1783552928.3246996,
+    "ast_hash": "62c3482df25821b462bebf5b248c19bf",
+    "semantic_hash": "62c3482df25821b462bebf5b248c19bf"
+  },
+  "false_presuppositions/Prior_20_runs/outputs/gpt_5_mini/sycophancy_strength_q20_20260623_150238.md": {
+    "mtime": 1783552928.3296986,
+    "ast_hash": "943458c4ab3893a19ae86f504073720d",
+    "semantic_hash": "943458c4ab3893a19ae86f504073720d"
+  },
+  "false_presuppositions/Prior_20_runs/outputs/gpt_5_mini/sycophancy_strength_q4_20260623_150237.md": {
+    "mtime": 1783552928.333214,
+    "ast_hash": "1355a34b83c16712cde0272c24ac0e79",
+    "semantic_hash": "1355a34b83c16712cde0272c24ac0e79"
+  },
+  "false_presuppositions/Prior_20_runs/outputs/q10/deepseek_r1_outputs_escalation.md": {
+    "mtime": 1783552928.340199,
+    "ast_hash": "5d7e996a66ee151c45c81a30a4a7088d",
+    "semantic_hash": "5d7e996a66ee151c45c81a30a4a7088d"
+  },
+  "false_presuppositions/Prior_20_runs/outputs/q10/deepseek_r1_outputs_exploitation.md": {
+    "mtime": 1783552928.3481984,
+    "ast_hash": "8538a6a8be233b9707b8a521e264095c",
+    "semantic_hash": "8538a6a8be233b9707b8a521e264095c"
+  },
+  "false_presuppositions/Prior_20_runs/outputs/q10/deepseek_v3.md": {
+    "mtime": 1783552928.3527007,
+    "ast_hash": "4851761573edc0f58e797f8b25b6868a",
+    "semantic_hash": "4851761573edc0f58e797f8b25b6868a"
+  },
+  "false_presuppositions/Prior_20_runs/outputs/q10/gemini_3.1_flash_lite\uff08prejudge\uff09.md": {
+    "mtime": 1783552928.358201,
+    "ast_hash": "8fdd9ec2201d6d9b3e0998e3a752d602",
+    "semantic_hash": "8fdd9ec2201d6d9b3e0998e3a752d602"
+  },
+  "false_presuppositions/Prior_20_runs/outputs/q10/qwen3-32b_nonthinking.md": {
+    "mtime": 1783552928.365198,
+    "ast_hash": "f996f5d8ba679210a1355e19911ee21b",
+    "semantic_hash": "f996f5d8ba679210a1355e19911ee21b"
+  },
+  "false_presuppositions/Prior_20_runs/outputs/q10/qwen3-32b_thinking.md": {
+    "mtime": 1783552928.3731995,
+    "ast_hash": "3d02886a03f6376707799fedcdbf663a",
+    "semantic_hash": "3d02886a03f6376707799fedcdbf663a"
+  },
+  "false_presuppositions/Prior_20_runs/outputs/qwen3_32b_nonthinking/sycophancy_strength_q11_20260611_165101.md": {
+    "mtime": 1783552928.3787153,
+    "ast_hash": "42ce07908f4058394c105122e44a4220",
+    "semantic_hash": "42ce07908f4058394c105122e44a4220"
+  },
+  "false_presuppositions/Prior_20_runs/outputs/qwen3_32b_nonthinking/sycophancy_strength_q12_20260611_165101.md": {
+    "mtime": 1783552928.3887117,
+    "ast_hash": "e10c878a1ee442a008f48fd9bf6b8452",
+    "semantic_hash": "e10c878a1ee442a008f48fd9bf6b8452"
+  },
+  "false_presuppositions/Prior_20_runs/outputs/qwen3_32b_nonthinking/sycophancy_strength_q13_20260611_165101.md": {
+    "mtime": 1783552928.394197,
+    "ast_hash": "173ce126c042a84b8e41d4418e0112ac",
+    "semantic_hash": "173ce126c042a84b8e41d4418e0112ac"
+  },
+  "false_presuppositions/Prior_20_runs/outputs/qwen3_32b_nonthinking/sycophancy_strength_q14_20260611_165101.md": {
+    "mtime": 1783552928.397722,
+    "ast_hash": "fd193bdf644dc8dd01b8aaf8f65fa4b0",
+    "semantic_hash": "fd193bdf644dc8dd01b8aaf8f65fa4b0"
+  },
+  "false_presuppositions/Prior_20_runs/outputs/qwen3_32b_nonthinking/sycophancy_strength_q15_20260611_165101.md": {
+    "mtime": 1783552928.4026973,
+    "ast_hash": "f1ca4a0ac2c1f57177b0945006acb3c3",
+    "semantic_hash": "f1ca4a0ac2c1f57177b0945006acb3c3"
+  },
+  "false_presuppositions/Prior_20_runs/outputs/qwen3_32b_nonthinking/sycophancy_strength_q16_20260611_165101.md": {
+    "mtime": 1783552928.4056993,
+    "ast_hash": "bde29daba9919368a6e8af5473c2db86",
+    "semantic_hash": "bde29daba9919368a6e8af5473c2db86"
+  },
+  "false_presuppositions/Prior_20_runs/outputs/qwen3_32b_nonthinking/sycophancy_strength_q17_20260611_165101.md": {
+    "mtime": 1783552928.4096997,
+    "ast_hash": "4a4c346ffd71c7713288825205a3ade8",
+    "semantic_hash": "4a4c346ffd71c7713288825205a3ade8"
+  },
+  "false_presuppositions/Prior_20_runs/outputs/qwen3_32b_nonthinking/sycophancy_strength_q18_20260611_165100.md": {
+    "mtime": 1783552928.4127114,
+    "ast_hash": "fc579ba406c81a3de91fa22821655136",
+    "semantic_hash": "fc579ba406c81a3de91fa22821655136"
+  },
+  "false_presuppositions/Prior_20_runs/outputs/qwen3_32b_nonthinking/sycophancy_strength_q19_20260611_165101.md": {
+    "mtime": 1783552928.4171999,
+    "ast_hash": "ecd24fed0028b11affd17e910bba83e6",
+    "semantic_hash": "ecd24fed0028b11affd17e910bba83e6"
+  },
+  "false_presuppositions/Prior_20_runs/outputs/qwen3_32b_nonthinking/sycophancy_strength_q1_20260611_163737.md": {
+    "mtime": 1783552928.421201,
+    "ast_hash": "6ecbcd83ad32955051ebbe3f9e7c87a0",
+    "semantic_hash": "6ecbcd83ad32955051ebbe3f9e7c87a0"
+  },
+  "false_presuppositions/Prior_20_runs/outputs/qwen3_32b_nonthinking/sycophancy_strength_q20_20260611_165312.md": {
+    "mtime": 1783552928.4256992,
+    "ast_hash": "18c4527f0e8704026c453b1a2828a1e7",
+    "semantic_hash": "18c4527f0e8704026c453b1a2828a1e7"
+  },
+  "false_presuppositions/Prior_20_runs/outputs/qwen3_32b_nonthinking/sycophancy_strength_q2_20260611_200608.md": {
+    "mtime": 1783552928.4392095,
+    "ast_hash": "04906b2003f8370487e7d9d40c00a76a",
+    "semantic_hash": "04906b2003f8370487e7d9d40c00a76a"
+  },
+  "false_presuppositions/Prior_20_runs/outputs/qwen3_32b_nonthinking/sycophancy_strength_q3_20260611_165101.md": {
+    "mtime": 1783552928.4482002,
+    "ast_hash": "3b0aeee5b1373411427548710428761a",
+    "semantic_hash": "3b0aeee5b1373411427548710428761a"
+  },
+  "false_presuppositions/Prior_20_runs/outputs/qwen3_32b_nonthinking/sycophancy_strength_q4_20260611_165101.md": {
+    "mtime": 1783552928.4507008,
+    "ast_hash": "81718311fb09b9073c51cc115f6cda47",
+    "semantic_hash": "81718311fb09b9073c51cc115f6cda47"
+  },
+  "false_presuppositions/Prior_20_runs/outputs/qwen3_32b_nonthinking/sycophancy_strength_q5_20260611_200608.md": {
+    "mtime": 1783552928.4541996,
+    "ast_hash": "41d881d6608e0d14b649c941d64ff199",
+    "semantic_hash": "41d881d6608e0d14b649c941d64ff199"
+  },
+  "false_presuppositions/Prior_20_runs/outputs/qwen3_32b_nonthinking/sycophancy_strength_q6_20260611_165101.md": {
+    "mtime": 1783552928.4592006,
+    "ast_hash": "b39dfa2271c453dbc3ae8cc55a5bb785",
+    "semantic_hash": "b39dfa2271c453dbc3ae8cc55a5bb785"
+  },
+  "false_presuppositions/Prior_20_runs/outputs/qwen3_32b_nonthinking/sycophancy_strength_q7_20260611_165059.md": {
+    "mtime": 1783552928.4647453,
+    "ast_hash": "ee67a4874e7a1514c553dc23dc991e68",
+    "semantic_hash": "ee67a4874e7a1514c553dc23dc991e68"
+  },
+  "false_presuppositions/Prior_20_runs/outputs/qwen3_32b_nonthinking/sycophancy_strength_q8_20260611_165101.md": {
+    "mtime": 1783552928.4686978,
+    "ast_hash": "8d2fb7a7edef718e8e76f04b660249c8",
+    "semantic_hash": "8d2fb7a7edef718e8e76f04b660249c8"
+  },
+  "false_presuppositions/Prior_20_runs/outputs/qwen3_32b_nonthinking/sycophancy_strength_q9_20260611_165101.md": {
+    "mtime": 1783552928.4727368,
+    "ast_hash": "7319f75cd900ac439ef568cab18803ed",
+    "semantic_hash": "7319f75cd900ac439ef568cab18803ed"
+  },
+  "false_presuppositions/Prior_20_runs/outputs/qwen3_32b_thinking/sycophancy_strength_q11_20260611_165101.md": {
+    "mtime": 1783552928.4797115,
+    "ast_hash": "61b353e258a09543b56ee387219a9f95",
+    "semantic_hash": "61b353e258a09543b56ee387219a9f95"
+  },
+  "false_presuppositions/Prior_20_runs/outputs/qwen3_32b_thinking/sycophancy_strength_q12_20260611_200608.md": {
+    "mtime": 1783552928.4911988,
+    "ast_hash": "eacf8a1635d80701b43eebeea56b5717",
+    "semantic_hash": "eacf8a1635d80701b43eebeea56b5717"
+  },
+  "false_presuppositions/Prior_20_runs/outputs/qwen3_32b_thinking/sycophancy_strength_q13_20260611_165101.md": {
+    "mtime": 1783552928.4946966,
+    "ast_hash": "c5637635874a29ac72a9043cf0ac48f9",
+    "semantic_hash": "c5637635874a29ac72a9043cf0ac48f9"
+  },
+  "false_presuppositions/Prior_20_runs/outputs/qwen3_32b_thinking/sycophancy_strength_q14_20260611_165101.md": {
+    "mtime": 1783552928.5041997,
+    "ast_hash": "13875284909374fa5dd3100e4eb9cebd",
+    "semantic_hash": "13875284909374fa5dd3100e4eb9cebd"
+  },
+  "false_presuppositions/Prior_20_runs/outputs/qwen3_32b_thinking/sycophancy_strength_q15_20260611_200608.md": {
+    "mtime": 1783552928.5111992,
+    "ast_hash": "11e7e8c901d83053e04573a41a0db9c1",
+    "semantic_hash": "11e7e8c901d83053e04573a41a0db9c1"
+  },
+  "false_presuppositions/Prior_20_runs/outputs/qwen3_32b_thinking/sycophancy_strength_q16_20260611_165101.md": {
+    "mtime": 1783552928.516201,
+    "ast_hash": "e8c5510ff49dc8cf8e4c2d6c738c1eb4",
+    "semantic_hash": "e8c5510ff49dc8cf8e4c2d6c738c1eb4"
+  },
+  "false_presuppositions/Prior_20_runs/outputs/qwen3_32b_thinking/sycophancy_strength_q17_20260611_165101.md": {
+    "mtime": 1783552928.5202138,
+    "ast_hash": "530bb1d956752cae7c8705c7852ef4fb",
+    "semantic_hash": "530bb1d956752cae7c8705c7852ef4fb"
+  },
+  "false_presuppositions/Prior_20_runs/outputs/qwen3_32b_thinking/sycophancy_strength_q18_20260611_165102.md": {
+    "mtime": 1783552928.5257,
+    "ast_hash": "1e490f1eb0d2ee15bfa56dc2223dcd5d",
+    "semantic_hash": "1e490f1eb0d2ee15bfa56dc2223dcd5d"
+  },
+  "false_presuppositions/Prior_20_runs/outputs/qwen3_32b_thinking/sycophancy_strength_q19_20260611_200609.md": {
+    "mtime": 1783552928.5367005,
+    "ast_hash": "5af47c1b751915a26b9e161edd5e1d34",
+    "semantic_hash": "5af47c1b751915a26b9e161edd5e1d34"
+  },
+  "false_presuppositions/Prior_20_runs/outputs/qwen3_32b_thinking/sycophancy_strength_q1_20260611_165102.md": {
+    "mtime": 1783552928.5506966,
+    "ast_hash": "662aba8a6cb743d56e4668480f5ef4fc",
+    "semantic_hash": "662aba8a6cb743d56e4668480f5ef4fc"
+  },
+  "false_presuppositions/Prior_20_runs/outputs/qwen3_32b_thinking/sycophancy_strength_q20_20260611_165102.md": {
+    "mtime": 1783552928.5586994,
+    "ast_hash": "80d39bc77a934d5b296a66f1ff2b4637",
+    "semantic_hash": "80d39bc77a934d5b296a66f1ff2b4637"
+  },
+  "false_presuppositions/Prior_20_runs/outputs/qwen3_32b_thinking/sycophancy_strength_q2_20260611_200608.md": {
+    "mtime": 1783552928.5731976,
+    "ast_hash": "1fc85c5b403ff4bdaaaa2aca65232cb0",
+    "semantic_hash": "1fc85c5b403ff4bdaaaa2aca65232cb0"
+  },
+  "false_presuppositions/Prior_20_runs/outputs/qwen3_32b_thinking/sycophancy_strength_q3_20260611_165101.md": {
+    "mtime": 1783552928.5792005,
+    "ast_hash": "ce0910847a5074cf5cfd3a556db886da",
+    "semantic_hash": "ce0910847a5074cf5cfd3a556db886da"
+  },
+  "false_presuppositions/Prior_20_runs/outputs/qwen3_32b_thinking/sycophancy_strength_q4_20260611_165101.md": {
+    "mtime": 1783552928.5821984,
+    "ast_hash": "b67fc125bc622037a374b420a10a4265",
+    "semantic_hash": "b67fc125bc622037a374b420a10a4265"
+  },
+  "false_presuppositions/Prior_20_runs/outputs/qwen3_32b_thinking/sycophancy_strength_q5_20260611_200608.md": {
+    "mtime": 1783552928.5921988,
+    "ast_hash": "20125ce09d00d85f4b39a619bb017407",
+    "semantic_hash": "20125ce09d00d85f4b39a619bb017407"
+  },
+  "false_presuppositions/Prior_20_runs/outputs/qwen3_32b_thinking/sycophancy_strength_q6_20260611_165101.md": {
+    "mtime": 1783552928.5982008,
+    "ast_hash": "297c0c540903992ca80485766410826e",
+    "semantic_hash": "297c0c540903992ca80485766410826e"
+  },
+  "false_presuppositions/Prior_20_runs/outputs/qwen3_32b_thinking/sycophancy_strength_q7_20260611_165102.md": {
+    "mtime": 1783552928.6062,
+    "ast_hash": "d61a6ade2522b7e9bf62a641651c2385",
+    "semantic_hash": "d61a6ade2522b7e9bf62a641651c2385"
+  },
+  "false_presuppositions/Prior_20_runs/outputs/qwen3_32b_thinking/sycophancy_strength_q8_20260611_200609.md": {
+    "mtime": 1783552928.620199,
+    "ast_hash": "1d5fde580aa807356a0c3ba289d65799",
+    "semantic_hash": "1d5fde580aa807356a0c3ba289d65799"
+  },
+  "false_presuppositions/Prior_20_runs/outputs/qwen3_32b_thinking/sycophancy_strength_q9_20260611_165101.md": {
+    "mtime": 1783552928.6261964,
+    "ast_hash": "56d3ad9940b25b2f4268ebcebd2818b2",
+    "semantic_hash": "56d3ad9940b25b2f4268ebcebd2818b2"
+  },
+  "false_presuppositions/Prior_20_runs/questions/corrections.txt": {
+    "mtime": 1783552928.6287005,
+    "ast_hash": "0b68487d21cade736366e62d8aee2971",
+    "semantic_hash": "0b68487d21cade736366e62d8aee2971"
+  },
+  "false_presuppositions/Prior_20_runs/questions/presuppositions.txt": {
+    "mtime": 1783552928.6307013,
+    "ast_hash": "8d09c351877ca710dbc0590f391eb630",
+    "semantic_hash": "8d09c351877ca710dbc0590f391eb630"
+  },
+  "false_presuppositions/Prior_20_runs/questions/q10.txt": {
+    "mtime": 1783552928.6322005,
+    "ast_hash": "437dd1d06fe7e8da0963f05c8dccbedf",
+    "semantic_hash": "437dd1d06fe7e8da0963f05c8dccbedf"
+  },
+  "false_presuppositions/Prior_20_runs/questions/questions.txt": {
+    "mtime": 1783552928.634203,
+    "ast_hash": "095a5cb52edb4ffa1b92f414d6832e0b",
+    "semantic_hash": "095a5cb52edb4ffa1b92f414d6832e0b"
+  },
+  "false_presuppositions/ablation_outputs/naturalistic/ablasion_qwen_outputs/qwen235b_off/sycophancy_strength_naturalistic_q10_20260629_233624.md": {
+    "mtime": 1783552930.8202014,
+    "ast_hash": "4aba3046111e120870e5693c02913879",
+    "semantic_hash": "4aba3046111e120870e5693c02913879"
+  },
+  "false_presuppositions/ablation_outputs/naturalistic/ablasion_qwen_outputs/qwen235b_off/sycophancy_strength_naturalistic_q11_20260629_234539.md": {
+    "mtime": 1783552930.827699,
+    "ast_hash": "af254d6a2cca69372d9f5713a7a03f75",
+    "semantic_hash": "af254d6a2cca69372d9f5713a7a03f75"
+  },
+  "false_presuppositions/ablation_outputs/naturalistic/ablasion_qwen_outputs/qwen235b_off/sycophancy_strength_naturalistic_q12_20260629_235423.md": {
+    "mtime": 1783552930.833717,
+    "ast_hash": "52db882e3362977fedd81d1e5b9eb4b8",
+    "semantic_hash": "52db882e3362977fedd81d1e5b9eb4b8"
+  },
+  "false_presuppositions/ablation_outputs/naturalistic/ablasion_qwen_outputs/qwen235b_off/sycophancy_strength_naturalistic_q13_20260630_000439.md": {
+    "mtime": 1783552930.8391993,
+    "ast_hash": "34a72f29f86ad55ddeac58063a8aca76",
+    "semantic_hash": "34a72f29f86ad55ddeac58063a8aca76"
+  },
+  "false_presuppositions/ablation_outputs/naturalistic/ablasion_qwen_outputs/qwen235b_off/sycophancy_strength_naturalistic_q14_20260630_000936.md": {
+    "mtime": 1783552930.8486993,
+    "ast_hash": "607e7dfa0b4f42a6667fbac58c91d318",
+    "semantic_hash": "607e7dfa0b4f42a6667fbac58c91d318"
+  },
+  "false_presuppositions/ablation_outputs/naturalistic/ablasion_qwen_outputs/qwen235b_off/sycophancy_strength_naturalistic_q15_20260630_003325.md": {
+    "mtime": 1783552930.8576994,
+    "ast_hash": "ce6e6b1c81a9fa23be685ac40c1df2f6",
+    "semantic_hash": "ce6e6b1c81a9fa23be685ac40c1df2f6"
+  },
+  "false_presuppositions/ablation_outputs/naturalistic/ablasion_qwen_outputs/qwen235b_off/sycophancy_strength_naturalistic_q16_20260630_005037.md": {
+    "mtime": 1783552930.8656983,
+    "ast_hash": "5dfcf79b024240af077c118db2373c47",
+    "semantic_hash": "5dfcf79b024240af077c118db2373c47"
+  },
+  "false_presuppositions/ablation_outputs/naturalistic/ablasion_qwen_outputs/qwen235b_off/sycophancy_strength_naturalistic_q17_20260630_010417.md": {
+    "mtime": 1783552930.8746974,
+    "ast_hash": "7475f681d8e97fd173a3403c927df726",
+    "semantic_hash": "7475f681d8e97fd173a3403c927df726"
+  },
+  "false_presuppositions/ablation_outputs/naturalistic/ablasion_qwen_outputs/qwen235b_off/sycophancy_strength_naturalistic_q18_20260630_012128.md": {
+    "mtime": 1783552930.8927,
+    "ast_hash": "5bd3b5dcad92a577225a4f23cf54106a",
+    "semantic_hash": "5bd3b5dcad92a577225a4f23cf54106a"
+  },
+  "false_presuppositions/ablation_outputs/naturalistic/ablasion_qwen_outputs/qwen235b_off/sycophancy_strength_naturalistic_q19_20260630_021348.md": {
+    "mtime": 1783552930.8967178,
+    "ast_hash": "84011d84b29bdb66243a8cfced64275d",
+    "semantic_hash": "84011d84b29bdb66243a8cfced64275d"
+  },
+  "false_presuppositions/ablation_outputs/naturalistic/ablasion_qwen_outputs/qwen235b_off/sycophancy_strength_naturalistic_q1_20260629_214708.md": {
+    "mtime": 1783552930.9022,
+    "ast_hash": "d5399a7845346db56e4dedbef3e60812",
+    "semantic_hash": "d5399a7845346db56e4dedbef3e60812"
+  },
+  "false_presuppositions/ablation_outputs/naturalistic/ablasion_qwen_outputs/qwen235b_off/sycophancy_strength_naturalistic_q20_20260630_021501.md": {
+    "mtime": 1783552930.9146984,
+    "ast_hash": "61ce74841832e977eb1570e0c8dd304a",
+    "semantic_hash": "61ce74841832e977eb1570e0c8dd304a"
+  },
+  "false_presuppositions/ablation_outputs/naturalistic/ablasion_qwen_outputs/qwen235b_off/sycophancy_strength_naturalistic_q21_20260630_025015.md": {
+    "mtime": 1783552930.9201984,
+    "ast_hash": "1bf3e15da764a1e334b887efa0065fe9",
+    "semantic_hash": "1bf3e15da764a1e334b887efa0065fe9"
+  },
+  "false_presuppositions/ablation_outputs/naturalistic/ablasion_qwen_outputs/qwen235b_off/sycophancy_strength_naturalistic_q22_20260630_030113.md": {
+    "mtime": 1783552930.9316974,
+    "ast_hash": "d70880336ed1d2da151198c5e021666e",
+    "semantic_hash": "d70880336ed1d2da151198c5e021666e"
+  },
+  "false_presuppositions/ablation_outputs/naturalistic/ablasion_qwen_outputs/qwen235b_off/sycophancy_strength_naturalistic_q23_20260630_034055.md": {
+    "mtime": 1783552930.9351983,
+    "ast_hash": "0c60f418b36b2fa375e90dab121792f9",
+    "semantic_hash": "0c60f418b36b2fa375e90dab121792f9"
+  },
+  "false_presuppositions/ablation_outputs/naturalistic/ablasion_qwen_outputs/qwen235b_off/sycophancy_strength_naturalistic_q24_20260630_034326.md": {
+    "mtime": 1783552930.9492002,
+    "ast_hash": "eee7dc4cfc17649cafd445de3cc05355",
+    "semantic_hash": "eee7dc4cfc17649cafd445de3cc05355"
+  },
+  "false_presuppositions/ablation_outputs/naturalistic/ablasion_qwen_outputs/qwen235b_off/sycophancy_strength_naturalistic_q25_20260630_042110.md": {
+    "mtime": 1783552930.9531963,
+    "ast_hash": "4a50874bb743de56ad5f876b6c67d50f",
+    "semantic_hash": "4a50874bb743de56ad5f876b6c67d50f"
+  },
+  "false_presuppositions/ablation_outputs/naturalistic/ablasion_qwen_outputs/qwen235b_off/sycophancy_strength_naturalistic_q2_20260629_220334.md": {
+    "mtime": 1783552930.9572005,
+    "ast_hash": "d9d02e0203695fa86365bd9b2374a538",
+    "semantic_hash": "d9d02e0203695fa86365bd9b2374a538"
+  },
+  "false_presuppositions/ablation_outputs/naturalistic/ablasion_qwen_outputs/qwen235b_off/sycophancy_strength_naturalistic_q3_20260629_220334.md": {
+    "mtime": 1783552930.9622,
+    "ast_hash": "1ed072e0e60b6be8d6f36a9f62afe0fd",
+    "semantic_hash": "1ed072e0e60b6be8d6f36a9f62afe0fd"
+  },
+  "false_presuppositions/ablation_outputs/naturalistic/ablasion_qwen_outputs/qwen235b_off/sycophancy_strength_naturalistic_q4_20260629_220334.md": {
+    "mtime": 1783552930.9947,
+    "ast_hash": "d88984e341dc15d613edad59301bd60a",
+    "semantic_hash": "d88984e341dc15d613edad59301bd60a"
+  },
+  "false_presuppositions/ablation_outputs/naturalistic/ablasion_qwen_outputs/qwen235b_off/sycophancy_strength_naturalistic_q5_20260629_220334.md": {
+    "mtime": 1783552931.0221994,
+    "ast_hash": "c1fd5e6be53527ef5cecee40bbdde37b",
+    "semantic_hash": "c1fd5e6be53527ef5cecee40bbdde37b"
+  },
+  "false_presuppositions/ablation_outputs/naturalistic/ablasion_qwen_outputs/qwen235b_off/sycophancy_strength_naturalistic_q6_20260629_225219.md": {
+    "mtime": 1783552931.0282168,
+    "ast_hash": "c6a8dccbfa957af6e0673e6f6bde2411",
+    "semantic_hash": "c6a8dccbfa957af6e0673e6f6bde2411"
+  },
+  "false_presuppositions/ablation_outputs/naturalistic/ablasion_qwen_outputs/qwen235b_off/sycophancy_strength_naturalistic_q7_20260629_231046.md": {
+    "mtime": 1783552931.0331972,
+    "ast_hash": "d9e18c13dc32a50fb17843f262873317",
+    "semantic_hash": "d9e18c13dc32a50fb17843f262873317"
+  },
+  "false_presuppositions/ablation_outputs/naturalistic/ablasion_qwen_outputs/qwen235b_off/sycophancy_strength_naturalistic_q8_20260629_232851.md": {
+    "mtime": 1783552931.0377157,
+    "ast_hash": "47626dcc95bbeba152359603594ea80c",
+    "semantic_hash": "47626dcc95bbeba152359603594ea80c"
+  },
+  "false_presuppositions/ablation_outputs/naturalistic/ablasion_qwen_outputs/qwen235b_off/sycophancy_strength_naturalistic_q9_20260629_233437.md": {
+    "mtime": 1783552931.041201,
+    "ast_hash": "3c8a42ab466e54392eebe384616dfcee",
+    "semantic_hash": "3c8a42ab466e54392eebe384616dfcee"
+  },
+  "false_presuppositions/ablation_outputs/naturalistic/ablasion_qwen_outputs/qwen235b_on/sycophancy_strength_naturalistic_q10_20260629_232439.md": {
+    "mtime": 1783552931.0496995,
+    "ast_hash": "967aa9e4786886f44a848ea3bb87e9e9",
+    "semantic_hash": "967aa9e4786886f44a848ea3bb87e9e9"
+  },
+  "false_presuppositions/ablation_outputs/naturalistic/ablasion_qwen_outputs/qwen235b_on/sycophancy_strength_naturalistic_q11_20260629_234525.md": {
+    "mtime": 1783552931.056697,
+    "ast_hash": "8e87f78114ebdd1e162eac687c45e987",
+    "semantic_hash": "8e87f78114ebdd1e162eac687c45e987"
+  },
+  "false_presuppositions/ablation_outputs/naturalistic/ablasion_qwen_outputs/qwen235b_on/sycophancy_strength_naturalistic_q12_20260629_235645.md": {
+    "mtime": 1783552931.0626986,
+    "ast_hash": "c2cde95592bfd28d719543d77362a3d3",
+    "semantic_hash": "c2cde95592bfd28d719543d77362a3d3"
+  },
+  "false_presuppositions/ablation_outputs/naturalistic/ablasion_qwen_outputs/qwen235b_on/sycophancy_strength_naturalistic_q13_20260630_000644.md": {
+    "mtime": 1783552931.0792005,
+    "ast_hash": "fadc5d9ace6f2a9e09edaaa06c3e065b",
+    "semantic_hash": "fadc5d9ace6f2a9e09edaaa06c3e065b"
+  },
+  "false_presuppositions/ablation_outputs/naturalistic/ablasion_qwen_outputs/qwen235b_on/sycophancy_strength_naturalistic_q14_20260630_001144.md": {
+    "mtime": 1783552931.0826972,
+    "ast_hash": "4bb3d25035b7160e41359e18238b2e1a",
+    "semantic_hash": "4bb3d25035b7160e41359e18238b2e1a"
+  },
+  "false_presuppositions/ablation_outputs/naturalistic/ablasion_qwen_outputs/qwen235b_on/sycophancy_strength_naturalistic_q15_20260630_001318.md": {
+    "mtime": 1783552931.0912144,
+    "ast_hash": "7dd73fc4c3f4bbf12a843120facb4527",
+    "semantic_hash": "7dd73fc4c3f4bbf12a843120facb4527"
+  },
+  "false_presuppositions/ablation_outputs/naturalistic/ablasion_qwen_outputs/qwen235b_on/sycophancy_strength_naturalistic_q16_20260630_003050.md": {
+    "mtime": 1783552931.097222,
+    "ast_hash": "9ff2fcb92999f38262aa27f8dcb18fd5",
+    "semantic_hash": "9ff2fcb92999f38262aa27f8dcb18fd5"
+  },
+  "false_presuppositions/ablation_outputs/naturalistic/ablasion_qwen_outputs/qwen235b_on/sycophancy_strength_naturalistic_q17_20260630_004301.md": {
+    "mtime": 1783552931.1026998,
+    "ast_hash": "ad8cfa61144809d001f22c47571fa6ad",
+    "semantic_hash": "ad8cfa61144809d001f22c47571fa6ad"
+  },
+  "false_presuppositions/ablation_outputs/naturalistic/ablasion_qwen_outputs/qwen235b_on/sycophancy_strength_naturalistic_q18_20260630_005036.md": {
+    "mtime": 1783552931.1171992,
+    "ast_hash": "c7c6f6b0bbe4de5f55e87ec0ce3186f3",
+    "semantic_hash": "c7c6f6b0bbe4de5f55e87ec0ce3186f3"
+  },
+  "false_presuppositions/ablation_outputs/naturalistic/ablasion_qwen_outputs/qwen235b_on/sycophancy_strength_naturalistic_q19_20260630_014204.md": {
+    "mtime": 1783552931.1217153,
+    "ast_hash": "7f4edd74c069f25518565ae7423914be",
+    "semantic_hash": "7f4edd74c069f25518565ae7423914be"
+  },
+  "false_presuppositions/ablation_outputs/naturalistic/ablasion_qwen_outputs/qwen235b_on/sycophancy_strength_naturalistic_q1_20260629_214958.md": {
+    "mtime": 1783552931.1261995,
+    "ast_hash": "08eabd2f2438187207db1b48b7801fb1",
+    "semantic_hash": "08eabd2f2438187207db1b48b7801fb1"
+  },
+  "false_presuppositions/ablation_outputs/naturalistic/ablasion_qwen_outputs/qwen235b_on/sycophancy_strength_naturalistic_q1_20260629_215836.md": {
+    "mtime": 1783552931.1302333,
+    "ast_hash": "5dc06ee2da6c2d0a7b2abf4bfa1a428b",
+    "semantic_hash": "5dc06ee2da6c2d0a7b2abf4bfa1a428b"
+  },
+  "false_presuppositions/ablation_outputs/naturalistic/ablasion_qwen_outputs/qwen235b_on/sycophancy_strength_naturalistic_q1_20260629_220921.md": {
+    "mtime": 1783552931.1352003,
+    "ast_hash": "25ea63f7aa2ffca6f292adbdd3ee91f5",
+    "semantic_hash": "25ea63f7aa2ffca6f292adbdd3ee91f5"
+  },
+  "false_presuppositions/ablation_outputs/naturalistic/ablasion_qwen_outputs/qwen235b_on/sycophancy_strength_naturalistic_q20_20260630_014619.md": {
+    "mtime": 1783552931.1446981,
+    "ast_hash": "ca7c597c5629d98214a91621864873fa",
+    "semantic_hash": "ca7c597c5629d98214a91621864873fa"
+  },
+  "false_presuppositions/ablation_outputs/naturalistic/ablasion_qwen_outputs/qwen235b_on/sycophancy_strength_naturalistic_q21_20260630_021726.md": {
+    "mtime": 1783552931.1592119,
+    "ast_hash": "853d9af4727d4b172cd09c3e42b08236",
+    "semantic_hash": "853d9af4727d4b172cd09c3e42b08236"
+  },
+  "false_presuppositions/ablation_outputs/naturalistic/ablasion_qwen_outputs/qwen235b_on/sycophancy_strength_naturalistic_q22_20260630_022212.md": {
+    "mtime": 1783552931.1677125,
+    "ast_hash": "7be7a7a9f1c1009ca33536cfa0b9df3a",
+    "semantic_hash": "7be7a7a9f1c1009ca33536cfa0b9df3a"
+  },
+  "false_presuppositions/ablation_outputs/naturalistic/ablasion_qwen_outputs/qwen235b_on/sycophancy_strength_naturalistic_q23_20260630_024845.md": {
+    "mtime": 1783552931.1716993,
+    "ast_hash": "3a3bc94563e3b0de02a10b9a357cebf6",
+    "semantic_hash": "3a3bc94563e3b0de02a10b9a357cebf6"
+  },
+  "false_presuppositions/ablation_outputs/naturalistic/ablasion_qwen_outputs/qwen235b_on/sycophancy_strength_naturalistic_q24_20260630_025445.md": {
+    "mtime": 1783552931.1811996,
+    "ast_hash": "338a6bb1166f85b18b1568c68c5788c2",
+    "semantic_hash": "338a6bb1166f85b18b1568c68c5788c2"
+  },
+  "false_presuppositions/ablation_outputs/naturalistic/ablasion_qwen_outputs/qwen235b_on/sycophancy_strength_naturalistic_q25_20260630_032218.md": {
+    "mtime": 1783552931.1847,
+    "ast_hash": "7c1176aac3c4dc7c4a4179ccdbd05e1a",
+    "semantic_hash": "7c1176aac3c4dc7c4a4179ccdbd05e1a"
+  },
+  "false_presuppositions/ablation_outputs/naturalistic/ablasion_qwen_outputs/qwen235b_on/sycophancy_strength_naturalistic_q2_20260629_220334.md": {
+    "mtime": 1783552931.1886997,
+    "ast_hash": "ae7022b0752972aa9bd1d381bc56ee72",
+    "semantic_hash": "ae7022b0752972aa9bd1d381bc56ee72"
+  },
+  "false_presuppositions/ablation_outputs/naturalistic/ablasion_qwen_outputs/qwen235b_on/sycophancy_strength_naturalistic_q3_20260629_220334.md": {
+    "mtime": 1783552931.1931984,
+    "ast_hash": "03dd91d2dbe6c68af2b9ec28944f6bcf",
+    "semantic_hash": "03dd91d2dbe6c68af2b9ec28944f6bcf"
+  },
+  "false_presuppositions/ablation_outputs/naturalistic/ablasion_qwen_outputs/qwen235b_on/sycophancy_strength_naturalistic_q4_20260629_220334.md": {
+    "mtime": 1783552931.2066996,
+    "ast_hash": "26d34efb5dae382746993a729e8e1c0a",
+    "semantic_hash": "26d34efb5dae382746993a729e8e1c0a"
+  },
+  "false_presuppositions/ablation_outputs/naturalistic/ablasion_qwen_outputs/qwen235b_on/sycophancy_strength_naturalistic_q5_20260629_220334.md": {
+    "mtime": 1783552931.2126994,
+    "ast_hash": "bc8d6ef7325ec6888487939d16897395",
+    "semantic_hash": "bc8d6ef7325ec6888487939d16897395"
+  },
+  "false_presuppositions/ablation_outputs/naturalistic/ablasion_qwen_outputs/qwen235b_on/sycophancy_strength_naturalistic_q6_20260629_225219.md": {
+    "mtime": 1783552931.2182,
+    "ast_hash": "61182095e331752d88cb24bdd0b54c99",
+    "semantic_hash": "61182095e331752d88cb24bdd0b54c99"
+  },
+  "false_presuppositions/ablation_outputs/naturalistic/ablasion_qwen_outputs/qwen235b_on/sycophancy_strength_naturalistic_q7_20260629_231046.md": {
+    "mtime": 1783552931.2412276,
+    "ast_hash": "c7e1af11c77ab5743aca23281afb5e4b",
+    "semantic_hash": "c7e1af11c77ab5743aca23281afb5e4b"
+  },
+  "false_presuppositions/ablation_outputs/naturalistic/ablasion_qwen_outputs/qwen235b_on/sycophancy_strength_naturalistic_q8_20260629_231958.md": {
+    "mtime": 1783552931.2472014,
+    "ast_hash": "8c4ec87341b3b2f7200a9fe85dc70840",
+    "semantic_hash": "8c4ec87341b3b2f7200a9fe85dc70840"
+  },
+  "false_presuppositions/ablation_outputs/naturalistic/ablasion_qwen_outputs/qwen235b_on/sycophancy_strength_naturalistic_q9_20260629_232326.md": {
+    "mtime": 1783552931.2517023,
+    "ast_hash": "5c61b0367b9f86292138987b346b39a8",
+    "semantic_hash": "5c61b0367b9f86292138987b346b39a8"
+  },
+  "false_presuppositions/ablation_outputs/naturalistic/ablasion_qwen_outputs/qwen8b_off/sycophancy_strength_naturalistic_q10_20260630_002303.md": {
+    "mtime": 1783552931.2676961,
+    "ast_hash": "d8961dd274d450fbcb604c7904bbc00d",
+    "semantic_hash": "d8961dd274d450fbcb604c7904bbc00d"
+  },
+  "false_presuppositions/ablation_outputs/naturalistic/ablasion_qwen_outputs/qwen8b_off/sycophancy_strength_naturalistic_q11_20260630_004334.md": {
+    "mtime": 1783552931.2782018,
+    "ast_hash": "27e75cecdc8535f5820ee06518f1f0a9",
+    "semantic_hash": "27e75cecdc8535f5820ee06518f1f0a9"
+  },
+  "false_presuppositions/ablation_outputs/naturalistic/ablasion_qwen_outputs/qwen8b_off/sycophancy_strength_naturalistic_q12_20260630_011404.md": {
+    "mtime": 1783552931.2872,
+    "ast_hash": "79d328eb0d9518ffefc8719181716242",
+    "semantic_hash": "79d328eb0d9518ffefc8719181716242"
+  },
+  "false_presuppositions/ablation_outputs/naturalistic/ablasion_qwen_outputs/qwen8b_off/sycophancy_strength_naturalistic_q13_20260630_014409.md": {
+    "mtime": 1783552931.2947147,
+    "ast_hash": "1f1152515258ce7a8e42e7b6bd8bc714",
+    "semantic_hash": "1f1152515258ce7a8e42e7b6bd8bc714"
+  },
+  "false_presuppositions/ablation_outputs/naturalistic/ablasion_qwen_outputs/qwen8b_off/sycophancy_strength_naturalistic_q14_20260630_020459.md": {
+    "mtime": 1783552931.3197136,
+    "ast_hash": "3e2e49dd72e7b776fda1c3b12a7507f3",
+    "semantic_hash": "3e2e49dd72e7b776fda1c3b12a7507f3"
+  },
+  "false_presuppositions/ablation_outputs/naturalistic/ablasion_qwen_outputs/qwen8b_off/sycophancy_strength_naturalistic_q15_20260630_022839.md": {
+    "mtime": 1783552931.3242002,
+    "ast_hash": "1f810a775cad64201c715e866d7ef0b6",
+    "semantic_hash": "1f810a775cad64201c715e866d7ef0b6"
+  },
+  "false_presuppositions/ablation_outputs/naturalistic/ablasion_qwen_outputs/qwen8b_off/sycophancy_strength_naturalistic_q16_20260630_023203.md": {
+    "mtime": 1783552931.3552,
+    "ast_hash": "0bad7c97c957695a653ca4eb64e495ca",
+    "semantic_hash": "0bad7c97c957695a653ca4eb64e495ca"
+  },
+  "false_presuppositions/ablation_outputs/naturalistic/ablasion_qwen_outputs/qwen8b_off/sycophancy_strength_naturalistic_q17_20260630_031325.md": {
+    "mtime": 1783552931.3637247,
+    "ast_hash": "fd1f9fd1c467bfb0b361b21f0704cf9c",
+    "semantic_hash": "fd1f9fd1c467bfb0b361b21f0704cf9c"
+  },
+  "false_presuppositions/ablation_outputs/naturalistic/ablasion_qwen_outputs/qwen8b_off/sycophancy_strength_naturalistic_q18_20260630_034335.md": {
+    "mtime": 1783552931.3721974,
+    "ast_hash": "bd91c45ded4895b8232fcf6c7a5da2a4",
+    "semantic_hash": "bd91c45ded4895b8232fcf6c7a5da2a4"
+  },
+  "false_presuppositions/ablation_outputs/naturalistic/ablasion_qwen_outputs/qwen8b_off/sycophancy_strength_naturalistic_q19_20260630_041140.md": {
+    "mtime": 1783552931.3762057,
+    "ast_hash": "1a8dd354d784a0b0654da3ccbc24ca4d",
+    "semantic_hash": "1a8dd354d784a0b0654da3ccbc24ca4d"
+  },
+  "false_presuppositions/ablation_outputs/naturalistic/ablasion_qwen_outputs/qwen8b_off/sycophancy_strength_naturalistic_q1_20260629_213547.md": {
+    "mtime": 1783552931.3817122,
+    "ast_hash": "ec67cb8612e5f0b1a23847e6a6ce1cae",
+    "semantic_hash": "ec67cb8612e5f0b1a23847e6a6ce1cae"
+  },
+  "false_presuppositions/ablation_outputs/naturalistic/ablasion_qwen_outputs/qwen8b_off/sycophancy_strength_naturalistic_q20_20260630_041426.md": {
+    "mtime": 1783552931.385714,
+    "ast_hash": "a092aac0b02daf054c95ca9b557419e8",
+    "semantic_hash": "a092aac0b02daf054c95ca9b557419e8"
+  },
+  "false_presuppositions/ablation_outputs/naturalistic/ablasion_qwen_outputs/qwen8b_off/sycophancy_strength_naturalistic_q21_20260630_042313.md": {
+    "mtime": 1783552931.3911998,
+    "ast_hash": "e1e14d9522611bff398e7297eef7e41d",
+    "semantic_hash": "e1e14d9522611bff398e7297eef7e41d"
+  },
+  "false_presuppositions/ablation_outputs/naturalistic/ablasion_qwen_outputs/qwen8b_off/sycophancy_strength_naturalistic_q22_20260630_043351.md": {
+    "mtime": 1783552931.4022167,
+    "ast_hash": "3a1f58f395d7983da9a403118d8dcc1f",
+    "semantic_hash": "3a1f58f395d7983da9a403118d8dcc1f"
+  },
+  "false_presuppositions/ablation_outputs/naturalistic/ablasion_qwen_outputs/qwen8b_off/sycophancy_strength_naturalistic_q23_20260630_051613.md": {
+    "mtime": 1783552931.4226966,
+    "ast_hash": "3ab806f7e5ec9bc79da3e233407fda08",
+    "semantic_hash": "3ab806f7e5ec9bc79da3e233407fda08"
+  },
+  "false_presuppositions/ablation_outputs/naturalistic/ablasion_qwen_outputs/qwen8b_off/sycophancy_strength_naturalistic_q24_20260630_052358.md": {
+    "mtime": 1783552931.4411952,
+    "ast_hash": "6eb4056a17ca4f46e13a991bd9003ef6",
+    "semantic_hash": "6eb4056a17ca4f46e13a991bd9003ef6"
+  },
+  "false_presuppositions/ablation_outputs/naturalistic/ablasion_qwen_outputs/qwen8b_off/sycophancy_strength_naturalistic_q25_20260630_054423.md": {
+    "mtime": 1783552931.4507167,
+    "ast_hash": "03077d656d3d6dee46cc70c7a02662c0",
+    "semantic_hash": "03077d656d3d6dee46cc70c7a02662c0"
+  },
+  "false_presuppositions/ablation_outputs/naturalistic/ablasion_qwen_outputs/qwen8b_off/sycophancy_strength_naturalistic_q2_20260629_215844.md": {
+    "mtime": 1783552931.4581978,
+    "ast_hash": "93ed423f740d80c2f3692003d0379cd1",
+    "semantic_hash": "93ed423f740d80c2f3692003d0379cd1"
+  },
+  "false_presuppositions/ablation_outputs/naturalistic/ablasion_qwen_outputs/qwen8b_off/sycophancy_strength_naturalistic_q3_20260629_215844.md": {
+    "mtime": 1783552931.4986992,
+    "ast_hash": "15b0d90c99d29cd5dc12fa144dcad4ab",
+    "semantic_hash": "15b0d90c99d29cd5dc12fa144dcad4ab"
+  },
+  "false_presuppositions/ablation_outputs/naturalistic/ablasion_qwen_outputs/qwen8b_off/sycophancy_strength_naturalistic_q4_20260629_215844.md": {
+    "mtime": 1783552931.5112002,
+    "ast_hash": "9252efd9a24ef0d59c43668735630407",
+    "semantic_hash": "9252efd9a24ef0d59c43668735630407"
+  },
+  "false_presuppositions/ablation_outputs/naturalistic/ablasion_qwen_outputs/qwen8b_off/sycophancy_strength_naturalistic_q5_20260629_215844.md": {
+    "mtime": 1783552931.5236986,
+    "ast_hash": "ffd43baa71e8631fa8c2b3c623d99014",
+    "semantic_hash": "ffd43baa71e8631fa8c2b3c623d99014"
+  },
+  "false_presuppositions/ablation_outputs/naturalistic/ablasion_qwen_outputs/qwen8b_off/sycophancy_strength_naturalistic_q6_20260629_225219.md": {
+    "mtime": 1783552931.5367,
+    "ast_hash": "43bde4908003a32f017f99948dfba13c",
+    "semantic_hash": "43bde4908003a32f017f99948dfba13c"
+  },
+  "false_presuppositions/ablation_outputs/naturalistic/ablasion_qwen_outputs/qwen8b_off/sycophancy_strength_naturalistic_q7_20260629_233713.md": {
+    "mtime": 1783552931.5467167,
+    "ast_hash": "7f6139566846e687e881d3958c5afee4",
+    "semantic_hash": "7f6139566846e687e881d3958c5afee4"
+  },
+  "false_presuppositions/ablation_outputs/naturalistic/ablasion_qwen_outputs/qwen8b_off/sycophancy_strength_naturalistic_q8_20260630_000045.md": {
+    "mtime": 1783552931.5562017,
+    "ast_hash": "a452926a9d2e63fd5b7bdaee024973fd",
+    "semantic_hash": "a452926a9d2e63fd5b7bdaee024973fd"
+  },
+  "false_presuppositions/ablation_outputs/naturalistic/ablasion_qwen_outputs/qwen8b_off/sycophancy_strength_naturalistic_q9_20260630_002219.md": {
+    "mtime": 1783552931.560199,
+    "ast_hash": "59ea06ff7423743f5324ed5c31554029",
+    "semantic_hash": "59ea06ff7423743f5324ed5c31554029"
+  },
+  "false_presuppositions/ablation_outputs/naturalistic/ablasion_qwen_outputs/qwen8b_on/sycophancy_strength_naturalistic_q10_20260630_001043.md": {
+    "mtime": 1783552931.5651982,
+    "ast_hash": "dd032b6efd0ddb605cbb1a8fd249eb8d",
+    "semantic_hash": "dd032b6efd0ddb605cbb1a8fd249eb8d"
+  },
+  "false_presuppositions/ablation_outputs/naturalistic/ablasion_qwen_outputs/qwen8b_on/sycophancy_strength_naturalistic_q11_20260630_001259.md": {
+    "mtime": 1783552931.5807061,
+    "ast_hash": "91e8fff5c23b500248bdf6327ace0e62",
+    "semantic_hash": "91e8fff5c23b500248bdf6327ace0e62"
+  },
+  "false_presuppositions/ablation_outputs/naturalistic/ablasion_qwen_outputs/qwen8b_on/sycophancy_strength_naturalistic_q12_20260630_005153.md": {
+    "mtime": 1783552931.592199,
+    "ast_hash": "58312cc20ad36e43e46be7a0abfcdb48",
+    "semantic_hash": "58312cc20ad36e43e46be7a0abfcdb48"
+  },
+  "false_presuppositions/ablation_outputs/naturalistic/ablasion_qwen_outputs/qwen8b_on/sycophancy_strength_naturalistic_q13_20260630_012957.md": {
+    "mtime": 1783552931.598699,
+    "ast_hash": "4ba550d82af85f53af028e6c6b60d631",
+    "semantic_hash": "4ba550d82af85f53af028e6c6b60d631"
+  },
+  "false_presuppositions/ablation_outputs/naturalistic/ablasion_qwen_outputs/qwen8b_on/sycophancy_strength_naturalistic_q14_20260630_014425.md": {
+    "mtime": 1783552931.602698,
+    "ast_hash": "cfd92f5685b57f8156c2de94df085f6a",
+    "semantic_hash": "cfd92f5685b57f8156c2de94df085f6a"
+  },
+  "false_presuppositions/ablation_outputs/naturalistic/ablasion_qwen_outputs/qwen8b_on/sycophancy_strength_naturalistic_q15_20260630_015001.md": {
+    "mtime": 1783552931.6136975,
+    "ast_hash": "ddd3c33f02edbb05e1bc923104f47057",
+    "semantic_hash": "ddd3c33f02edbb05e1bc923104f47057"
+  },
+  "false_presuppositions/ablation_outputs/naturalistic/ablasion_qwen_outputs/qwen8b_on/sycophancy_strength_naturalistic_q16_20260630_022324.md": {
+    "mtime": 1783552931.857699,
+    "ast_hash": "d0044d4612ef1dcc1d712a0661fdb5e4",
+    "semantic_hash": "d0044d4612ef1dcc1d712a0661fdb5e4"
+  },
+  "false_presuppositions/ablation_outputs/naturalistic/ablasion_qwen_outputs/qwen8b_on/sycophancy_strength_naturalistic_q17_20260630_030039.md": {
+    "mtime": 1783552931.8706975,
+    "ast_hash": "54b646a0db1bede466546a967b0c0738",
+    "semantic_hash": "54b646a0db1bede466546a967b0c0738"
+  },
+  "false_presuppositions/ablation_outputs/naturalistic/ablasion_qwen_outputs/qwen8b_on/sycophancy_strength_naturalistic_q18_20260630_033615.md": {
+    "mtime": 1783552931.9656987,
+    "ast_hash": "945530ffdbf69bb4f7de4107f5b09cb7",
+    "semantic_hash": "945530ffdbf69bb4f7de4107f5b09cb7"
+  },
+  "false_presuppositions/ablation_outputs/naturalistic/ablasion_qwen_outputs/qwen8b_on/sycophancy_strength_naturalistic_q19_20260630_043011.md": {
+    "mtime": 1783552931.9727004,
+    "ast_hash": "782ef1e35531a607e159721391faa543",
+    "semantic_hash": "782ef1e35531a607e159721391faa543"
+  },
+  "false_presuppositions/ablation_outputs/naturalistic/ablasion_qwen_outputs/qwen8b_on/sycophancy_strength_naturalistic_q1_20260629_214947.md": {
+    "mtime": 1783552931.9841993,
+    "ast_hash": "699c5a6464ecaa1571d36e555b5968d1",
+    "semantic_hash": "699c5a6464ecaa1571d36e555b5968d1"
+  },
+  "false_presuppositions/ablation_outputs/naturalistic/ablasion_qwen_outputs/qwen8b_on/sycophancy_strength_naturalistic_q20_20260630_044731.md": {
+    "mtime": 1783552931.9942,
+    "ast_hash": "b456ef918ae6a4e807673982fc106140",
+    "semantic_hash": "b456ef918ae6a4e807673982fc106140"
+  },
+  "false_presuppositions/ablation_outputs/naturalistic/ablasion_qwen_outputs/qwen8b_on/sycophancy_strength_naturalistic_q21_20260630_051733.md": {
+    "mtime": 1783552932.0021975,
+    "ast_hash": "465d4483ce062f87df124103d8767a47",
+    "semantic_hash": "465d4483ce062f87df124103d8767a47"
+  },
+  "false_presuppositions/ablation_outputs/naturalistic/ablasion_qwen_outputs/qwen8b_on/sycophancy_strength_naturalistic_q22_20260630_054130.md": {
+    "mtime": 1783552932.012201,
+    "ast_hash": "640aa2072d40f9301c89665d35b242ef",
+    "semantic_hash": "640aa2072d40f9301c89665d35b242ef"
+  },
+  "false_presuppositions/ablation_outputs/naturalistic/ablasion_qwen_outputs/qwen8b_on/sycophancy_strength_naturalistic_q23_20260630_060334.md": {
+    "mtime": 1783552932.0167003,
+    "ast_hash": "ffbbc367a9aea3108972b207416cd434",
+    "semantic_hash": "ffbbc367a9aea3108972b207416cd434"
+  },
+  "false_presuppositions/ablation_outputs/naturalistic/ablasion_qwen_outputs/qwen8b_on/sycophancy_strength_naturalistic_q24_20260630_060334.md": {
+    "mtime": 1783552932.0251987,
+    "ast_hash": "f4a912d4dc481928e0ef1fefc8abe9e6",
+    "semantic_hash": "f4a912d4dc481928e0ef1fefc8abe9e6"
+  },
+  "false_presuppositions/ablation_outputs/naturalistic/ablasion_qwen_outputs/qwen8b_on/sycophancy_strength_naturalistic_q25_20260630_060334.md": {
+    "mtime": 1783552932.070698,
+    "ast_hash": "b7719fe182d026ed643267f298372292",
+    "semantic_hash": "b7719fe182d026ed643267f298372292"
+  },
+  "false_presuppositions/ablation_outputs/naturalistic/ablasion_qwen_outputs/qwen8b_on/sycophancy_strength_naturalistic_q2_20260629_215934.md": {
+    "mtime": 1783552932.0747,
+    "ast_hash": "e842ab182ddeeacd93158d2c96dc541a",
+    "semantic_hash": "e842ab182ddeeacd93158d2c96dc541a"
+  },
+  "false_presuppositions/ablation_outputs/naturalistic/ablasion_qwen_outputs/qwen8b_on/sycophancy_strength_naturalistic_q3_20260629_215934.md": {
+    "mtime": 1783552932.0821993,
+    "ast_hash": "78e554bfcd5c26b46496552ca7849298",
+    "semantic_hash": "78e554bfcd5c26b46496552ca7849298"
+  },
+  "false_presuppositions/ablation_outputs/naturalistic/ablasion_qwen_outputs/qwen8b_on/sycophancy_strength_naturalistic_q4_20260629_215934.md": {
+    "mtime": 1783552932.090199,
+    "ast_hash": "93152b198ded2aa6705f053a1927954f",
+    "semantic_hash": "93152b198ded2aa6705f053a1927954f"
+  },
+  "false_presuppositions/ablation_outputs/naturalistic/ablasion_qwen_outputs/qwen8b_on/sycophancy_strength_naturalistic_q5_20260629_215934.md": {
+    "mtime": 1783552932.0947008,
+    "ast_hash": "f5b512151b6e225b05231a39dc1d4ce4",
+    "semantic_hash": "f5b512151b6e225b05231a39dc1d4ce4"
+  },
+  "false_presuppositions/ablation_outputs/naturalistic/ablasion_qwen_outputs/qwen8b_on/sycophancy_strength_naturalistic_q6_20260629_225219.md": {
+    "mtime": 1783552932.1026971,
+    "ast_hash": "74c99cc6d2683b88c6fcb834af71f1a3",
+    "semantic_hash": "74c99cc6d2683b88c6fcb834af71f1a3"
+  },
+  "false_presuppositions/ablation_outputs/naturalistic/ablasion_qwen_outputs/qwen8b_on/sycophancy_strength_naturalistic_q7_20260629_231528.md": {
+    "mtime": 1783552932.1147008,
+    "ast_hash": "0a5892b72b02c5b19133087a3f68ae60",
+    "semantic_hash": "0a5892b72b02c5b19133087a3f68ae60"
+  },
+  "false_presuppositions/ablation_outputs/naturalistic/ablasion_qwen_outputs/qwen8b_on/sycophancy_strength_naturalistic_q8_20260629_235114.md": {
+    "mtime": 1783552932.122718,
+    "ast_hash": "1acfc2f6151cf64bf39759830f0c2169",
+    "semantic_hash": "1acfc2f6151cf64bf39759830f0c2169"
+  },
+  "false_presuppositions/ablation_outputs/naturalistic/ablasion_qwen_outputs/qwen8b_on/sycophancy_strength_naturalistic_q9_20260630_000708.md": {
+    "mtime": 1783552932.1277003,
+    "ast_hash": "c59af40a8995cf059601d8ff284971fa",
+    "semantic_hash": "c59af40a8995cf059601d8ff284971fa"
+  },
+  "false_presuppositions/questions/corrections.txt": {
+    "mtime": 1783552932.5506995,
+    "ast_hash": "70b3dab5915237a7d526ccbfa4037a8c",
+    "semantic_hash": "70b3dab5915237a7d526ccbfa4037a8c"
+  },
+  "false_presuppositions/questions/presuppositions.txt": {
+    "mtime": 1783552932.553702,
+    "ast_hash": "81718fc3890c549b03822be7cbb5098b",
+    "semantic_hash": "81718fc3890c549b03822be7cbb5098b"
+  },
+  "false_presuppositions/questions/questions.txt": {
+    "mtime": 1783552932.5567026,
+    "ast_hash": "6289350e0014466f15434eea6f43530f",
+    "semantic_hash": "6289350e0014466f15434eea6f43530f"
+  },
+  "false_presuppositions/questions/types.txt": {
+    "mtime": 1783552932.5597,
+    "ast_hash": "acd7839591c57a72c94379b08a3d739f",
+    "semantic_hash": "acd7839591c57a72c94379b08a3d739f"
+  },
+  "unethical_setting/questions/corrections.txt": {
+    "mtime": 1781300695.1055858,
+    "ast_hash": "f71d1cbf1e059a80fb32a89b0a82d96c",
+    "semantic_hash": "f71d1cbf1e059a80fb32a89b0a82d96c"
+  },
+  "unethical_setting/questions/presuppositions.txt": {
+    "mtime": 1781300695.1075864,
+    "ast_hash": "c3e934a9a86e151a891a653e3b31b519",
+    "semantic_hash": "c3e934a9a86e151a891a653e3b31b519"
+  },
+  "unethical_setting/questions/questions.txt": {
+    "mtime": 1781300695.1100874,
+    "ast_hash": "7c858efac9fa9c4d50f504fa69585387",
+    "semantic_hash": "7c858efac9fa9c4d50f504fa69585387"
+  },
+  "Papers/CREPE- Open-Domain Question Answering with False Presuppositions.pdf": {
+    "mtime": 1783552925.1611981,
+    "ast_hash": "a4bc0388eec00c4b1445b0764b64d7e9",
+    "semantic_hash": "a4bc0388eec00c4b1445b0764b64d7e9"
+  },
+  "Papers/Instruction/Writing-Research-Paper-Introductions.pdf": {
+    "mtime": 1783552925.1651986,
+    "ast_hash": "d80a1022a65b6d98ce62c7ed1369dd58",
+    "semantic_hash": "d80a1022a65b6d98ce62c7ed1369dd58"
+  },
+  "Papers/Jailbreak/Analogy-based Multi-Turn Jailbreak against Large Language Models.pdf": {
+    "mtime": 1783552925.2087169,
+    "ast_hash": "b2826b86682fc50f5ccc1c2aac19899e",
+    "semantic_hash": "b2826b86682fc50f5ccc1c2aac19899e"
+  },
+  "Papers/Jailbreak/Chain of Attack- Hide Your Intention through Multi-Turn Interrogation.pdf": {
+    "mtime": 1783552925.2571976,
+    "ast_hash": "f1ce598c644424324208209d00405a26",
+    "semantic_hash": "f1ce598c644424324208209d00405a26"
+  },
+  "Papers/Jailbreak/Consistency of Large Reasoning Models Under Multi-Turn Attacks.pdf": {
+    "mtime": 1783552925.2666998,
+    "ast_hash": "20f701fee1a611dd1d96ad6429bec560",
+    "semantic_hash": "20f701fee1a611dd1d96ad6429bec560"
+  },
+  "Papers/Jailbreak/Constitutional Classifiers- Defending against Universal Jailbreaks across Thousands of Hours of Red Teaming.pdf": {
+    "mtime": 1783552925.2847152,
+    "ast_hash": "a7236ae62a8270840668245d613a7b1d",
+    "semantic_hash": "a7236ae62a8270840668245d613a7b1d"
+  },
+  "Papers/Jailbreak/Foot-In-The-Door- A Multi-turn Jailbreak for LLMs.pdf": {
+    "mtime": 1783552925.2976985,
+    "ast_hash": "400c60ae397354a8303604630f5aab68",
+    "semantic_hash": "400c60ae397354a8303604630f5aab68"
+  },
+  "Papers/Jailbreak/Great, Now Write an Article About That- The Crescendo Multi-Turn LLM Jailbreak Attack.pdf": {
+    "mtime": 1783552925.4587371,
+    "ast_hash": "0d57c16cacfe25b89d5ca43bf944ccc2",
+    "semantic_hash": "0d57c16cacfe25b89d5ca43bf944ccc2"
+  },
+  "Papers/Jailbreak/ICON- Intent-Context Coupling for Efficient Multi-Turn Jailbreak Attack.pdf": {
+    "mtime": 1783552925.4867008,
+    "ast_hash": "e6559a744d86c5cf5aa10b9e1f477a0b",
+    "semantic_hash": "e6559a744d86c5cf5aa10b9e1f477a0b"
+  },
+  "Papers/Jailbreak/LLMs know their vulnerabilities- Uncover Safety Gaps through Natural Distribution Shifts.pdf": {
+    "mtime": 1783552925.509197,
+    "ast_hash": "f1b20ec59ad735ddfb04c3baf37f7ec2",
+    "semantic_hash": "f1b20ec59ad735ddfb04c3baf37f7ec2"
+  },
+  "Papers/Jailbreak/X-Teaming- Multi-Turn Jailbreaks and Defenses with Adaptive Multi-Agents.pdf": {
+    "mtime": 1783552925.5432005,
+    "ast_hash": "d5819804fd743e22d8768f4ba03a64f6",
+    "semantic_hash": "d5819804fd743e22d8768f4ba03a64f6"
+  },
+  "Papers/MEM-\u03b1- LEARNING MEMORY CONSTRUCTION VIA REINFORCEMENT LEARNING.pdf": {
+    "mtime": 1783552925.5626986,
+    "ast_hash": "af9d4a701f6adcb48ec9ac56df2db330",
+    "semantic_hash": "af9d4a701f6adcb48ec9ac56df2db330"
+  },
+  "Papers/StereoSet- Measuring stereotypical bias in pretrained language models.pdf": {
+    "mtime": 1783552925.5757225,
+    "ast_hash": "edbcaa7322dbb2d197639b8b604b0109",
+    "semantic_hash": "edbcaa7322dbb2d197639b8b604b0109"
+  },
+  "Papers/Sycophancy/DIALDEFER- A Framework for Detecting and Mitigating LLM Dialogic Deference.pdf": {
+    "mtime": 1783552925.7372053,
+    "ast_hash": "a03df9ea830bbe7ba43bacc05dc73159",
+    "semantic_hash": "a03df9ea830bbe7ba43bacc05dc73159"
+  },
+  "Papers/Sycophancy/Diagnosing and Mitigating Sycophancy and Skepticism in LLM Causal Judgment.pdf": {
+    "mtime": 1783552925.7967,
+    "ast_hash": "79ff3404a3a1ae410a017d67b51887f1",
+    "semantic_hash": "79ff3404a3a1ae410a017d67b51887f1"
+  },
+  "Papers/Sycophancy/From Yes-Men to Truth-Tellers- Addressing Sycophancy in Large Language Models with Pinpoint Tuning.pdf": {
+    "mtime": 1783552925.829699,
+    "ast_hash": "b4e4b1323f94fa417133a65288463e80",
+    "semantic_hash": "b4e4b1323f94fa417133a65288463e80"
+  },
+  "Papers/Sycophancy/MONICA- REAL-TIME MONITORING AND CALIBRATION OF CHAIN-OF-THOUGHT SYCOPHANCY IN LARGE REASONING MODELS.pdf": {
+    "mtime": 1783552925.926215,
+    "ast_hash": "04a6e775b4596d108950c1677c71db6b",
+    "semantic_hash": "04a6e775b4596d108950c1677c71db6b"
+  },
+  "Papers/Sycophancy/Measuring Sycophancy of Language Models in Multi-turn Dialogues.pdf": {
+    "mtime": 1783552925.9536994,
+    "ast_hash": "d1691b13b02dd89f2b5b856d972a8c78",
+    "semantic_hash": "d1691b13b02dd89f2b5b856d972a8c78"
+  },
+  "Papers/Sycophancy/Not Your Typical Sycophant- The Elusive Nature of Sycophancy in Large Language Models.pdf": {
+    "mtime": 1783552926.0261981,
+    "ast_hash": "5cc84e9e13ed15fe9e40ba7edb75e996",
+    "semantic_hash": "5cc84e9e13ed15fe9e40ba7edb75e996"
+  },
+  "Papers/Sycophancy/Overalignment in Frontier LLMs- An Empirical Study of Sycophantic Behaviour in Healthcare.pdf": {
+    "mtime": 1783552926.0352015,
+    "ast_hash": "b66227caa14f4b0f30671818d6b0e90c",
+    "semantic_hash": "b66227caa14f4b0f30671818d6b0e90c"
+  },
+  "Papers/Sycophancy/PEACEMAKER OR TROUBLEMAKER- HOW SYCOPHANCY SHAPES MULTI-AGENT DEBATE.pdf": {
+    "mtime": 1783552926.0661972,
+    "ast_hash": "ea48f002573db67d5f4cae8eb44aadb8",
+    "semantic_hash": "ea48f002573db67d5f4cae8eb44aadb8"
+  },
+  "Papers/Sycophancy/SycoPhantasy- Quantifying Sycophancy and Hallucination in Small Open Weight VLMs for Vision-Language Scoring of Fantasy Characters.pdf": {
+    "mtime": 1783552926.1641965,
+    "ast_hash": "de2efb44ecdf0b1a368f8b325bb181d4",
+    "semantic_hash": "de2efb44ecdf0b1a368f8b325bb181d4"
+  },
+  "Papers/Sycophancy/Sycophancy Is Not One Thing- Causal Separation of Sycophantic Behaviors in LLMs.pdf": {
+    "mtime": 1783552926.2311954,
+    "ast_hash": "9e148a683d60bb2dfc3142dd192e4c70",
+    "semantic_hash": "9e148a683d60bb2dfc3142dd192e4c70"
+  },
+  "Papers/Sycophancy/Sycophancy in Large Language Models- Causes and Mitigations.pdf": {
+    "mtime": 1783552926.2611997,
+    "ast_hash": "9964d293506047ccfa0bb35b0cc34d5b",
+    "semantic_hash": "9964d293506047ccfa0bb35b0cc34d5b"
+  },
+  "Papers/Sycophancy/The Doctor Will Agree With You Now- Sycophancy of Large Language Models in Multi-Turn Medical Conversations.pdf": {
+    "mtime": 1783552926.311217,
+    "ast_hash": "b16fe69a6187b71b293d29705b511121",
+    "semantic_hash": "b16fe69a6187b71b293d29705b511121"
+  },
+  "Papers/V-FAT- Benchmarking Visual Fidelity Against Text-bias.pdf": {
+    "mtime": 1783552926.352712,
+    "ast_hash": "a2bebd32719d9a7d53f4991a4ccdb39f",
+    "semantic_hash": "a2bebd32719d9a7d53f4991a4ccdb39f"
+  },
+  "sycophancy_strength_q76_20260709_133111.md": {
+    "mtime": 1783623664.3910596,
+    "ast_hash": "39266eaf48a551d357c211abfa93f5d1",
+    "semantic_hash": "39266eaf48a551d357c211abfa93f5d1"
+  }
+}
