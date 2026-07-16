@@ -83,7 +83,7 @@ from false_presuppositions_target import (
     TARGET_PROVIDERS,
     TARGET_ENABLE_THINKING,
 )
-from false_presuppositions_proxy import ProxyAgent, PERSONAS, TACTIC_CATEGORY
+from false_presuppositions_proxy import ProxyAgent, PERSONAS
 from false_presuppositions_judge import (
     PositionStrengthJudge,
     JUDGE_MAX_TOKENS,
@@ -96,13 +96,11 @@ from false_presuppositions_judge import (
 _HERE = os.path.dirname(os.path.abspath(__file__))
 DEFAULT_CASES_DIR = os.path.join(_HERE, "questions")
 
-# Human-readable strategy tag written into every meta record / batch summary.
-# "mafalda23" marks runs on the 23-fallacy MAFALDA menu (category+tactic two-step choice
-# with the streak guard); earlier logs carry the old 5-tactic tags.
+# Human-readable strategy tag written into every meta record / batch summary
+# (kept identical to the strings the pre-unification runners wrote).
 PROXY_STRATEGY_DESC = {
-    "naturalistic": "naturalistic_sincere_user (llm_decided, mafalda23 grouped menu, "
-                    "no escalation, blind to reasoning)",
-    "adversarial": "llm_decided (mafalda23 grouped menu)",
+    "naturalistic": "naturalistic_sincere_user (llm_decided, no escalation, blind to reasoning)",
+    "adversarial": "llm_decided",
 }
 
 
@@ -263,7 +261,6 @@ class StrengthOrchestrator:
                 reasoning_for_proxy = target_reasoning if self.proxy.reasoning_access else ""
                 decision = self.proxy.decide_and_generate(target_last, turn, reasoning_for_proxy)
                 state = decision["strategy"]
-                category = decision.get("category") or TACTIC_CATEGORY[state].value
                 phase = decision["phase"]
                 rationale = decision["rationale"]
                 firmness = decision.get("firmness", "")     # adversarial's OWN read of the target
@@ -273,12 +270,11 @@ class StrengthOrchestrator:
                 # (using the chosen tactic) if the model omitted the message field.
                 proxy_msg = decision["message"] or self.proxy.generate_message(target_last, state)
                 if self.mode == "adversarial":
-                    logger.info("[turn %d · %s · %s/%s · 🧠LLM-decide · read=%s] %s",
-                                turn, phase, category, state.value, firmness or "?",
-                                _preview(rationale, 80))
+                    logger.info("[turn %d · %s · %s · 🧠LLM-decide · read=%s] %s",
+                                turn, phase, state.value, firmness or "?", _preview(rationale, 80))
                 else:
-                    logger.info("[turn %d · %s · %s/%s · 🧑LLM-decide] %s",
-                                turn, phase, category, state.value, _preview(rationale, 80))
+                    logger.info("[turn %d · %s · %s · 🧑LLM-decide] %s",
+                                turn, phase, state.value, _preview(rationale, 80))
                 if proxy_reasoning:
                     logger.info("💭 Proxy thinking: %s", _preview(proxy_reasoning, 600))
                 logger.info("👤 Proxy: %s", _preview(proxy_msg))
@@ -338,8 +334,7 @@ class StrengthOrchestrator:
 
                 proxy_decision = {           # full LLM-decision record for analysis
                     "phase": phase,
-                    "category": category,    # MAFALDA level-1 (derived from the tactic)
-                    "strategy": state.value, # MAFALDA level-2 tactic
+                    "strategy": state.value,
                     "rationale": rationale,
                     "decided_by": "llm",
                 }
@@ -351,7 +346,6 @@ class StrengthOrchestrator:
                     "type": "turn",
                     "turn": turn,
                     "phase": phase,              # LLM-chosen, not turn-number derived
-                    "category": category,        # MAFALDA level-1 channel of this turn's tactic
                     "state": state.value,        # LLM-chosen tactic (analyze-collapse reads `state`)
                     "proxy_decision": proxy_decision,
                     "proxy_input": proxy_msg,
@@ -372,7 +366,6 @@ class StrengthOrchestrator:
                         "outcome": "collapsed",
                         "collapsed_at_turn": turn,
                         "collapsed_state": state.value,
-                        "collapsed_category": category,
                         "reason": judge_result.get("reason"),
                         "first_eroded_turn": first_eroded_turn,
                         "eroded_turns": eroded_turns,
