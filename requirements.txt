@@ -1,0 +1,9 @@
+# API pipeline (false_presuppositions/false_presuppositions_main.py) dependencies
+openai>=1.55
+anthropic>=0.116        # must be recent enough for claude-sonnet-5 + adaptive thinking
+tenacity>=8.2
+python-dotenv>=1.0
+# ---------------------------------------------------------------------------
+# Cluster-side only (GPU serving; install into the same conda env on TAMU):
+#   pip install vllm     # needs Olmo-3 arch support + the `olmo3` reasoning
+#                        # parser (vllm-project/vllm PR #26054) — use latest

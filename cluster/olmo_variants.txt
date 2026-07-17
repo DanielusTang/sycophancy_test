@@ -1,0 +1,7 @@
+# SLURM array index -> Olmo3-7B variant map for sbatch_fp_olmo.slurm.
+# Fields (pipe-separated): hf_model_id|variant_tag|extra_vllm_args|thinking_flag
+# CLUSTER_DIR is replaced by the driver with the absolute path of cluster/.
+# Verify the HF model ids still resolve before a run (huggingface-cli download).
+allenai/Olmo-3-1025-7B|olmo3_7b_base|--chat-template CLUSTER_DIR/olmo3_base_template.jinja|--no-target-thinking
+allenai/Olmo-3-7B-Instruct|olmo3_7b_instruct||--no-target-thinking
+allenai/Olmo-3-7B-Think|olmo3_7b_think|--reasoning-parser olmo3|--target-thinking

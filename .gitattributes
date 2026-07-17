@@ -1,0 +1,7 @@
+# Cluster scripts and templates must check out with LF endings on every platform
+# (this repo is developed on Windows with core.autocrlf=true, but *.sh/*.slurm
+# run on the Linux cluster). Deploy to the cluster via git clone/pull, not scp.
+*.sh     text eol=lf
+*.slurm  text eol=lf
+*.jinja  text eol=lf
+*.py     text eol=lf

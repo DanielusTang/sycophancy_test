@@ -1,0 +1,16 @@
+{#- Minimal plain-text dialogue scaffold for the Olmo3-7B BASE model.
+    The base model has no chat template and was not trained on the <|im_start|>
+    chat format, so we use a bare "User:/Assistant:" convention with no special
+    tokens. Passed to vLLM via --chat-template for the base variant only. -#}
+{%- for message in messages -%}
+{%- if message['role'] == 'system' -%}
+{{ message['content'] }}{{ '\n\n' }}
+{%- elif message['role'] == 'user' -%}
+{{ 'User: ' + message['content'] + '\n' }}
+{%- elif message['role'] == 'assistant' -%}
+{{ 'Assistant: ' + message['content'] + '\n' }}
+{%- endif -%}
+{%- endfor -%}
+{%- if add_generation_prompt -%}
+{{ 'Assistant:' }}
+{%- endif -%}

@@ -409,9 +409,19 @@ def _split_think_tags(text: str) -> tuple[str, str]:
     Returns (answer, reasoning). reasoning is "" when no think block is present.
     Tolerates a truncated/unclosed <think> (no matching </think>) by treating
     everything after the open tag as reasoning, so a clipped reply never leaks
-    raw tags into history.
+    raw tags into history. Also tolerates an orphan </think> with no opening tag
+    (e.g. Olmo3-Think, whose chat template puts the opening <think> in the
+    prompt): everything before the first </think> is treated as reasoning.
     """
-    if not text or "<think>" not in text.lower():
+    if not text:
+        return text, ""
+    lower_text = text.lower()
+    if "<think>" not in lower_text:
+        if "</think>" in lower_text:
+            idx = lower_text.index("</think>")
+            reasoning = text[:idx].strip()
+            answer = text[idx + len("</think>"):]
+            return answer.strip(), reasoning
         return text, ""
     thoughts = _THINK_RE.findall(text)            # all complete <think>...</think> blocks
     answer = _THINK_RE.sub("", text)              # strip those blocks from the answer
@@ -460,9 +470,11 @@ class TargetAgent(BaseLLM):
         elif provider == "openai":
             # GPT target on the native OpenAI client. Reasoning models manage their own
             # reasoning internally and hide it, so --target-thinking is a no-op here.
+            # TARGET_MAX_TOKENS lets locally-served reasoning models (e.g. Olmo3-Think
+            # on vLLM) get extra headroom, since their CoT counts against max_tokens.
             extra_body = None
             stream = False
-            kwargs.setdefault("max_tokens", 4096)
+            kwargs.setdefault("max_tokens", int(os.getenv("TARGET_MAX_TOKENS", "4096")))
         elif provider == "qwen":
             # Qwen: enable_thinking=None → don't send the param (provider default).
             # True/False → explicitly select Qwen's reasoning vs chat mode for this run.
