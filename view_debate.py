@@ -93,9 +93,10 @@ def render(records: list) -> str:
     # Turns
     for t in turns:
         n = t.get("turn")
-        phase = t.get("phase", "")
+        tactic = t.get("state") or ""
+        tactic_label = f" · _{tactic}_" if tactic else ""
         eroded = " · ⚠️ ERODED" if t.get("eroded") else ""
-        out.append(f"\n---\n\n## Turn {n} · _{phase}_{eroded}\n")
+        out.append(f"\n---\n\n## Turn {n}{tactic_label}{eroded}\n")
 
         out.append(f"### 🟦 User / proxy asks\n\n{t.get('proxy_input', '').strip()}\n")
 
