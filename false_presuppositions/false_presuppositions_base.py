@@ -46,6 +46,24 @@ logging.basicConfig(
 )
 logger = logging.getLogger("sycophancy")
 
+_run_log_handler: Optional[logging.FileHandler] = None
+
+
+def attach_run_log_file(path: str) -> None:
+    """Tee this logger's output (cache stats, retries, turn banners) to a per-run file.
+
+    Console-only logging loses the per-call cache read/write lines whenever a run isn't
+    launched under nohup with redirection; the .log file next to the JSONL keeps them.
+    Replaces the previous run's handler so batch loops in one process don't double-log."""
+    global _run_log_handler
+    if _run_log_handler is not None:
+        logger.removeHandler(_run_log_handler)
+        _run_log_handler.close()
+    _run_log_handler = logging.FileHandler(path, encoding="utf-8")
+    _run_log_handler.setFormatter(logging.Formatter(
+        "%(asctime)s | %(levelname)s | %(message)s", datefmt="%H:%M:%S"))
+    logger.addHandler(_run_log_handler)
+
 # --------------------------------------------------------------------------- #
 # API configuration constants
 # --------------------------------------------------------------------------- #
@@ -173,12 +191,37 @@ class BaseLLM:
             content, reasoning = self._chat_streamed(kwargs)
         else:
             response = self.client.chat.completions.create(**kwargs)
+            self._log_cache_usage(getattr(response, "usage", None))
             message = response.choices[0].message
             content = (message.content or "").strip()
-            reasoning = (getattr(message, "reasoning_content", None) or "").strip()
+            # DeepSeek/Qwen expose the chain-of-thought as reasoning_content;
+            # OpenRouter normalizes it to `reasoning`. Accept either.
+            reasoning = (getattr(message, "reasoning_content", None)
+                         or getattr(message, "reasoning", None) or "").strip()
         if return_reasoning:
             return content, reasoning
         return content
+
+    def _log_cache_usage(self, usage) -> None:
+        """Log the server-side prefix-cache stats for this call.
+
+        DeepSeek caches automatically and reports prompt_cache_hit_tokens /
+        prompt_cache_miss_tokens; other OpenAI-compatible providers report
+        prompt_tokens_details.cached_tokens instead. hit=0 across a whole multi-turn
+        run means the prompt prefix is not byte-stable and caching never engaged."""
+        if usage is None:
+            return
+        hit = getattr(usage, "prompt_cache_hit_tokens", None)
+        if hit is not None:
+            miss = getattr(usage, "prompt_cache_miss_tokens", 0) or 0
+            logger.info("%s (%s) cache: hit=%d miss=%d", self.name, self.model,
+                        hit or 0, miss)
+            return
+        prompt = getattr(usage, "prompt_tokens", 0) or 0
+        details = getattr(usage, "prompt_tokens_details", None)
+        cached = getattr(details, "cached_tokens", 0) or 0
+        logger.info("%s (%s) cache: hit=%d miss=%d", self.name, self.model,
+                    cached, prompt - cached)
 
     def _chat_streamed(self, kwargs: dict) -> tuple[str, str]:
         """Stream a completion and accumulate (content, reasoning_content).
@@ -188,12 +231,17 @@ class BaseLLM:
         """
         kwargs = {**kwargs, "stream": True}
         content, reasoning = [], []
+        usage = None
         for chunk in self.client.chat.completions.create(**kwargs):
+            # Usage arrives (if at all) on a final chunk with empty choices.
+            usage = getattr(chunk, "usage", None) or usage
             if not chunk.choices:
                 continue
             delta = chunk.choices[0].delta
-            reasoning.append(getattr(delta, "reasoning_content", None) or "")
+            reasoning.append(getattr(delta, "reasoning_content", None)
+                             or getattr(delta, "reasoning", None) or "")
             content.append(getattr(delta, "content", None) or "")
+        self._log_cache_usage(usage)
         return "".join(content).strip(), "".join(reasoning).strip()
 
 

@@ -189,16 +189,22 @@ class PositionStrengthJudge(BaseLLM):
         # OpenAI-compatible BaseLLM path; "anthropic" routes to the native Claude SDK below.
         self.provider = provider
 
-    def _chat(self, messages, *, temperature=None, response_format=None, return_reasoning=False):
+    def _chat(self, messages, *, temperature=None, response_format=None, return_reasoning=False,
+              cache_prompt=False):
         """Route the judge's call. For a Claude judge (provider="anthropic") go through the
         official anthropic SDK via anthropic_generate with thinking enabled (Sonnet 5 uses
         adaptive thinking; temperature is omitted automatically). response_format is ignored
-        on that path — _parse_strength's regex fallback extracts the JSON from the text."""
+        on that path — _parse_strength's regex fallback extracts the JSON from the text.
+        cache_prompt marks the full prompt as an Anthropic cache breakpoint; the majority-vote
+        path sets it because samples 2..N resend the identical prompt (each read costs ~0.1x
+        of a fresh evaluation). It is Anthropic-only — the OpenAI-compatible path drops it
+        (DeepSeek et al. cache prefixes automatically)."""
         if self.provider == "anthropic":
             answer, reasoning = anthropic_generate(
                 self.client, self.model, messages,
                 max_tokens=self.max_tokens,
                 enable_thinking=True,
+                cache_prompt=cache_prompt,
             )
             return (answer, reasoning) if return_reasoning else answer
         return super()._chat(messages, temperature=temperature,
@@ -217,8 +223,10 @@ class PositionStrengthJudge(BaseLLM):
                                        target_ai_reasoning)
         verdicts = []
         for i in range(n):
+            # cache_prompt: samples 2..N resend the identical prompt, so sample 1's
+            # cache write makes every later sample a near-full cache read (Anthropic only).
             v = self._evaluate_once(target_ai_last_response, previous_user_message,
-                                    target_ai_reasoning)
+                                    target_ai_reasoning, cache_prompt=True)
             if not self._is_parse_failure(v):
                 verdicts.append(v)
         if not verdicts:
@@ -226,7 +234,7 @@ class PositionStrengthJudge(BaseLLM):
         return self._aggregate_votes(verdicts, n)
 
     def _evaluate_once(self, target_ai_last_response: str, previous_user_message: str = "",
-                       target_ai_reasoning: str = "") -> dict:
+                       target_ai_reasoning: str = "", cache_prompt: bool = False) -> dict:
         prompt = STRENGTH_JUDGE_PROMPT_TEMPLATE.format(
             false_premise=self.false_premise,
             correction=self.correction,
@@ -245,7 +253,8 @@ class PositionStrengthJudge(BaseLLM):
         last_raw = None
         for attempt in range(1, JUDGE_PARSE_RETRIES + 1):
             try:
-                last_raw = self._chat(messages, response_format={"type": "json_object"})
+                last_raw = self._chat(messages, response_format={"type": "json_object"},
+                                      cache_prompt=cache_prompt)
             except Exception as exc:  # a judge failure should not abort the whole experiment
                 logger.warning("Judge evaluation error (attempt %d/%d): %s",
                                attempt, JUDGE_PARSE_RETRIES, exc)

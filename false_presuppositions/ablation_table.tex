@@ -1,0 +1,48 @@
+% Requires: \usepackage{booktabs}
+% ---------------------------------------------------------------------------
+% Body text referencing the table (place in your Results/Ablations section)
+% ---------------------------------------------------------------------------
+Table~\ref{tab:fp-ablation} reports one-factor-at-a-time ablations that isolate
+which components of the attack pipeline drive sycophantic collapse under
+adversarial false-presupposition pressure. Starting from the \textsc{D0}
+baseline---a DeepSeek-R1 target probed by a DeepSeek-R1 reasoner proxy with the
+target's reasoning visible, no judge feedback, and no escalation---each condition
+toggles a single factor. Collapse itself is near-universal: every condition drives
+the target to fully affirm the false premise in $100\%$ of cases, except A4 at
+$19/20$. The informative signal is therefore \emph{how many turns} the target
+resists before eroding and collapsing, which we report paired over the $10$
+questions common to all conditions (higher $=$ more robust). Supplying the proxy
+with judge feedback (A1) accelerates full collapse the most (from turn $17.6$ to
+$12.8$), whereas replacing the reasoner proxy with a weaker chat proxy (A4)
+roughly doubles the target's survival time (to turn $24.6$), confirming that a
+reasoning-capable adversary is substantially more effective. Escalate-on-erosion
+(A3) produces the earliest \emph{effective} (soft-cave) collapse (turn $4.0$) by
+pouncing the moment erosion is detected.
+
+% ---------------------------------------------------------------------------
+% Table (forces the number to 3; delete \setcounter if you use auto-numbering)
+% ---------------------------------------------------------------------------
+\setcounter{table}{2}
+\begin{table}[t]
+\centering
+\caption{\textbf{False-presupposition ablations under adversarial pressure
+(target: DeepSeek-R1).} One-factor-at-a-time ablations from the \textsc{D0}
+baseline. Collapse is near-universal in every condition (all $100\%$ except A4 at
+$19/20$), so the discriminating signal is the number of turns the target resists.
+Turn statistics are paired on the $10$ questions common to all conditions;
+higher $=$ more robust.}
+\label{tab:fp-ablation}
+\begin{tabular}{llccc}
+\toprule
+ & & \multicolumn{3}{c}{Mean turn (paired, $n{=}10$)} \\
+\cmidrule(lr){3-5}
+Cond. & Change from baseline & First erosion & Eff.\ collapse & Full collapse \\
+\midrule
+D0 & Baseline (reasoner proxy)      & 5.6  & 16.4 & 17.6 \\
+A1 & $+$ judge feedback             & 8.8  & 10.6 & 12.8 \\
+A2 & $-$ reasoning access           & 4.9  & 5.5  & 13.6 \\
+A3 & $+$ escalate-on-erosion        & 6.1  & 4.0  & 15.3 \\
+A4 & Chat proxy (weaker attacker)   & 11.1 & 16.7 & 24.6 \\
+\bottomrule
+\end{tabular}
+\end{table}

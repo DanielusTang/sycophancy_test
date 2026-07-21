@@ -7,7 +7,7 @@ False-Presupposition Sycophancy Stress Test — unified entry point
 Runner that ties the three agent modules together: the Target
 (`false_presuppositions_target.TargetAgent`, the model under test, full conversation
 history), the Human Proxy (`false_presuppositions_proxy.ProxyAgent`, an LLM that
-decides its own phase + tactic each turn and pushes a false premise over up to 99
+decides its own tactic each turn and pushes a false premise over up to 99
 turns), and the Judge (`false_presuppositions_judge.PositionStrengthJudge`, the graded
 0-4 position-strength scorer). This file holds everything that is none of those three:
 the `StrengthOrchestrator` run loop, case loading, batch mode, and the CLI.
@@ -16,7 +16,9 @@ Two conditions share this single code path, selected with ``--mode``; the ONLY
 difference between them is the proxy's persona:
 
   * ``naturalistic`` (default; the main benchmark) — a sincere, confidently-wrong user.
-    Always blind to the target's hidden reasoning and to the judge's scores.
+    Always blind to the judge's scores, and by default to the target's hidden reasoning;
+    ``--reasoning-access`` shows it the <think> trace with sincere framing (the missing
+    persona x visibility 2x2 cell).
   * ``adversarial`` — an autonomous attacker, with two ablation knobs:
     ``--judge-feedback`` (leak the judge's 0-4 score into the proxy's memory) and
     ``--no-reasoning-access`` (blind it to the target's <think> trace).
@@ -32,8 +34,7 @@ only when the target endorses the false premise as a GENERAL truth in its own vo
 orchestrator also records erosion events (a downward *trend*) and soft caves without
 stopping — the run ends only on a strict collapse or at --max-turns.
 
-Both the proxy and the target keep the FULL conversation context by default (the proxy's
-memory can be windowed with --history-window as an ablation), and every turn records the
+Both the proxy and the target keep the FULL conversation context, and every turn records the
 proxy's and the target's reasoning traces alongside their outputs, in the JSONL log and
 on the terminal.
 
@@ -57,6 +58,10 @@ python false_presuppositions_main.py --proxy-provider anthropic --model claude-s
 python false_presuppositions_main.py --target-provider gemini --target-model gemini-3.1-flash-lite
 python false_presuppositions_main.py --target-provider openai --target-model gpt-4o
 python false_presuppositions_main.py --target-provider anthropic --target-model claude-haiku-4-5 --target-thinking
+
+# OpenRouter targets (e.g. the OLMo 3.1 32B instruct/think pair)
+python false_presuppositions_main.py --target-provider openrouter --target-model allenai/olmo-3.1-32b-instruct
+python false_presuppositions_main.py --target-provider openrouter --target-model allenai/olmo-3.1-32b-think
 """
 
 
@@ -73,6 +78,7 @@ from typing import Optional
 from false_presuppositions_base import (
     logger,
     _preview,
+    attach_run_log_file,
     DEFAULT_MODEL,
 )
 from false_presuppositions_target import (
@@ -97,18 +103,29 @@ _HERE = os.path.dirname(os.path.abspath(__file__))
 DEFAULT_CASES_DIR = os.path.join(_HERE, "questions")
 
 # Human-readable strategy tag written into every meta record / batch summary.
-# "mafalda23" marks runs on the 23-fallacy MAFALDA menu (category+tactic two-step choice
-# with the streak guard); earlier logs carry the old 5-tactic tags.
+# "mafalda23+direct" marks runs on the 23-fallacy MAFALDA menu plus the DIRECT_CHALLENGE
+# no-fallacy control channel (category+tactic two-step choice with the streak guard);
+# earlier logs carry "mafalda23" (no control channel) or the old 5-tactic tags.
 PROXY_STRATEGY_DESC = {
-    "naturalistic": "naturalistic_sincere_user (llm_decided, mafalda23 grouped menu, "
+    "naturalistic": "naturalistic_sincere_user (llm_decided, mafalda23+direct grouped menu, "
                     "no escalation, blind to reasoning)",
-    "adversarial": "llm_decided (mafalda23 grouped menu)",
+    "adversarial": "llm_decided (mafalda23+direct grouped menu)",
 }
 
 
+def proxy_strategy_desc(mode: str, reasoning_access: bool = False) -> str:
+    """The strategy tag for the meta record; the naturalistic reasoning_access ablation
+    (the persona x visibility 2x2 cell) is marked so runs stay distinguishable at a glance
+    even without reading the ablation dict."""
+    desc = PROXY_STRATEGY_DESC[mode]
+    if mode == "naturalistic" and reasoning_access:
+        desc = desc.replace("blind to reasoning", "reasoning access ON (sincere framing)")
+    return desc
+
+
 # --------------------------------------------------------------------------- #
-# StrengthOrchestrator: the main loop — the proxy LLM decides its phase + tactic
-# each turn; the judge scores every reply; strict collapse is the only hard stop.
+# StrengthOrchestrator: the main loop — the proxy LLM decides its tactic each
+# turn; the judge scores every reply; strict collapse is the only hard stop.
 # --------------------------------------------------------------------------- #
 @dataclass
 class StrengthOrchestrator:
@@ -138,13 +155,16 @@ class StrengthOrchestrator:
         if not self.output_path:
             ts = datetime.now().strftime("%Y%m%d_%H%M%S")
             self.output_path = f"sycophancy_strength_{self.mode}_{self.topic}_{ts}.jsonl"
+        # Tee logger output (incl. per-call cache read/write lines) to a .log beside the
+        # JSONL, so cache engagement is verifiable even without nohup redirection.
+        attach_run_log_file(os.path.splitext(self.output_path)[0] + ".log")
         self._log_file = open(self.output_path, "a", encoding="utf-8")
         self._write_record({
             "type": "meta",
             "timestamp": datetime.now().isoformat(),
             "topic": self.topic,
             "variant": f"position_strength_{self.mode}",
-            "proxy_strategy": PROXY_STRATEGY_DESC[self.mode],
+            "proxy_strategy": proxy_strategy_desc(self.mode, self.proxy.reasoning_access),
             "ablation": {
                 "judge_feedback": self.proxy.judge_feedback,
                 "reasoning_access": self.proxy.reasoning_access,
@@ -162,7 +182,6 @@ class StrengthOrchestrator:
             "judge_model": self.judge.model if self.judge else None,
             "max_turns": self.max_turns,
             "judge_enabled": self.judge is not None,
-            "history_window_size": self.proxy.history_window_size,
             "erosion": {
                 "track": self.track_erosion,
                 "stop_on_erosion": self.stop_on_erosion,
@@ -207,11 +226,8 @@ class StrengthOrchestrator:
         logger.info("Question: %s", self.opening_question)
         logger.info("False premise: %s", self.proxy.false_premise)
         logger.info("Correction: %s", self.correction)
-        window_display = (self.proxy.history_window_size
-                          if self.proxy.history_window_size is not None
-                          else "unbounded (full history)")
-        logger.info("Proxy: %s persona picks its OWN phase + tactic each turn "
-                    "(memory window = %s turns)", self.mode, window_display)
+        logger.info("Proxy: %s persona picks its OWN tactic each turn "
+                    "(full conversation memory)", self.mode)
         if self.mode == "adversarial":
             logger.info("Ablation: judge_feedback=%s | reasoning_access=%s | proxy_model=%s",
                         self.proxy.judge_feedback, self.proxy.reasoning_access, self.proxy.model)
@@ -244,7 +260,6 @@ class StrengthOrchestrator:
             self._write_record({
                 "type": "turn",
                 "turn": 0,
-                "phase": "baseline",
                 "state": None,
                 "proxy_input": self.opening_question,
                 "proxy_reasoning": "",   # baseline turn has no proxy decision
@@ -257,14 +272,13 @@ class StrengthOrchestrator:
 
             # ---- Conversation turns ----
             for turn in range(1, self.max_turns + 1):
-                # ---- The proxy LLM decides its phase + tactic AND writes the line.
-                #      The target's <think> trace is passed only under the adversarial
-                #      reasoning_access ablation; it never enters a naturalistic prompt. ----
+                # ---- The proxy LLM decides its tactic AND writes the line.
+                #      The target's <think> trace is passed only under the reasoning_access
+                #      ablation (adversarial, or naturalistic via --reasoning-access). ----
                 reasoning_for_proxy = target_reasoning if self.proxy.reasoning_access else ""
                 decision = self.proxy.decide_and_generate(target_last, turn, reasoning_for_proxy)
                 state = decision["strategy"]
                 category = decision.get("category") or TACTIC_CATEGORY[state].value
-                phase = decision["phase"]
                 rationale = decision["rationale"]
                 firmness = decision.get("firmness", "")     # adversarial's OWN read of the target
                 weak_point = decision.get("weak_point", "")
@@ -273,12 +287,12 @@ class StrengthOrchestrator:
                 # (using the chosen tactic) if the model omitted the message field.
                 proxy_msg = decision["message"] or self.proxy.generate_message(target_last, state)
                 if self.mode == "adversarial":
-                    logger.info("[turn %d · %s · %s/%s · 🧠LLM-decide · read=%s] %s",
-                                turn, phase, category, state.value, firmness or "?",
+                    logger.info("[turn %d · %s/%s · LLM-decide · read=%s] %s",
+                                turn, category, state.value, firmness or "?",
                                 _preview(rationale, 80))
                 else:
-                    logger.info("[turn %d · %s · %s/%s · 🧑LLM-decide] %s",
-                                turn, phase, category, state.value, _preview(rationale, 80))
+                    logger.info("[turn %d · %s/%s · LLM-decide] %s",
+                                turn, category, state.value, _preview(rationale, 80))
                 if proxy_reasoning:
                     logger.info("💭 Proxy thinking: %s", _preview(proxy_reasoning, 600))
                 logger.info("👤 Proxy: %s", _preview(proxy_msg))
@@ -328,7 +342,7 @@ class StrengthOrchestrator:
                 #      recalls what was just said if the run continues. The judge's scores
                 #      are stored only under the judge_feedback ablation. ----
                 self.proxy.record_turn(
-                    turn=turn, strategy=state, phase=phase,
+                    turn=turn, strategy=state,
                     proxy_message=proxy_msg, target_reply=target_last,
                     position_strength=score,
                     is_collapsed=(judge_result or {}).get("is_collapsed"),
@@ -337,7 +351,6 @@ class StrengthOrchestrator:
                 )
 
                 proxy_decision = {           # full LLM-decision record for analysis
-                    "phase": phase,
                     "category": category,    # MAFALDA level-1 (derived from the tactic)
                     "strategy": state.value, # MAFALDA level-2 tactic
                     "rationale": rationale,
@@ -347,10 +360,9 @@ class StrengthOrchestrator:
                     # the attacker's OWN read of the target this turn (compare vs the judge's
                     # position_strength to measure attacker situational awareness).
                     proxy_decision["target_read"] = {"firmness": firmness, "weak_point": weak_point}
-                self._write_record({
+                turn_record = {
                     "type": "turn",
                     "turn": turn,
-                    "phase": phase,              # LLM-chosen, not turn-number derived
                     "category": category,        # MAFALDA level-1 channel of this turn's tactic
                     "state": state.value,        # LLM-chosen tactic (analyze-collapse reads `state`)
                     "proxy_decision": proxy_decision,
@@ -363,12 +375,13 @@ class StrengthOrchestrator:
                     "eroded": is_eroded,
                     "erosion_reason": erosion_reason,
                     "context_messages": self.target.turns_in_context,
-                })
+                }
+                self._write_record(turn_record)
 
                 # ---- Stop condition 1: strict full collapse (explicit affirmation) ----
                 if judge_result and judge_result.get("is_collapsed") is True:
                     logger.warning("❌ Full collapse (endorsed the general false premise) at turn %d.", turn)
-                    return self._finish(path, {
+                    result = {
                         "outcome": "collapsed",
                         "collapsed_at_turn": turn,
                         "collapsed_state": state.value,
@@ -381,7 +394,8 @@ class StrengthOrchestrator:
                         "soft_cave_lead": (turn - first_effective_collapse_turn)
                             if first_effective_collapse_turn is not None else 0,
                         "strength_trajectory": scores,
-                    })
+                    }
+                    return self._finish(path, result)
 
                 # ---- Stop condition 2 (legacy, opt-in): stop at the first erosion ----
                 if is_eroded and self.stop_on_erosion:
@@ -410,7 +424,7 @@ class StrengthOrchestrator:
             if effective_collapse_turns:
                 logger.info("⚠️  Soft-caved (effective_collapse) on %d turn(s) (first @ turn %s) without ever "
                             "explicitly affirming the premise.", len(effective_collapse_turns), first_effective_collapse_turn)
-            return self._finish(path, {
+            result = {
                 "outcome": outcome,
                 "collapsed_at_turn": None,
                 "collapsed_state": None,
@@ -421,7 +435,8 @@ class StrengthOrchestrator:
                 "first_effective_collapse_turn": first_effective_collapse_turn,
                 "effective_collapse_turns": effective_collapse_turns,
                 "strength_trajectory": scores,
-            })
+            }
+            return self._finish(path, result)
         finally:
             if self._log_file:
                 self._log_file.close()
@@ -507,7 +522,7 @@ def run_batch(args) -> None:
     batch_ts = datetime.now().strftime("%Y%m%d_%H%M%S")
 
     logger.info("=" * 70)
-    logger.info("BATCH [position-strength · %s] | %d case(s) | proxy picks own phase+tactic | "
+    logger.info("BATCH [position-strength · %s] | %d case(s) | proxy picks own tactic | "
                 "target=%s/%s (thinking=%s) | proxy=%s | judge=%s",
                 args.mode.upper(), len(cases), args.target_provider, args.target_model,
                 args.target_thinking, args.model,
@@ -525,7 +540,6 @@ def run_batch(args) -> None:
             proxy = ProxyAgent(proxy_client, case["presupposition"], model=args.model,
                                persona=args.mode,
                                provider=args.proxy_provider,
-                               history_window_size=args.history_window,
                                judge_feedback=args.judge_feedback,
                                reasoning_access=args.reasoning_access,
                                enable_thinking=args.proxy_thinking)
@@ -581,7 +595,7 @@ def run_batch(args) -> None:
         json.dump({
             "batch_timestamp": batch_ts,
             "variant": f"position_strength_{args.mode}",
-            "proxy_strategy": PROXY_STRATEGY_DESC[args.mode],
+            "proxy_strategy": proxy_strategy_desc(args.mode, args.reasoning_access),
             "ablation": {
                 "judge_feedback": args.judge_feedback,
                 "reasoning_access": args.reasoning_access,
@@ -596,7 +610,6 @@ def run_batch(args) -> None:
             "judge_provider": args.judge_provider,
             "judge_model": None if args.no_judge else args.judge_model,
             "max_turns": args.max_turns,
-            "history_window": args.history_window,
             "erosion": {
                 "track_erosion": not args.no_erosion_tracking,
                 "stop_on_erosion": args.stop_on_erosion,
@@ -614,12 +627,15 @@ def run_batch(args) -> None:
         }, f, ensure_ascii=False, indent=2)
 
     logger.info("=" * 70)
-    logger.info("BATCH COMPLETE — collapsed=%d | eroded_no_collapse=%d | survived=%d | error=%d",
-                _count("collapsed"), _count("eroded_no_collapse"), _count("survived"), _count("error"))
+    logger.info("BATCH COMPLETE — collapsed=%d | eroded_no_collapse=%d | survived=%d | "
+                "error=%d",
+                _count("collapsed"), _count("eroded_no_collapse"), _count("survived"),
+                _count("error"))
     for s in summaries:
         logger.info("  q%-3s | %-18s | collapse@%-4s first_erosion@%-4s | %s",
                     s.get("index"), s.get("outcome"),
-                    s.get("collapsed_at_turn"), s.get("first_eroded_turn"),
+                    s.get("collapsed_at_turn"),
+                    s.get("first_eroded_turn"),
                     (s.get("question") or "")[:50])
     logger.info("Summary saved: %s", summary_path)
     logger.info("=" * 70)
@@ -631,15 +647,16 @@ def run_batch(args) -> None:
 def main() -> None:
     parser = argparse.ArgumentParser(
         description="False-presupposition sycophancy stress test — the proxy LLM picks its "
-                    "own phase + tactic each turn; graded position-strength judge; runs every "
+                    "own tactic each turn; graded position-strength judge; runs every "
                     "case in --cases-dir. --mode naturalistic (default): a sincere, "
-                    "confidently-wrong user, blind to the target's reasoning and the judge's "
-                    "scores. --mode adversarial: an autonomous attacker, with --judge-feedback "
-                    "and --no-reasoning-access as ablation knobs."
+                    "confidently-wrong user, blind to the judge's scores and (unless "
+                    "--reasoning-access) to the target's reasoning. --mode adversarial: an "
+                    "autonomous attacker, with --judge-feedback and --no-reasoning-access as "
+                    "ablation knobs."
     )
     parser.add_argument("--mode", choices=list(PERSONAS), default="naturalistic",
-                        help="proxy persona: 'naturalistic' (sincere user; the main benchmark, "
-                             "default) or 'adversarial' (autonomous attacker)")
+                        help="proxy persona: 'naturalistic' (sincere never-yield user; the main "
+                             "benchmark, default) or 'adversarial' (autonomous attacker)")
     parser.add_argument("--max-turns", type=int, default=99, help="max conversation turns per case (default 99)")
 
     # ---- Proxy ----
@@ -653,10 +670,6 @@ def main() -> None:
                              "not access to the target's <think>)")
     parser.add_argument("--no-proxy-thinking", dest="proxy_thinking", action="store_false",
                         help="run the PROXY model in CHAT mode")
-    parser.add_argument("--history-window", type=int, default=0,
-                        help="how many recent turns the proxy remembers when choosing its next "
-                             "phase+tactic; 0 = unbounded (full untruncated conversation, "
-                             "mirroring the Target's full context — the default)")
 
     # ---- Judge ----
     parser.add_argument("--judge-model", default=DEFAULT_JUDGE_MODEL,
@@ -675,7 +688,8 @@ def main() -> None:
     parser.add_argument("--target-provider", choices=list(TARGET_PROVIDERS),
                         default=DEFAULT_TARGET_PROVIDER,
                         help=f"provider for the model under test (default {DEFAULT_TARGET_PROVIDER}): "
-                             f"'deepseek', 'qwen' (智增增), 'gemini', 'anthropic', or 'openai'")
+                             f"'deepseek', 'qwen' (智增增), 'gemini', 'anthropic', 'openai', "
+                             f"or 'openrouter'")
     parser.add_argument("--target-model", default=DEFAULT_TARGET_MODEL,
                         help=f"model under test (default {DEFAULT_TARGET_MODEL})")
     parser.add_argument("--target-thinking", dest="target_thinking", action="store_true",
@@ -720,16 +734,21 @@ def main() -> None:
     parser.add_argument("--no-reasoning-access", dest="reasoning_access", action="store_false", default=None,
                         help="ABLATION (adversarial only): blind the proxy to the target's <think> "
                              "reasoning trace (adversarial default: reasoning access ON)")
+    parser.add_argument("--reasoning-access", dest="reasoning_access", action="store_true", default=None,
+                        help="ABLATION (naturalistic only): show the sincere user the target's "
+                             "<think> trace — the persona x visibility 2x2 cell (naturalistic "
+                             "default: blind)")
     args = parser.parse_args()
 
     # Resolve the per-mode defaults / constraints.
     if args.mode == "naturalistic":
-        # The sincere user is ALWAYS blind to the target's reasoning and the judge's scores.
-        if args.judge_feedback or args.reasoning_access is False:
-            parser.error("--judge-feedback / --no-reasoning-access are adversarial-only ablations "
-                         "(the naturalistic user is always blind); use --mode adversarial")
+        # The sincere user never sees the judge's scores; it may opt into reasoning access
+        # (--reasoning-access) — the persona x visibility 2x2 cell.
+        if args.judge_feedback:
+            parser.error("--judge-feedback is an adversarial-only ablation "
+                         "(a sincere user has no oracle); use --mode adversarial")
         args.judge_feedback = False
-        args.reasoning_access = False
+        args.reasoning_access = bool(args.reasoning_access)
     else:
         args.judge_feedback = bool(args.judge_feedback)
         args.reasoning_access = True if args.reasoning_access is None else args.reasoning_access

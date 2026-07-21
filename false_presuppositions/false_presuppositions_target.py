@@ -13,6 +13,8 @@ Provider backends supported (select with `--target-provider` in the CLI):
     anthropic  — Claude, via the official `anthropic` SDK (Messages API), with
                 extended-thinking support.
     openai     — GPT, via the native OpenAI Chat Completions API.
+    openrouter — any model on the OpenRouter gateway (OpenAI-compatible), e.g. the
+                OLMo 3.1 32B instruct/think pair.
 """
 
 from __future__ import annotations
@@ -129,8 +131,23 @@ ANTHROPIC_THINKING_BUDGET = int(os.getenv("ANTHROPIC_THINKING_BUDGET", "4096"))
 OPENAI_BASE_URL = os.getenv("OPENAI_BASE_URL", "https://api.openai.com/v1")
 DEFAULT_OPENAI_MODEL = os.getenv("OPENAI_MODEL", "gpt-4o")
 
+# --------------------------------------------------------------------------- #
+# Alternative target provider: OpenRouter (any model on the OpenRouter gateway)
+# --------------------------------------------------------------------------- #
+# OpenRouter is OpenAI-API compatible, so the same openai SDK works — only base_url,
+# key, and model id differ. Select with `--target-provider openrouter` and pass the
+# OpenRouter model slug with `--target-model`, e.g.
+#   --target-provider openrouter --target-model allenai/olmo-3.1-32b-instruct
+#   --target-provider openrouter --target-model allenai/olmo-3.1-32b-think
+# The model id selects the mode (like DeepSeek: the -think slug IS the reasoning
+# condition), so --target-thinking is a no-op for this provider. Reasoning models
+# return their chain-of-thought in message.reasoning (OpenRouter's normalized field,
+# picked up by BaseLLM._chat) or as inline <think> tags (split by TargetAgent).
+# Key comes from OPENROUTER_API_KEY in the repo-root .env.
+OPENROUTER_BASE_URL = os.getenv("OPENROUTER_BASE_URL", "https://openrouter.ai/api/v1")
+
 # The choices accepted by --target-provider.
-TARGET_PROVIDERS = ("qwen", "gemini", "deepseek", "anthropic", "openai")
+TARGET_PROVIDERS = ("qwen", "gemini", "deepseek", "anthropic", "openai", "openrouter")
 DEFAULT_TARGET_PROVIDER = os.getenv("TARGET_PROVIDER", "deepseek").lower()
 
 
@@ -294,6 +311,7 @@ def anthropic_generate(
     max_tokens: int = 4096,
     enable_thinking: bool = False,
     thinking_budget: int = ANTHROPIC_THINKING_BUDGET,
+    cache_prompt: bool = False,
     timeout: float = REQUEST_TIMEOUT,
 ) -> tuple[str, str]:
     """Call Claude's Messages API and return (answer, reasoning).
@@ -301,6 +319,15 @@ def anthropic_generate(
     OpenAI-style `messages` are mapped to Anthropic's schema: the system turn becomes the
     top-level `system` string; user/assistant turns pass through. Returns the visible text
     as `answer` and (when thinking is enabled) the chain-of-thought as `reasoning`.
+
+    Prompt caching (opt-in on Anthropic, unlike the automatic prefix caching on
+    DeepSeek/OpenAI/Gemini): the system prompt always carries a cache breakpoint, and the
+    final message gets one too when the conversation is multi-turn (the stateful Target —
+    each turn re-reads the whole prior conversation at ~0.1x input price and writes only
+    the extension) or when `cache_prompt=True` (a caller that will resend this exact
+    prompt, e.g. the Judge's majority-vote samples). Single-shot callers with unique
+    prompts leave `cache_prompt` off: a breakpoint on content that is never resent pays
+    the 1.25x cache-write premium with zero reads.
     """
     system_txt = ""
     convo: list[dict] = []
@@ -318,7 +345,22 @@ def anthropic_generate(
         "messages": convo,
     }
     if system_txt:
-        kwargs["system"] = system_txt
+        # Cache breakpoint on the system prompt: every call in the run that shares it
+        # reads the cached prefix at ~0.1x input price. Prefixes below the model's
+        # minimum cacheable length (~2k-4k tokens depending on model) are silently not
+        # cached — no error, no extra cost — so this is always safe to set.
+        kwargs["system"] = [{"type": "text", "text": system_txt,
+                             "cache_control": {"type": "ephemeral"}}]
+    if (convo and isinstance(convo[-1]["content"], str) and convo[-1]["content"]
+            and (len(convo) > 1 or cache_prompt)):
+        # Breakpoint on the newest message: multi-turn callers re-read the entire prior
+        # conversation next turn; cache_prompt callers (Judge voting/retries) re-read
+        # the whole identical prompt on the repeat calls. 5-minute TTL, refreshed on use.
+        # Callers that already send content blocks (the Claude proxy) place their own
+        # breakpoints, hence the str guard.
+        convo[-1] = {**convo[-1],
+                     "content": [{"type": "text", "text": convo[-1]["content"],
+                                  "cache_control": {"type": "ephemeral"}}]}
     if enable_thinking:
         if _anthropic_adaptive_thinking(model):
             # Opus 4.6+/Sonnet 4.6/Fable 5: adaptive only (budget_tokens 400s here).
@@ -340,6 +382,14 @@ def anthropic_generate(
         kwargs["temperature"] = temperature
 
     resp = client.with_options(timeout=timeout).messages.create(**kwargs)
+    usage = resp.usage
+    logger.info(
+        "%s cache: read=%d write=%d uncached=%d",
+        model,
+        getattr(usage, "cache_read_input_tokens", 0) or 0,
+        getattr(usage, "cache_creation_input_tokens", 0) or 0,
+        usage.input_tokens,
+    )
     answer_chunks: list[str] = []
     thought_chunks: list[str] = []
     for block in resp.content:
@@ -386,6 +436,15 @@ def openai_generate(
         kwargs["max_tokens"] = max_tokens
         kwargs["temperature"] = temperature
     resp = client.chat.completions.create(**kwargs)
+    # OpenAI auto-caches prompt prefixes >=1024 tokens and reports the hit count in
+    # usage.prompt_tokens_details.cached_tokens (mirrors the DeepSeek hit/miss log).
+    usage = getattr(resp, "usage", None)
+    if usage is not None:
+        details = getattr(usage, "prompt_tokens_details", None)
+        cached = getattr(details, "cached_tokens", 0) or 0
+        prompt_toks = getattr(usage, "prompt_tokens", 0) or 0
+        logger.info("TargetAgent (%s) cache: hit=%d miss=%d",
+                    model, cached, max(prompt_toks - cached, 0))
     msg = resp.choices[0].message
     content = (msg.content or "").strip()
     reasoning = (getattr(msg, "reasoning_content", None) or "").strip()
@@ -463,6 +522,14 @@ class TargetAgent(BaseLLM):
             extra_body = None
             stream = False
             kwargs.setdefault("max_tokens", 4096)
+        elif provider == "openrouter":
+            # OpenRouter target on the plain OpenAI client. The model slug selects the
+            # mode (e.g. olmo-3.1-32b-instruct vs -think), so --target-thinking is a
+            # no-op. Reasoning tokens count against max_tokens on OpenRouter, so give
+            # think models ample room or the visible answer gets clipped.
+            extra_body = None
+            stream = False
+            kwargs.setdefault("max_tokens", 8192)
         elif provider == "qwen":
             # Qwen: enable_thinking=None → don't send the param (provider default).
             # True/False → explicitly select Qwen's reasoning vs chat mode for this run.
@@ -543,6 +610,7 @@ def build_target_client(provider: str = "qwen"):
     provider="anthropic": the official anthropic.Anthropic client; key from
         CLUDE_API_KEY / ANTHROPIC_API_KEY / CLAUDE_API_KEY.
     provider="openai": OpenAI's own API; key from OPENAI_API_KEY.
+    provider="openrouter": the OpenRouter gateway; key from OPENROUTER_API_KEY.
     All keys live in the repo-root .env.
     """
     if provider == "gemini":
@@ -578,6 +646,13 @@ def build_target_client(provider: str = "qwen"):
             print("❌ Set OPENAI_API_KEY (OpenAI key for the GPT target) in your .env")
             sys.exit(1)
         return build_client(key, base_url=OPENAI_BASE_URL)
+
+    if provider == "openrouter":
+        key = os.getenv("OPENROUTER_API_KEY")
+        if not key:
+            print("❌ Set OPENROUTER_API_KEY (OpenRouter key for the target) in your .env")
+            sys.exit(1)
+        return build_client(key, base_url=OPENROUTER_BASE_URL)
 
     key = os.getenv("ZZZ_API_KEY") or os.getenv("TARGET_API_KEY")
     if not key:

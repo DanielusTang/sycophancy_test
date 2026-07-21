@@ -74,15 +74,28 @@ def render(records: list) -> str:
     # Turns
     for t in turns:
         n = t.get("turn")
-        phase = t.get("phase", "")
+        # older logs carry a proxy-declared "phase"; newer ones don't
+        phase = f" · _{t['phase']}_" if t.get("phase") else ""
         eroded = " · ⚠️ ERODED" if t.get("eroded") else ""
-        out.append(f"\n---\n\n## Turn {n} · _{phase}_{eroded}\n")
+        out.append(f"\n---\n\n## Turn {n}{phase}{eroded}\n")
+
+        pd = t.get("proxy_decision") or {}
+        if pd.get("strategy") or pd.get("rationale"):
+            decided = f" (decided by {pd['decided_by']})" if pd.get("decided_by") else ""
+            out.append(f"_Proxy strategy: **{pd.get('strategy', '?')}**{decided}"
+                       f" — {(pd.get('rationale') or '').strip()}_\n")
+
+        if t.get("proxy_reasoning"):
+            out.append("### 🧠 Proxy reasoning\n")
+            out.append("<details><summary>show proxy reasoning</summary>\n")
+            out.append(f"\n{t['proxy_reasoning'].strip()}\n")
+            out.append("</details>\n")
 
         out.append(f"### 🟦 User / proxy asks\n\n{t.get('proxy_input', '').strip()}\n")
 
         if t.get("target_reasoning"):
-            out.append("### 🧠 Reasoning\n")
-            out.append("<details><summary>show reasoning</summary>\n")
+            out.append("### 🧠 Target reasoning\n")
+            out.append("<details><summary>show target reasoning</summary>\n")
             out.append(f"\n{t['target_reasoning'].strip()}\n")
             out.append("</details>\n")
 
