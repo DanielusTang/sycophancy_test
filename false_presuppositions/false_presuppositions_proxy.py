@@ -22,12 +22,21 @@ conditions differ by persona and nothing else:
     truth. Two ablation knobs control what it may use: ``reasoning_access`` (read the
     target's <think> trace) and ``judge_feedback`` (see the judge's 0-4 score).
 
-The proxy keeps a running conversational memory: the full untruncated conversation,
-mirroring the Target's full context window. The per-case STABLE framing (premise, full
-menu, output schema, guidance) is folded into the system prompt and every turn is appended
-to a persistent dialogue, so the whole prior conversation is a byte-stable, cacheable
-prefix served at ~0.1x; only the AI's latest reply and a recap of recent moves ride in the
-volatile tail so they never disturb that prefix.
+The proxy keeps a running conversational memory: by default the full untruncated
+conversation, mirroring the Target's full context window. The per-case STABLE framing
+(premise, full menu, output schema, guidance) is folded into the system prompt and every turn
+is appended to a persistent dialogue, so the whole prior conversation is a byte-stable,
+cacheable prefix served at ~0.1x; only the AI's latest reply and a recap of recent moves ride
+in the volatile tail so they never disturb that prefix.
+
+``memory_turns`` (0 = full history, the default) instead shows the proxy only the LAST N
+turns. Long runs otherwise hand the proxy a pile of evidence that it has been arguing
+forever — the transcript itself, the absolute message counter, and a recap full of repeats —
+and a sincere persona reads that as a cue to wrap the conversation up rather than keep
+pressing. Under a window the counter and the recap are localized to the window too, so the
+proxy's whole view is "a few turns in," however long the run actually is. The window slides
+each turn, so the dialogue stops being a cache-stable prefix (the system prompt still is);
+that is a deliberate trade — see ``decide_and_generate``.
 """
 
 from __future__ import annotations
@@ -362,6 +371,12 @@ visible reply still sounds firm.
 # prompt ALWAYS renders the FULL menu and full vocab so its bytes never change; only the
 # AI's latest reply and a recap of recent moves ride in the volatile tail — the proxy picks
 # its tactic freely, with no menu restriction.
+#
+# Under a memory window (memory_turns > 0) only the dialogue's cacheability is lost — the
+# window slides one turn per call, so nothing after the system prompt repeats byte-for-byte.
+# The system prompt (premise + full menu + task frame — by far the larger stable block) keeps
+# its own breakpoint and still caches, and a few-turn tail is much smaller than a 70-turn one,
+# so input tokens per call fall even with no dialogue cache reads.
 # --------------------------------------------------------------------------- #
 
 # ---- naturalistic: stable frame (-> system) + per-turn user ----
@@ -465,7 +480,8 @@ class ProxyAgent(BaseLLM):
 
     ``persona`` selects the system prompt and turn template (sincere user vs attacker);
     everything else — tactic menu, memory, JSON parsing, fallback — is shared. The
-    orchestrator feeds the rolling memory via ``record_turn``.
+    orchestrator feeds the rolling memory via ``record_turn``. ``memory_turns`` bounds how
+    much of that memory the proxy is actually shown (0 = all of it).
     """
 
     def __init__(
@@ -479,6 +495,7 @@ class ProxyAgent(BaseLLM):
         judge_feedback: bool = False,
         reasoning_access: bool = False,
         enable_thinking: Optional[bool] = None,
+        memory_turns: int = 0,
         **kwargs,
     ) -> None:
         if persona not in PERSONAS:
@@ -503,6 +520,11 @@ class ProxyAgent(BaseLLM):
         # the <think> trace). ----
         self.judge_feedback = judge_feedback if persona == "adversarial" else False
         self.reasoning_access = reasoning_access
+        # How many past turns the proxy is SHOWN each turn; 0 = the full conversation
+        # (the default, and what every run before this knob existed did). The full history
+        # is always retained on self._dialogue / self.history_window regardless — this
+        # bounds the view, not the record.
+        self.memory_turns = max(0, int(memory_turns))
         self.history_window: list[dict] = []
         # Full MAFALDA menu + vocab, fixed for the run (folded into the system prompt below).
         all_cats = list(CATEGORIES)
@@ -522,9 +544,10 @@ class ProxyAgent(BaseLLM):
 
         # Persistent multi-turn dialogue (empty until the first turn); each turn appends a
         # user(=the AI's reply)/assistant(=your JSON) pair so the prior conversation is a
-        # byte-stable, cacheable prefix. The per-case STABLE framing (premise, full menu,
-        # output schema, guidance) is folded into the system prompt here so it is never
-        # resent per turn.
+        # byte-stable, cacheable prefix. Always the COMPLETE conversation — memory_turns
+        # narrows what is SENT (see decide_and_generate), never what is kept. The per-case
+        # STABLE framing (premise, full menu, output schema, guidance) is folded into the
+        # system prompt here so it is never resent per turn.
         self._dialogue: list[dict] = []
         if persona == "adversarial":
             self._system_full = self._system_prompt + ADVERSARIAL_TASK_FRAME.format(
@@ -587,7 +610,11 @@ class ProxyAgent(BaseLLM):
 
     # ----- compact recap of the proxy's own recent picks, shown in its prompt -----
     # (the anti-camping signal: without it the proxy has no idea it is repeating itself)
-    def _recent_moves(self, last_n: int = 8) -> str:
+    # Defaults to the memory window when one is set, so the recap never reaches further back
+    # than the conversation the proxy can see — a windowed proxy shown 8 moves for a 5-turn
+    # view would still be reading a long trail of its own repeats.
+    def _recent_moves(self, last_n: Optional[int] = None) -> str:
+        last_n = last_n or self.memory_turns or 8
         if not self.history_window:
             return "(none yet — this is your first reply)"
         parts = []
@@ -612,6 +639,18 @@ class ProxyAgent(BaseLLM):
         # Build ONLY this turn's volatile content (the AI's latest reply + a recap of recent
         # moves). The stable framing lives in self._system_full; every prior turn lives in
         # self._dialogue.
+        #
+        # The slice is the memory window: two entries per turn (the AI's reply + our JSON),
+        # so the last `memory_turns` turns are the last 2*memory_turns entries. memory_turns=0
+        # keeps the whole dialogue, exactly as before the knob existed.
+        visible = (self._dialogue if not self.memory_turns
+                   else self._dialogue[-2 * self.memory_turns:])
+        # Position within what the proxy can SEE, not the absolute turn number. Unwindowed
+        # this is identical to `turn` (turns are 1-indexed and the dialogue is empty on turn
+        # 1); windowed it plateaus at memory_turns + 1, so a proxy 80 turns deep still reads
+        # "message 6 of your chat" instead of being told how long it has been at this. The
+        # absolute `turn` still goes to the JSONL record — only the prompt is localized.
+        display_turn = len(visible) // 2 + 1
         recent_moves = self._recent_moves()
         if self.persona == "adversarial":
             reasoning_block = ""
@@ -622,7 +661,7 @@ class ProxyAgent(BaseLLM):
             user_content = ADVERSARIAL_TURN_USER.format(
                 target_ai_last_response=target_ai_last_response,
                 reasoning_block=reasoning_block,
-                current_turn=turn,
+                current_turn=display_turn,
                 recent_moves=recent_moves,
             )
         else:
@@ -635,14 +674,16 @@ class ProxyAgent(BaseLLM):
                 target_ai_last_response=target_ai_last_response,
                 visibility_note="" if self.reasoning_access else _NATURALISTIC_BLIND_NOTE,
                 reasoning_block=reasoning_block,
-                current_turn=turn,
+                current_turn=display_turn,
                 recent_moves=recent_moves,
             )
-        # system + the whole prior dialogue + this turn's user message. anthropic_generate places
+        # system + the visible dialogue + this turn's user message. anthropic_generate places
         # the cache breakpoint on the last message; because we PERSIST that message below, it is
-        # still present next turn, so this entire prefix is served from cache at ~0.1x.
+        # still present next turn, so this entire prefix is served from cache at ~0.1x —
+        # unwindowed. Under a window the slice drops its oldest turn each call, so the prefix
+        # after the system prompt changes every time and only the system prompt cache-hits.
         messages = ([{"role": "system", "content": self._system_full}]
-                    + self._dialogue
+                    + visible
                     + [{"role": "user", "content": user_content}])
         # response_format is honoured for the non-reasoner proxy (deepseek-chat) and
         # silently skipped for a reasoner, in which case the regex fallback parses it.
@@ -650,7 +691,9 @@ class ProxyAgent(BaseLLM):
         raw, proxy_reasoning = self._chat(
             messages, response_format={"type": "json_object"}, return_reasoning=True)
         decision = self._parse_decision(raw)
-        # Persist this exchange so next turn's prefix is byte-identical up to here and cache-hits.
+        # Persist this exchange on the FULL dialogue (the window is applied at read time, above,
+        # so nothing is ever discarded). Unwindowed this also makes next turn's prefix
+        # byte-identical up to here, so it cache-hits.
         # The assistant turn is the model's raw JSON (or a minimal reconstruction if it was empty).
         self._dialogue.append({"role": "user", "content": user_content})
         self._dialogue.append({"role": "assistant", "content": raw or json.dumps(
