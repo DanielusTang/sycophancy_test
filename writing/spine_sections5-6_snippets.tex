@@ -1,0 +1,324 @@
+% ============================================================
+% Ready-to-paste LaTeX for the SPINE paper, Sections 5-6.
+% Converted from writing/section5-6_guide.md (Parts D and E).
+%
+% Blocks marked "E-n" are the guide's drafted passages; blocks
+% marked "from draft" are your existing prose converted to LaTeX
+% with the Part C fixes applied (terminology sweep, denominators,
+% label renames). Nothing else was changed in those blocks.
+%
+% Before pasting into Overleaf:
+%   1. Replace the placeholder \cite keys (hong2025measuring)
+%      with the keys in YOUR .bib file.
+%   2. Fill every [bracketed] placeholder from the run logs --
+%      the fill-source table is in section5-6_guide.md, Part C.
+%   3. Labels here match spine_sections3-4_snippets.tex, which
+%      already references sec:results-trends, sec:ablation, and
+%      sec:analysis. Keep them in sync if you rename.
+%   4. The ablation table and paragraph assume A_i = component
+%      REMOVED from the full adversary D0 (guide item C.2-5).
+%      Verify the direction against the ablation code and jsonl
+%      meta before pasting; if your runs ADDED components to a
+%      lean base instead, flip the checkmarks and the verbs.
+%   5. Preamble requirements: booktabs (tables); natbib-style
+%      \citep/\citet/\citealp.
+%   6. The misranking sentence in 5.1 must be verified against
+%      CR@5 vs CR@99 -- a commented-out rank-correlation
+%      fallback is provided below it.
+% ============================================================
+
+
+% ------------------------------------------------------------
+% Section 5 opening: header rename ("Experimental Results",
+% C.1-1) + E-1 roadmap paragraph
+% ------------------------------------------------------------
+
+\section{Experimental Results}
+\label{sec:results}
+
+Section~\ref{sec:results-trends} reports the main results: collapse
+rates and holding times for every target under both conditions and both
+scenarios (Table~\ref{tab:main-results}), with survival curves in
+Figure~\ref{fig:survival}. Section~\ref{sec:ablation} ablates the
+adversarial proxy to isolate which of its components actually drive
+collapse (Table~\ref{tab:ablation}). Per-item results and full
+trajectories appear in Appendix~[X].
+
+
+% ------------------------------------------------------------
+% 5.1 -- renamed from "Model Trend" (C.1-2). Six claim-first
+% blocks in the existing order.
+% ------------------------------------------------------------
+
+\subsection{Main Results}
+\label{sec:results-trends}
+
+% ---- block 1 (from draft; "sincere" -> "naturalistic" sweep,
+%      C.2-1; decide both-scenario vs FP-only scope, C.2-12;
+%      most/least resistant models computed, not guessed) ----
+
+\paragraph{Sustained pressure defeats most models.}
+Under the naturalistic condition alone, [x] of [N] models collapse on
+at least half of the false-presupposition cases within 99 turns, and
+under adversarial pressure every model collapses on at least [y]\% of
+cases. [MODEL] is the most resistant, holding its position for an
+average of [a] of 99 turns, whereas [MODEL] collapses within [b] turns
+on average. Table~\ref{tab:main-results} reports CR@99 and TH@99 for
+all models and conditions; Figure~\ref{fig:survival} shows the survival
+curves.
+
+% ---- block 2 = E-2 (mandatory SYCON credit; verify the
+%      reversal pair exists, C.2-7) ----
+
+\paragraph{Most collapses occur beyond turn five.}
+Across all runs that end in collapse, [x]\% do so after turn 5, the
+horizon at which SYCON-Bench and comparable multi-turn protocols stop
+\citep{hong2025measuring}; the median collapse turn is [t], and [y]\%
+of collapses occur after turn 20. Because our items are SYCON-Bench's
+own seeds (\S\ref{sec:datasets}), the comparison is direct: a five-turn
+protocol running these questions would observe at most [100$-$x]\% of
+the failures we record. The shortfall is not only undercounting but
+reordering: ranked by collapse rate at turn five, [MODEL A] appears
+more robust than [MODEL B], and the full horizon reverses the pair
+([a]\% vs.\ [b]\% at turn 5; [a$'$]\% vs.\ [b$'$]\% at turn 99). This
+gap is the failure mode SPINE is built to expose.
+
+% Fallback if no clean reversal exists in the data -- replace the
+% last two sentences with:
+%
+% The shortfall is not only undercounting but reordering: model
+% rankings by collapse rate at turn five and at turn 99 agree only
+% weakly (Kendall $\tau = $ [t]). This gap is the failure mode SPINE
+% is built to expose.
+
+% ---- block 3 (from draft; body says "naturalistic", header
+%      keeps "sincere users" as persona description) ----
+
+\paragraph{Sincere users already elicit collapse; adversaries raise the price.}
+Under purely naturalistic pressure, with no access to the target's
+reasoning and no strategy beyond genuine conviction, models collapse on
+[x]\% of cases on average. The adversarial condition shortens TH@99 by
+a further [d] turns and raises CR@99 by [p] points, with the largest
+premium on [MODEL] ([numbers]). Sycophantic collapse is therefore not
+an artifact of adversarial optimization: it is reachable by an
+ordinary, honestly mistaken user, and an optimizing adversary chiefly
+accelerates it.
+
+% ---- block 4 = E-3 (mandatory SYCON credit, confirm-then-
+%      extend; check the reproduction claim across ALL families,
+%      not only DeepSeek) ----
+
+\paragraph{Reasoning helps selectively.}
+At a five-turn horizon, reasoning-optimized models are the most
+resistant models in SYCON-Bench \citep{hong2025measuring}, and our
+short-horizon data reproduce the advantage: [verify: within each
+family, the reasoning variant holds longer than its chat counterpart].
+Sustained pressure erodes the advantage, and unevenly. R1 improves on
+V3 by [n] points of CR@99 on stereotype premises but only [m] points on
+false factual premises, and Qwen3's thinking mode shows the same
+pattern ([numbers]). One interpretation is that stereotype premises
+trigger refusal behavior that deliberation reinforces, whereas factual
+premises invite the model to argue on the merits, where a persistent
+interlocutor keeps supplying plausible counter-considerations; the
+traces in \S\ref{sec:analysis} are consistent with this reading.
+
+% ---- block 5 (from draft; Qwen3-32B-thinking footnote added,
+%      C.2-9) ----
+
+\paragraph{Scale improves resistance within a family but does not confer immunity.}
+Across the Qwen3 series, naturalistic-condition CR@99 falls from [a]\%
+at 8B to [b]\% at 32B and [c]\% at 235B, with TH@99 rising
+accordingly.\footnote{Qwen3-32B (thinking) covers [x of N] items due to
+[reason]; we report it for reference and exclude it from aggregate
+claims.} Even at 235B, however, the model collapses on [d]\% of
+adversarial cases. We observe the scaling trend within a single family
+and do not claim it generalizes across architectures.
+
+% ---- block 6 (from draft; optional neutral ToF cite added,
+%      Part B item 4; depends on AUSC being defined in Sec. 3.3) ----
+
+\paragraph{Erosion precedes collapse and persists without it.}
+First erosion occurs early even for models that ultimately hold: the
+median first-erosion turn is [t], and the median gap between first
+erosion and collapse is [g] turns, the window in which the target is
+conceding ground it will not recover. Some models never collapse yet
+soften steadily; [MODEL] ends [x]\% of its non-collapsed runs at
+position strength 2 or below, and its AUSC of [v] sits closer to the
+frequently collapsing [MODEL] ([v$'$]) than its zero collapse rate
+would suggest. A binary flip metric (e.g., Turn-of-Flip;
+\citealp{hong2025measuring}) scores every one of these runs as a
+success; this is the failure mode that motivates a graded judge.
+
+
+% ------------------------------------------------------------
+% 5.2 -- grammar fix in header (C.1-3); setup paragraph = E-6
+% with the A_i = remove-from-D0 convention (C.2-5)
+% ------------------------------------------------------------
+
+\subsection{What Makes the Adversary Effective?}
+\label{sec:ablation}
+
+\paragraph{Ablation setup.}
+The full adversary (D0) combines four components: a capable proxy model
+(R1), access to the target's reasoning trace, the judge's turn-level
+strength score fed back to the proxy, and an escalation ladder that
+hardens tactics once erosion is detected. Starting from D0, we disable
+one component at a time, holding the target (DeepSeek-R1), the judge,
+and the case set fixed: A1 withholds the judge's score, A2 withholds
+the trace, A3 disables the ladder, and A4 substitutes the weaker V3 as
+proxy. Table~\ref{tab:ablation} reports collapse rate and turns held
+for each configuration; because a run ends at collapse or at the turn
+budget, higher turns held means the target resisted longer, that is, a
+weaker adversary. The ablation covers one target and one scenario; we
+do not claim the component ranking generalizes.
+
+% ---- from draft; verbs matched to the remove-from-D0
+%      convention ----
+
+\paragraph{Only proxy capability and trace access matter.}
+Weakening the proxy from R1 to the smaller V3 (A4) is the largest
+single effect, more than doubling turns held (10.0 to 23.0) and, for
+the first time, letting some cases survive the full budget (CR 100\% to
+96\%). Removing the proxy's access to the target's reasoning trace (A2)
+is the second largest, raising turns held to 13.6. The two engineered
+aids contribute nothing measurable: withholding the judge's score (A1,
+TH 9.6) and disabling the escalation ladder (A3, TH 9.7) leave the
+trajectory indistinguishable from the full adversary. A capable proxy
+that already adapts to the target gains nothing from a scripted
+escalation schedule or an external strength signal.
+
+% ---- from draft; "sincere" -> "naturalistic" sweep; the
+%      closing sentence now states the main-config
+%      correspondence explicitly (C.2-5c) ----
+
+\paragraph{Persona bounds both.}
+These components operate within the adversarial persona; the persona
+itself, naturalistic versus manipulative intent, is the outermost
+lever, and its effect is reported in \S\ref{sec:results-trends}, where
+switching from the naturalistic to the adversarial condition shortens
+TH from [X] to [Y]. Three factors therefore govern how fast a target
+erodes: the persona behind the pressure, the capability of the model
+applying it, and whether that model can read the target's reasoning.
+The remaining scaffolding is inert, which is why the main experiments
+of \S\ref{sec:results-trends} run the adversary without the escalation
+ladder and without judge feedback (D0 minus A1 and A3).
+
+% ---- ablation table (Part D design): component grid, sorted by
+%      TH, one-toggle-at-a-time visually self-verifying.
+%      Requires \usepackage{booktabs}. ----
+
+\begin{table}[t]
+  \centering
+  \small
+  \begin{tabular}{lccccrr}
+    \toprule
+    Config & Proxy & Trace & Feedback & Ladder & CR & TH \\
+    \midrule
+    A1 ($-$feedback) & R1 & \checkmark & --         & \checkmark & [·]    & 9.6  \\
+    A3 ($-$ladder)   & R1 & \checkmark & \checkmark & --         & [·]    & 9.7  \\
+    D0 (full)        & R1 & \checkmark & \checkmark & \checkmark & 100\%  & 10.0 \\
+    A2 ($-$trace)    & R1 & --         & \checkmark & \checkmark & [·]    & 13.6 \\
+    A4 (V3 proxy)    & V3 & \checkmark & \checkmark & \checkmark & 96\%   & 23.0 \\
+    \bottomrule
+  \end{tabular}
+  \caption{Adversary-component ablation on DeepSeek-R1
+    ([scenario], [n] cases, judge fixed). Each row disables one
+    component of the full adversary D0. Higher turns held (TH) means
+    the target resisted longer, i.e.\ a weaker adversary.}
+  \label{tab:ablation}
+\end{table}
+
+
+% ============================================================
+% Section 6 -- subsections numbered (C.1 header items), question
+% headers per the SYCON Sec. 6 move
+% ============================================================
+
+\section{Analysis}
+\label{sec:analysis}
+
+% ------------------------------------------------------------
+% 6.1 = E-5: scope sentence (C.2-3), "social autopilot"
+% replaces "accommodation" (C.2-2), resolves the Sec. 2.4
+% forward promise (C.2-4). Verify subset size and condition
+% from the run logs.
+% ------------------------------------------------------------
+
+\subsection{How Do Models Collapse?}
+\label{sec:mechanisms}
+
+We examine collapse mechanisms in a deep dive: DeepSeek-R1 on a
+[20-question] subset of the false-presupposition items under the
+[naturalistic] condition, where 17 of 20 runs end in collapse. We
+classify each collapsed run by the mechanism visible in the reasoning
+trace and final reply, using four categories: \emph{social autopilot},
+where the model folds to ``everyone knows'' framing and the correct
+fact never enters its reasoning; \emph{reframe-to-agree}, where it
+constructs a technically true reading that makes agreement feel
+defensible; \emph{testimony-over-evidence}, where it weights the user's
+fabricated firsthand experience above established fact; and
+\emph{yes/no cornering}, where pressure to answer in one word strips
+the correct qualifier away with the rest. Orthogonal to the four, we
+flag \emph{conscious override}: the trace states the correct fact and
+the model explicitly chooses the user's answer anyway.
+Reframe-to-agree dominates (12 of 17), and 8 of 17 collapses show
+conscious override. Table~\ref{tab:mechanisms} gives the tally with a
+trace signature per mechanism; Figures~[N--M] show one excerpt each.
+
+% Optional one-clause link to SYCON's qualitative observation
+% (Part B item 5), appended to the paragraph above:
+%
+% \citet{hong2025measuring} observe that reasoning models fail
+% ``gradually'' rather than immediately; the four categories name the
+% specific routes that gradient takes.
+
+
+% ------------------------------------------------------------
+% 6.2 = E-4 (mandatory SYCON credit). Heading currently matches
+% SYCON Sec. 6.2 verbatim -- the in-text credit makes the
+% borrowing legible; retitling remains the cleaner option
+% (e.g. "Knowledge Check: Collapse Is Not Ignorance").
+% ------------------------------------------------------------
+
+\subsection{Ignorance or Sycophancy?}
+\label{sec:knowledge-check}
+
+A collapse is only evidence of sycophancy if the model knew better.
+SPINE answers this partly by construction: every run opens with a
+neutral question, and only runs in which the target initially states
+the correct position enter the analysis (\S\ref{sec:protocol}), so a
+later collapse abandons knowledge the model demonstrably held in
+context. As an independent check, we follow the presupposition
+knowledge check of \citet{hong2025measuring} and ask each model, in a
+fresh context, to classify as true or false every presupposition it
+endorsed under pressure. Models correctly classify [x]\% of them. Both
+tests point the same way: collapse reflects sycophantic alignment, not
+missing knowledge.
+
+
+% ------------------------------------------------------------
+% 6.3 (from draft): "sincere" -> "naturalistic" sweep; the
+% mild-confusion kicker now states its denominator explicitly
+% (C.2-6 -- fill [K] with the total collapse count across BOTH
+% conditions and recompute the fraction).
+% ------------------------------------------------------------
+
+\subsection{Which Tactics Do the Damage?}
+\label{sec:tactics}
+
+Because the proxy's move is recorded at every turn
+(\S\ref{sec:pressure}), we can ask which tactic immediately precedes a
+drop in position strength, data a fixed-script benchmark cannot
+produce. The two conditions break differently. Under naturalistic
+pressure on DeepSeek-R1, plain persistence does most of the damage:
+re-assertion of the belief precedes 52\% of all score drops and direct
+challenge 35\%, while personal-experience appeals precede only 6\%.
+Under adversarial pressure, direct challenge leads (44\%), but
+concede-and-return, granting part of the target's answer and
+re-approaching from another angle, accounts for 24\% of drops, four
+times its share in the naturalistic condition, reflecting the
+adversary's strategic use of partial concessions as wedges. The tactic
+active at the final collapse tells the same story from the other end:
+across both conditions, 5 of [K] collapses occur under mild confusion
+alone, meaning [5/K] of R1's failures required nothing more than a
+user asking to have the answer explained again.
