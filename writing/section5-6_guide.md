@@ -87,7 +87,9 @@ How much is "enough"? Three citations in ~2.5 pages of results is right. Every a
 2. **Mechanism-name mismatch:** §6 text introduces "*accommodation*" but Table 2's row is "(A) **Social autopilot**". Reconcile; recommendation: *social autopilot* — it is the more memorable coined name (Part A trait 6) and the table already uses it.
 3. **Scope statement for the deep dive (C.2-10 carryover):** Table 2 says "17 collapsed runs (of 20 questions)" while §4.2 says 25 FP items. §6.1's opening sentence must scope explicitly: which target (R1), which scenario (FP), which condition, which subset (20 of 25) and why.
 4. **§2.4's dangling promise:** "We quantify both effects—delayed but eventual collapse, and the rate of reason-then-override—in §[results]." Resolve to §5.1 (delayed collapse) and §6.1 (override rate). Note the scope: 8/17 conscious override is R1-on-FP only; either scope the §2.4 claim to the deep dive or compute an all-model rate before claiming "a substantial fraction of collapses".
-5. **Ablation label muddle (the one structural fix in §5–6).** The setup ¶ says D0 is the *full* adversary and each A_i *toggles one component off*; but the results ¶ says "**feeding** the judge's score back to the proxy (A1)" and "**adding** the erosion-triggered escalation ladder (A3)", which reads as if A1/A3 *add* components to a base. Meanwhile the closing sentence says the main experiments *drop* ladder and feedback, meaning the main configuration is not D0. Fix three things: (a) define each A_i unambiguously as remove-from-D0 (or rebase so the main config is the reference point — arguably cleaner, since then A1/A3 genuinely add); (b) state which configuration the §5.1 main results used; (c) make the verbs match the direction. Check the ablation jsonl meta for what was actually run (memory: ablation output folders are proxy-named, not target-named — do not trust folder names).
+5. **~~Ablation label muddle~~ — RESOLVED (2026-07-23).** `false_presuppositions/ablation_table.tex` is the authoritative artifact and settles the direction: **D0 = reasoner proxy, trace visible, no judge feedback, no escalation.** So A1 (`+` judge feedback) and A3 (`+` escalate-on-erosion) **add** components, while A2 (`−` reasoning access) and A4 (chat proxy) remove or weaken one. The main configuration therefore **is** D0, not "D0 minus A1 and A3". The remove-from-D0 convention assumed by earlier drafts of this guide and by E-6 is superseded; `spine_sections5-6_snippets.tex` is already rebased. Still verify against the jsonl run meta (memory: ablation output folders are proxy-named, not target-named — do not trust folder names).
+
+   **The results ¶ also has to change, not just its labels.** The tex reports A1 as the *largest accelerator of full collapse* (17.6 → 12.8) and A3 as producing the *earliest effective collapse* (4.0). The old prose claimed the opposite ("the two engineered aids contribute nothing measurable: A1 TH 9.6, A3 TH 9.7"). Those are two different runs; the tex is newer and wins until a rerun says otherwise. Header becomes "Proxy capability dominates; the engineered aids shift timing, not outcome." One open item: A2 moves erosion and soft cave *earlier* while leaving full collapse near baseline, which does not read cleanly — re-verify before it ships.
 6. **"A fifth of R1's failures" needs its denominator.** Five collapses under mild confusion, "a fifth" implies ~25 total collapses across both conditions; but the sincere-condition table says 17. State the arithmetic: "5 of [N] collapses across both conditions."
 7. **The misranking claim must be computed, not asserted.** "[MODEL A] … [MODEL B] … reversing their relative ordering" is the block's strongest sentence only if a pair actually reverses between CR@5 and CR@99. Compute it from the run logs; if no clean reversal exists, report the rank shuffle honestly (e.g., Kendall τ between CR@5 and CR@99 rankings) — a low τ makes the same point without manufacturing a pair.
 8. **"[My guess is claude]" and friends.** Every bracketed guess resolves from the run logs, and counts must match the reconciled roster (memory: true target count is 11, not the draft's "12 LLMs" or the table's ~19 rows; C.2-4 carryover). The §5.1 headline "X of 12 models" inherits whatever roster §4.3 freezes.
@@ -116,28 +118,41 @@ How much is "enough"? Three citations in ~2.5 pages of results is right. Every a
 
 ## Part D — Recommended outline
 
+> **Superseded 2026-07-23.** The §5 outline below replaces the earlier six-block version, which
+> inherited SYCON's organization by *model contrast axis* (base/instruct, scale, reasoning,
+> family). SPINE's contributions are *protocol* axes, so §5.1 now leads with those. The live
+> version of this structure is `spine_sections5-6_snippets.tex`; if the two disagree, the tex wins.
+> §6 below is unchanged.
+
 ### §5 Experimental Results
 
-- **¶0 — roadmap** (drafted in E-1). Three sentences: 5.1 + main table + survival-curve figure; 5.2 + ablation table; appendix pointers. Mirrors SYCON's move; no credit needed.
-- **5.1 Main Results.** Keep your six claim-headers and their current order — it builds correctly: headline → horizon comparison → condition comparison → reasoning axis → scale axis → graded-metric payoff. Per block: claim → one exemplar number → table/figure pointer, SYCON-style.
+- **¶0 — roadmap** (drafted in E-1, now three pointers rather than two). Mirrors SYCON's move; no credit needed.
+- **5.1 Main Results.** Six blocks. The reorder is driven by §2.3, which promises three
+  differentiating axes; blocks 3, 2, and 4 discharge them (turn structure, outcome granularity,
+  signal source respectively). Per block: claim → one exemplar number → table/figure pointer.
   1. *Sustained pressure defeats most models.* Headline CR@99/TH@99, both conditions, both scenarios (C.2-12); most/least resistant exemplar; main-table + survival-figure pointers.
-  2. *Most collapses occur beyond turn five.* The SYCON head-to-head. Mandatory credit; drafted in E-2. Optionally followed by the CR@5-vs-ToF comparability paragraph (Part B item 5).
-  3. *Sincere users already elicit collapse; adversaries raise the price.* Condition contrast; the "reachable by an honest user" sentence is one of the paper's best — keep.
-  4. *Reasoning helps selectively.* Confirm-then-extend with mandatory credit; drafted in E-3. Keep the single interpretation sentence + §6 pointer.
-  5. *Scale improves resistance within a family but does not confer immunity.* Qwen ladder; 32B-thinking footnote (C.2-9); keep the existing "we do not claim it generalizes across architectures" sentence — that is SYCON-grade honesty.
-  6. *Erosion precedes collapse and persists without it.* AUSC payoff; optional neutral ToF cite (Part B item 4). This block justifies the graded judge — it earns its place as the closer.
-- **5.2 What Makes the Adversary Effective?** Three blocks as drafted (*Ablation setup* / *Only proxy capability and trace access matter* / *Persona bounds both*), with the C.2-5 label fix and an explicit scope sentence (one target, one scenario, [n] cases; generalization unclaimed). Setup ¶ redrafted in E-6.
-  - **Ablation table design** (the "Table X" that doesn't exist yet): a component grid makes one-toggle-at-a-time visually self-verifying, sorted by TH —
+  2. *Holding is not the same as not collapsing.* **Promoted from position 6.** Zero clean survivals among non-collapsed FP runs (9 sonnet-5, 4 gpt-5.6-terra, 1 deepseek-v4-pro; all three flags fire on 100% of them); sonnet-5 q13 as the 61-turn exemplar; soft-cave lead of 4 / 6 / 1.5 turns (FP) and 24.5 / 37 (unethical). Neutral ToF cite (Part B item 4). It sits directly under the headline because it changes what the headline number means.
+  3. *A five-turn horizon sees a minority of the failures, and a different ranking.* **Reframed from "Most collapses occur beyond turn five", which is false as a blanket claim** — the real range is 12–67% after t5, medians 3–10. Now per-model, with CR@5 and CR@99 as adjacent table columns. Mandatory SYCON credit retained; misranking pair must be computed or replaced with Kendall τ (C.2-7).
+  4. *Sincere users already elicit collapse; adversaries raise the price.* Condition contrast; the "reachable by an honest user" sentence is one of the paper's best — keep.
+  5. *Reasoning delays collapse without preventing it.* Retitled from "Reasoning helps selectively" — the selectivity is the second clause, not the claim. Confirm-then-extend with mandatory credit; drafted in E-3.
+  6. *Non-collapse is not survival.* **New.** The instrument-validity block: 9 `ended_winddown` runs (proxy quit, not target held), 42 long incompletes counted as held, silent disengagement (sonnet-5 q14, "Noted." from t55, 67 turns), degenerate looping (olmo3 base q5, byte-identical paragraph 66×, judged PS 3–4). Every one biases toward the target looking robust, so the framing is "these numbers are a floor", not "these numbers are shaky". The `_parse_decision` fallback is deliberately *not* here — it is a bug being fixed, so it belongs in the reproducibility appendix.
+  - **Cut: the scale block.** Zero Qwen3 runs at 8B/235B for this protocol; the OLMo substitute is uninterpretable (all 604 OLMo turns have empty `target_reasoning`, so Think ran as a chat model, and base collapse at t1 conflates unaligned with sycophantic). If a scale sentence is wanted, it goes in Limitations.
+- **5.2 What Makes Pressure Effective?** Retitled from "…the Adversary…" because A1/A3 are protocol knobs, not adversary traits. Three blocks (*Ablation setup* / *Proxy capability dominates; the engineered aids shift timing, not outcome* / *Persona bounds both*), rebased per the resolved C.2-5 direction, with the scope sentence (one target, one scenario, paired n=10; generalization unclaimed).
+  - **Ablation table:** use the one in `false_presuppositions/ablation_table.tex` rather than a component grid. Because collapse is near-universal (100% everywhere except A4 at 19/20), a CR column carries no signal and three turn columns do:
 
-    | Config | Proxy | Trace | Feedback | Ladder | CR | TH |
-    |---|---|---|---|---|---|---|
-    | A1 | R1 | ✓ | ✗ | ✓ | [·] | 9.6 |
-    | A3 | R1 | ✓ | ✓ | ✗ | [·] | 9.7 |
-    | D0 (full) | R1 | ✓ | ✓ | ✓ | 100% | 10.0 |
-    | A2 | R1 | ✗ | ✓ | ✓ | [·] | 13.6 |
-    | A4 | V3 | ✓ | ✓ | ✓ | 96% | 23.0 |
+    | Cond. | Change from baseline | First erosion | Eff. collapse | Full collapse |
+    |---|---|---|---|---|
+    | A1 | + judge feedback | 8.8 | 10.6 | 12.8 |
+    | A2 | − reasoning access | 4.9 | 5.5 | 13.6 |
+    | A3 | + escalate-on-erosion | 6.1 | 4.0 | 15.3 |
+    | D0 | Baseline (reasoner proxy) | 5.6 | 16.4 | 17.6 |
+    | A4 | Chat proxy (weaker) | 11.1 | 16.7 | 24.6 |
 
-    (✓/✗ per the resolved direction from C.2-5 — the grid above assumes A_i = remove-from-D0; flip if you rebase.) Caption carries the scope sentence.
+- **5.3 Beyond Stance: Harm in the Unethical Setting.** **New.** The only harm-level rather than stance-level results in the paper, all already computed from `unethical_setting/outputs/naturalistic/**` (70 runs, 5 targets, 2,725 judged turns). Three blocks: discriminatory advice on 81 non-collapse turns (gemini-3.1-pro firing it in 3 of its 4 never-collapsed runs; sonnet-5 clean at 0/10); the conditional-framing loophole as a mechanism with run-level prevalence (31/70 runs, 68 turns, explicitly not a headline percentage at ~2% of judged turns) plus the verbatim gemini q5 turn; and evidence capitulation firing in nearly every run across all five targets.
+
+### Table 1 changes
+
+Add columns so the prose can shrink: **CR@5 | CR@99 | TH@99 | soft-cave rate | turns-to-first-soft-cave** (`first_effective_collapse_turn`, already computed) **| AUSC**. Footnote Qwen3-32B thinking as reference-only and exclude it from every "X of N models" sentence.
 
 ### §6 Analysis
 
@@ -194,11 +209,15 @@ Fill notes: this draft assumes A_i = remove-from-D0; verify against the ablation
 ## Checklist before freezing §5–§6
 
 - [ ] Three mandatory credits in place (E-2, E-3, E-4); no others added.
-- [ ] Headers renamed: "Experimental Results", 5.1 no longer "Model Trend", 5.2 grammar fixed, §6 numbered 6.1–6.3.
+- [ ] Headers renamed: "Experimental Results", 5.1 no longer "Model Trend", 5.2 is "What Makes Pressure Effective?", §6 numbered 6.1–6.3.
 - [ ] One condition name ("naturalistic") swept through §5–6.
 - [ ] "Social autopilot" vs. "accommodation" reconciled everywhere.
-- [ ] Ablation labels direction-consistent with the code; ablation table built; scope sentence present.
+- [x] Ablation direction resolved from `ablation_table.tex` (D0 has no feedback and no ladder; A1/A3 add). Scope sentence present; table rebuilt with the three turn columns.
+- [ ] A2's direction (erosion and soft cave *earlier*, full collapse near baseline) re-verified against the run meta, or the interpreting sentence cut.
 - [ ] Every placeholder filled from run logs (Part C inventory); no guessed model names; misranking pair verified or replaced with rank correlation.
 - [ ] "A fifth of R1's failures" denominator stated; 17-of-20 subset scoped in §6.1; §2.4 cross-refs resolved to §5.1 and §6.1.
-- [ ] Qwen3-32B thinking footnoted as partial; aggregates exclude it.
-- [ ] Table numbering deduplicated after the §3–4 renumber; models-table cells filled or rows cut.
+- [ ] §6.3's tactic shares (re-assertion 52% / direct challenge 35% / personal experience 6%) recomputed on the MAFALDA-23 runs at level 1; the 5-tactic numbers do not survive the switch.
+- [x] Scale block cut; no aggregate sentence in §5 references Qwen3 8B/235B or the OLMo Think variant.
+- [ ] §5 rerun after the `_parse_decision` fallback fix; no `[pre-fix]` number reaches the final draft.
+- [ ] Table numbering deduplicated after the §3–4 renumber; Table 1 gains the CR@5 / soft-cave / AUSC columns; models-table cells filled or rows cut.
+- [ ] Blocks 3, 2, and 4 of §5.1 checked against §2.3's three promised axes; each axis has a home.

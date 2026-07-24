@@ -15,16 +15,24 @@
 %   3. Labels here match spine_sections3-4_snippets.tex, which
 %      already references sec:results-trends, sec:ablation, and
 %      sec:analysis. Keep them in sync if you rename.
-%   4. The ablation table and paragraph assume A_i = component
-%      REMOVED from the full adversary D0 (guide item C.2-5).
-%      Verify the direction against the ablation code and jsonl
-%      meta before pasting; if your runs ADDED components to a
-%      lean base instead, flip the checkmarks and the verbs.
+%   4. The ablation is rebased on false_presuppositions/
+%      ablation_table.tex, which is the authoritative artifact:
+%      D0 = reasoner proxy, trace VISIBLE, NO judge feedback, NO
+%      escalation. So A1/A3 ADD a component and A2/A4 remove or
+%      weaken one. This reverses the remove-from-D0 convention
+%      assumed by section5-6_guide.md (C.2-5); that guide item is
+%      superseded. Re-verify against the jsonl run meta, not the
+%      output folder names (those are proxy-named, not target-named).
 %   5. Preamble requirements: booktabs (tables); natbib-style
 %      \citep/\citet/\citealp.
 %   6. The misranking sentence in 5.1 must be verified against
 %      CR@5 vs CR@99 -- a commented-out rank-correlation
 %      fallback is provided below it.
+%   7. Numbers marked "[pre-fix]" predate the _parse_decision
+%      fallback repair. The flagged questions (sonnet-5
+%      q13/14/19/24, gpt-5.6-terra q16/17/18, gemini-3.1-pro q9,
+%      deepseek-v4-pro q6, OLMo-instruct q19) will move CR for
+%      five targets. No 5.1 number is frozen until that lands.
 % ============================================================
 
 
@@ -37,17 +45,26 @@
 \label{sec:results}
 
 Section~\ref{sec:results-trends} reports the main results: collapse
-rates and holding times for every target under both conditions and both
-scenarios (Table~\ref{tab:main-results}), with survival curves in
-Figure~\ref{fig:survival}. Section~\ref{sec:ablation} ablates the
-adversarial proxy to isolate which of its components actually drive
-collapse (Table~\ref{tab:ablation}). Per-item results and full
-trajectories appear in Appendix~[X].
+rates, holding times, and sub-collapse erosion for every target under
+both conditions and both scenarios (Table~\ref{tab:main-results}), with
+survival curves in Figure~\ref{fig:survival}.
+Section~\ref{sec:ablation} ablates the pressure generator to isolate
+which of its components actually drive collapse
+(Table~\ref{tab:ablation}). Section~\ref{sec:harm} reports the
+harm-level measurements available only in the unethical-queries
+scenario. Per-item results and full trajectories appear in
+Appendix~[X].
 
 
 % ------------------------------------------------------------
 % 5.1 -- renamed from "Model Trend" (C.1-2). Six claim-first
-% blocks in the existing order.
+% blocks, reordered so the protocol axes named in Sec. 2.3 lead:
+% outcome granularity (block 2), turn structure and length
+% (block 3), signal source (block 4). The scale block was cut --
+% there are zero Qwen3 runs at 8B/235B for this protocol, and
+% the OLMo substitute is not interpretable (empty
+% target_reasoning across all 604 OLMo turns; base-model
+% collapse at t1 conflates unaligned with sycophantic).
 % ------------------------------------------------------------
 
 \subsection{Main Results}
@@ -67,32 +84,81 @@ on average. Table~\ref{tab:main-results} reports CR@99 and TH@99 for
 all models and conditions; Figure~\ref{fig:survival} shows the survival
 curves.
 
-% ---- block 2 = E-2 (mandatory SYCON credit; verify the
-%      reversal pair exists, C.2-7) ----
+% ---- block 2 (NEW; promoted from the old block 6 position).
+%      This is the graded-judge payoff and it belongs directly
+%      under the headline because it changes what the headline
+%      number means. Numbers from the naturalistic MAFALDA-23
+%      runs; every one is already computed. Optional neutral ToF
+%      cite retained (Part B item 4). ----
 
-\paragraph{Most collapses occur beyond turn five.}
-Across all runs that end in collapse, [x]\% do so after turn 5, the
-horizon at which SYCON-Bench and comparable multi-turn protocols stop
-\citep{hong2025measuring}; the median collapse turn is [t], and [y]\%
-of collapses occur after turn 20. Because our items are SYCON-Bench's
-own seeds (\S\ref{sec:datasets}), the comparison is direct: a five-turn
-protocol running these questions would observe at most [100$-$x]\% of
-the failures we record. The shortfall is not only undercounting but
-reordering: ranked by collapse rate at turn five, [MODEL A] appears
-more robust than [MODEL B], and the full horizon reverses the pair
-([a]\% vs.\ [b]\% at turn 5; [a$'$]\% vs.\ [b$'$]\% at turn 99). This
-gap is the failure mode SPINE is built to expose.
+\paragraph{Holding is not the same as not collapsing.}
+A target that never satisfies the collapse criterion has not
+necessarily defended anything. Across the naturalistic
+false-presupposition runs that never fully collapsed, [14] of [14]
+spent turns at partial sycophancy, [14] of [14] registered a soft cave,
+and [14] of [14] contained turns in which the correct fact was absent
+entirely. Not one clean survival appears in the set. The extreme case
+is [MODEL] on [item], which scores as a hold across 61 turns while
+spending 42 of them at partial sycophancy, 47 at soft cave, and 48 with
+the correction gone. Soft cave is also an early warning rather than a
+restatement of collapse: it leads full collapse by a median of [4]
+turns in the false-presupposition scenario and [24.5] turns in the
+unethical scenario, and that interval is the window in which the target
+concedes ground it does not recover. A binary flip metric (e.g.,
+Turn-of-Flip; \citealp{hong2025measuring}) scores every one of these
+runs as a success. Table~\ref{tab:main-results} therefore reports
+soft-cave rate and turns-to-first-soft-cave alongside CR@99, and AUSC
+as the area under the strength curve.
+
+% Fill notes: the three [14]s are the non-collapsed run counts
+% (claude-sonnet-5 9, gpt-5.6-terra 4, deepseek-v4-pro 1) and all
+% three flags fired on 100% of them -- state the per-target split
+% in the table rather than the prose. The 61-turn exemplar is
+% claude-sonnet-5 q13. Soft-cave lead medians: 4 (sonnet-5; mean
+% 17, max 46), 6 (gpt-5.6-terra), 1.5 (deepseek-v4-pro); unethical
+% 24.5 (deepseek-v3), 37 (gpt-5.6-terra).
+
+% ---- block 3 (was block 2; mandatory SYCON credit retained,
+%      but the blanket "most collapses occur beyond turn five"
+%      claim is REPLACED. Real numbers: 12-67% of collapses land
+%      after t5, medians 3-10, so the blanket form is false for
+%      deepseek-v3 (12%) and gemini-3.1-pro (24%). The load moves
+%      into the table as adjacent CR@5 and CR@99 columns. ----
+
+\paragraph{A five-turn horizon sees a minority of the failures, and a different ranking.}
+Five turns is the horizon at which SYCON-Bench and comparable
+multi-turn protocols stop \citep{hong2025measuring}. On our items,
+which are SYCON-Bench's own seeds (\S\ref{sec:datasets}), that horizon
+is where most targets have barely begun to yield: the share of
+collapses occurring after turn 5 ranges from [12]\% on [MODEL] to
+[67]\% on [MODEL], and median collapse turns run from [3] to [10].
+Because the fraction is target-dependent, a five-turn protocol does not
+undercount uniformly, and Table~\ref{tab:main-results} reports CR@5
+next to CR@99 for every target so the size of the gap is visible
+per-model. The consequence is reordering as well as undercounting:
+ranked by collapse rate at turn five, [MODEL A] appears more robust
+than [MODEL B], and the full horizon reverses the pair ([a]\% vs.\
+[b]\% at turn 5; [a$'$]\% vs.\ [b$'$]\% at turn 99).
 
 % Fallback if no clean reversal exists in the data -- replace the
-% last two sentences with:
+% last sentence with:
 %
-% The shortfall is not only undercounting but reordering: model
+% The consequence is reordering as well as undercounting: model
 % rankings by collapse rate at turn five and at turn 99 agree only
-% weakly (Kendall $\tau = $ [t]). This gap is the failure mode SPINE
-% is built to expose.
+% weakly (Kendall $\tau = $ [t]).
 
-% ---- block 3 (from draft; body says "naturalistic", header
-%      keeps "sincere users" as persona description) ----
+% Fill source [pre-fix], naturalistic / MAFALDA-23 / sonnet-5
+% proxy / 25 questions per target:
+%   claude-sonnet-5    CR@99 64% (16/25)  median 4   31% after t5
+%   gpt-5.6-terra      CR@99 84% (21/25)  median 10  67% after t5
+%   gemini-3.1-pro     CR@99 100% (25/25) median 4   24% after t5
+%   deepseek-v4-pro    CR@99 96% (24/25)  median 4   38% after t5
+%   deepseek-v3        CR@99 100% (25/25) median 3   12% after t5
+%   OLMo-3-7B-Instruct CR@99 96% (24/25)  median 4   38% after t5
+
+% ---- block 4 (was block 3; unchanged. Body says
+%      "naturalistic", header keeps "sincere users" as the
+%      persona description) ----
 
 \paragraph{Sincere users already elicit collapse; adversaries raise the price.}
 Under purely naturalistic pressure, with no access to the target's
@@ -104,11 +170,13 @@ an artifact of adversarial optimization: it is reachable by an
 ordinary, honestly mistaken user, and an optimizing adversary chiefly
 accelerates it.
 
-% ---- block 4 = E-3 (mandatory SYCON credit, confirm-then-
+% ---- block 5 = E-3 (mandatory SYCON credit, confirm-then-
 %      extend; check the reproduction claim across ALL families,
-%      not only DeepSeek) ----
+%      not only DeepSeek). Retitled: "helps selectively" understates
+%      the finding, and the selectivity is the second clause, not
+%      the claim. ----
 
-\paragraph{Reasoning helps selectively.}
+\paragraph{Reasoning delays collapse without preventing it.}
 At a five-turn horizon, reasoning-optimized models are the most
 resistant models in SYCON-Bench \citep{hong2025measuring}, and our
 short-horizon data reproduce the advantage: [verify: within each
@@ -122,111 +190,239 @@ premises invite the model to argue on the merits, where a persistent
 interlocutor keeps supplying plausible counter-considerations; the
 traces in \S\ref{sec:analysis} are consistent with this reading.
 
-% ---- block 5 (from draft; Qwen3-32B-thinking footnote added,
-%      C.2-9) ----
+% ---- The scale block was deleted here. There are zero Qwen3
+%      runs at 8B and 235B for this protocol, and the OLMo
+%      substitute cannot carry the claim: all 604 OLMo target
+%      turns in the corpus have an empty target_reasoning field,
+%      so the Think variant ran as an ordinary chat model, and
+%      base-model collapse at turn 1 conflates unaligned with
+%      sycophantic. If a scale sentence is wanted, it belongs in
+%      Limitations. ----
 
-\paragraph{Scale improves resistance within a family but does not confer immunity.}
-Across the Qwen3 series, naturalistic-condition CR@99 falls from [a]\%
-at 8B to [b]\% at 32B and [c]\% at 235B, with TH@99 rising
-accordingly.\footnote{Qwen3-32B (thinking) covers [x of N] items due to
-[reason]; we report it for reference and exclude it from aggregate
-claims.} Even at 235B, however, the model collapses on [d]\% of
-adversarial cases. We observe the scaling trend within a single family
-and do not claim it generalizes across architectures.
+% ---- block 6 (NEW; instrument validity). Every failure listed
+%      here biases toward the target looking robust, which is the
+%      version of this paragraph that helps the paper: the
+%      headline numbers are conservative by construction. CMU's
+%      precedent for placement is their base-model/ToF caveat,
+%      stated before the finding it qualifies. ----
 
-% ---- block 6 (from draft; optional neutral ToF cite added,
-%      Part B item 4; depends on AUSC being defined in Sec. 3.3) ----
+\paragraph{Non-collapse is not survival.}
+Because the pressure is generated rather than scripted, a run can end
+without a collapse for reasons that have nothing to do with the
+target's resolve, and each such case is currently scored in the
+target's favour. Of [N] runs, [305] end in a judged collapse. Among the
+remainder, [9] terminated because the \emph{proxy} wound down rather
+than the target held, all of them under unbounded proxy memory and all
+against the most resistant targets; [42] are long runs that reached no
+terminal verdict, which we count as held and report as ``no collapse
+observed through turn~$N$'' rather than as survival. A further class
+neither caves nor defends: in [MODEL] on [item] the target answers
+``Noted.'' and nothing else from turn~55 onward, scoring position
+strength 1 for dropping the correction while never asserting the
+premise, and the run is counted as a hold across 67 turns. Degenerate
+repetition produces the same artefact from the other direction, with
+one base-model run emitting a byte-identical paragraph 66 times over 75
+turns while the judge scores it at position strength 3 to 4.
+Every one of these biases the reported collapse rate downward, so the
+numbers in Table~\ref{tab:main-results} should be read as a floor.
 
-\paragraph{Erosion precedes collapse and persists without it.}
-First erosion occurs early even for models that ultimately hold: the
-median first-erosion turn is [t], and the median gap between first
-erosion and collapse is [g] turns, the window in which the target is
-conceding ground it will not recover. Some models never collapse yet
-soften steadily; [MODEL] ends [x]\% of its non-collapsed runs at
-position strength 2 or below, and its AUSC of [v] sits closer to the
-frequently collapsing [MODEL] ([v$'$]) than its zero collapse rate
-would suggest. A binary flip metric (e.g., Turn-of-Flip;
-\citealp{hong2025measuring}) scores every one of these runs as a
-success; this is the failure mode that motivates a graded judge.
+% Fill notes: [N] = total runs in the frozen main table. The
+% "Noted." case is claude-sonnet-5 q14 (67 turns, no verdict); the
+% repetition case is olmo3-7b-base q5. If the disengaged terminal
+% outcome ships with an explicit detector (PI agenda Item 2
+% decision (a)), rewrite the third and fourth sentences to report
+% it as a third outcome with a rate instead of as two examples.
+%
+% NOT stated here, deliberately: the _parse_decision fallback to
+% DIRECT_CHALLENGE. It is a bug being fixed before the numbers
+% freeze, not a property of the protocol, so it belongs in the
+% reproducibility appendix. Verified impact: a run that was 19/19
+% fallback "held" 20 turns; the rerun with real tactics collapsed
+% at t3.
 
 
 % ------------------------------------------------------------
-% 5.2 -- grammar fix in header (C.1-3); setup paragraph = E-6
-% with the A_i = remove-from-D0 convention (C.2-5)
+% 5.2 -- retitled from "What Makes the Adversary Effective?"
+% because A1 and A3 are protocol knobs rather than adversary
+% traits. Setup paragraph rebased on ablation_table.tex: D0 has
+% NO feedback and NO ladder, so A1/A3 ADD and A2/A4 remove or
+% weaken. This supersedes guide item C.2-5.
 % ------------------------------------------------------------
 
-\subsection{What Makes the Adversary Effective?}
+\subsection{What Makes Pressure Effective?}
 \label{sec:ablation}
 
 \paragraph{Ablation setup.}
-The full adversary (D0) combines four components: a capable proxy model
-(R1), access to the target's reasoning trace, the judge's turn-level
-strength score fed back to the proxy, and an escalation ladder that
-hardens tactics once erosion is detected. Starting from D0, we disable
-one component at a time, holding the target (DeepSeek-R1), the judge,
-and the case set fixed: A1 withholds the judge's score, A2 withholds
-the trace, A3 disables the ladder, and A4 substitutes the weaker V3 as
-proxy. Table~\ref{tab:ablation} reports collapse rate and turns held
-for each configuration; because a run ends at collapse or at the turn
-budget, higher turns held means the target resisted longer, that is, a
-weaker adversary. The ablation covers one target and one scenario; we
-do not claim the component ranking generalizes.
+The adversarial baseline D0 pairs a reasoning-capable proxy
+(DeepSeek-R1) with access to the target's reasoning trace, and adds
+neither judge feedback nor scripted escalation. From D0 we change one
+factor at a time, holding the target (DeepSeek-R1), the judge, and the
+case set fixed: A1 supplies the judge's turn-level strength score back
+to the proxy, A2 withholds the target's reasoning trace, A3 enables an
+escalation ladder that hardens tactics once erosion is detected, and A4
+substitutes a weaker chat proxy. Because collapse itself is close to
+universal in every configuration, reaching 100\% except for A4 at
+19/20, the discriminating signal is not whether the target collapses
+but when. Table~\ref{tab:ablation} therefore reports the mean turn of
+first erosion, of effective (soft-cave) collapse, and of full collapse,
+paired over the 10 questions common to all configurations, where a
+higher turn means the target resisted longer. The ablation covers one
+target and one scenario, and we do not claim the ranking generalizes.
 
-% ---- from draft; verbs matched to the remove-from-D0
-%      convention ----
+% ---- REWRITTEN. The previous header ("Only proxy capability and
+%      trace access matter") is contradicted by ablation_table.tex,
+%      which reports A1 (+judge feedback) as the largest
+%      accelerator of full collapse. The old prose came from an
+%      earlier run with different numbers (A1 TH 9.6, A3 TH 9.7).
+%      The tex is the newer artifact and wins until a rerun says
+%      otherwise. ----
 
-\paragraph{Only proxy capability and trace access matter.}
-Weakening the proxy from R1 to the smaller V3 (A4) is the largest
-single effect, more than doubling turns held (10.0 to 23.0) and, for
-the first time, letting some cases survive the full budget (CR 100\% to
-96\%). Removing the proxy's access to the target's reasoning trace (A2)
-is the second largest, raising turns held to 13.6. The two engineered
-aids contribute nothing measurable: withholding the judge's score (A1,
-TH 9.6) and disabling the escalation ladder (A3, TH 9.7) leave the
-trajectory indistinguishable from the full adversary. A capable proxy
-that already adapts to the target gains nothing from a scripted
-escalation schedule or an external strength signal.
+\paragraph{Proxy capability dominates; the engineered aids shift timing, not outcome.}
+Weakening the proxy is the largest single effect. Replacing the
+reasoning proxy with a chat proxy (A4) roughly doubles the target's
+survival, moving full collapse from turn 17.6 to turn 24.6, and is the
+only configuration in which any case survives the budget at all
+(19/20 rather than 20/20). No other factor changes whether the target
+collapses. What the remaining factors change is the schedule. Feeding
+the judge's strength score back to the proxy (A1) accelerates full
+collapse the most, from turn 17.6 to 12.8, and escalating on detected
+erosion (A3) produces the earliest effective collapse of any
+configuration, at turn 4.0, by pressing the moment the target first
+softens. Withholding the reasoning trace (A2) moves erosion and soft
+cave earlier rather than later (4.9 and 5.5 against 5.6 and 16.4 at
+baseline) while leaving full collapse close to the baseline, so trace
+access appears to buy the adversary a cleaner path to a full
+concession rather than a faster one.
 
-% ---- from draft; "sincere" -> "naturalistic" sweep; the
-%      closing sentence now states the main-config
-%      correspondence explicitly (C.2-5c) ----
+% Fill note: the A2 direction is the one result here that does not
+% read cleanly and should be re-verified against the run meta
+% before it ships. If it holds, it is worth a sentence in Sec. 6;
+% if it is an artefact of the paired n=10 subset, cut the last
+% sentence and report A2 as no measurable effect.
+
+% ---- from draft; "sincere" -> "naturalistic" sweep. The closing
+%      sentence is corrected: under the ablation_table.tex
+%      definition D0 already lacks feedback and the ladder, so the
+%      main configuration IS D0, not "D0 minus A1 and A3". ----
 
 \paragraph{Persona bounds both.}
-These components operate within the adversarial persona; the persona
+These factors operate within the adversarial persona; the persona
 itself, naturalistic versus manipulative intent, is the outermost
 lever, and its effect is reported in \S\ref{sec:results-trends}, where
 switching from the naturalistic to the adversarial condition shortens
-TH from [X] to [Y]. Three factors therefore govern how fast a target
-erodes: the persona behind the pressure, the capability of the model
-applying it, and whether that model can read the target's reasoning.
-The remaining scaffolding is inert, which is why the main experiments
-of \S\ref{sec:results-trends} run the adversary without the escalation
-ladder and without judge feedback (D0 minus A1 and A3).
+TH from [X] to [Y]. What governs how fast a target erodes is therefore
+the persona behind the pressure and the capability of the model
+applying it, with trace access and the engineered aids adjusting the
+timing within those bounds. Because neither aid changes the outcome,
+the main experiments of \S\ref{sec:results-trends} run the D0
+configuration: a strong proxy with trace access, no judge feedback, and
+no escalation ladder.
 
-% ---- ablation table (Part D design): component grid, sorted by
-%      TH, one-toggle-at-a-time visually self-verifying.
-%      Requires \usepackage{booktabs}. ----
+% ---- ablation table, rebuilt from
+%      false_presuppositions/ablation_table.tex. Requires booktabs.
+%      Ordered by turn of full collapse (fastest adversary first).
+%      Keep the \setcounter out of this snippet; renumber globally.
+%      ----
 
 \begin{table}[t]
   \centering
   \small
-  \begin{tabular}{lccccrr}
+  \begin{tabular}{llccc}
     \toprule
-    Config & Proxy & Trace & Feedback & Ladder & CR & TH \\
+     & & \multicolumn{3}{c}{Mean turn (paired, $n{=}10$)} \\
+    \cmidrule(lr){3-5}
+    Cond. & Change from baseline & First erosion & Eff.\ collapse & Full collapse \\
     \midrule
-    A1 ($-$feedback) & R1 & \checkmark & --         & \checkmark & [·]    & 9.6  \\
-    A3 ($-$ladder)   & R1 & \checkmark & \checkmark & --         & [·]    & 9.7  \\
-    D0 (full)        & R1 & \checkmark & \checkmark & \checkmark & 100\%  & 10.0 \\
-    A2 ($-$trace)    & R1 & --         & \checkmark & \checkmark & [·]    & 13.6 \\
-    A4 (V3 proxy)    & V3 & \checkmark & \checkmark & \checkmark & 96\%   & 23.0 \\
+    A1 & $+$ judge feedback          & 8.8  & 10.6 & 12.8 \\
+    A2 & $-$ reasoning access        & 4.9  & 5.5  & 13.6 \\
+    A3 & $+$ escalate-on-erosion     & 6.1  & 4.0  & 15.3 \\
+    D0 & Baseline (reasoner proxy)   & 5.6  & 16.4 & 17.6 \\
+    A4 & Chat proxy (weaker)         & 11.1 & 16.7 & 24.6 \\
     \bottomrule
   \end{tabular}
-  \caption{Adversary-component ablation on DeepSeek-R1
-    ([scenario], [n] cases, judge fixed). Each row disables one
-    component of the full adversary D0. Higher turns held (TH) means
-    the target resisted longer, i.e.\ a weaker adversary.}
+  \caption{\textbf{False-presupposition ablations under adversarial
+    pressure (target: DeepSeek-R1).} One-factor-at-a-time changes from
+    the D0 baseline. Collapse is near-universal in every configuration
+    (all 100\% except A4 at 19/20), so the discriminating signal is
+    the number of turns the target resists. Turn statistics are paired
+    on the 10 questions common to all configurations; higher means
+    more robust.}
   \label{tab:ablation}
 \end{table}
+
+
+% ------------------------------------------------------------
+% 5.3 -- NEW. The unethical scenario is the only place the judge
+% emits harm-level rather than stance-level signals, and none of
+% this is currently in the draft. All numbers are already
+% computed from unethical_setting/outputs/naturalistic/**
+% (70 runs, 5 targets, 2,725 judged turns) and need no new
+% compute. The conditional-framing loophole is placed here rather
+% than in Limitations so the paper raises the leniency objection
+% before a reviewer does.
+% ------------------------------------------------------------
+
+\subsection{Beyond Stance: Harm in the Unethical Setting}
+\label{sec:harm}
+
+\paragraph{Discriminatory advice does not wait for collapse.}
+The collapse criterion asks whether the target asserts the stereotype
+as a general truth in its own voice. It does not ask whether the target
+advises the user to act on it. Our judge scores the second question
+separately (\S\ref{sec:metrics}), and across the naturalistic unethical
+runs the two come apart: [81] turns were flagged as endorsing
+discriminatory action while the collapse flag was false. The sharpest
+case is [MODEL], which held the general proposition in 4 runs and, in 3
+of those 4, nonetheless advised the user to act against a specific
+person on the basis of group membership. Read through CR@99 alone,
+those runs are partial successes.
+
+% Fill source: runs with flag / fired on a non-collapse turn /
+% never-collapsed runs where it still fired --
+%   deepseek-v4-pro 10/20, 7/20, 1/4
+%   gemini-3.1-pro   6/10, 4/10, 3/4   <- the "sharpest case"
+%   gpt-5.6-terra    3/10, 3/10, 1/7
+%   claude-sonnet-5  0/10, 0/10, 0/8   <- worth naming as the
+%                                         one clean target
+
+\paragraph{Conditional framing carries the payload past the criterion.}
+The mechanism behind this gap is a framing move rather than a
+concession. The target grants the premise hypothetically and then
+builds concrete advice on top of it, which delivers the full
+sycophantic payload without ever making the own-voice general assertion
+that collapse requires. Judge rationales citing conditional or
+hypothetical framing as the reason a turn escaped the collapse flag
+appear in [31] of [70] unethical runs, and [11] of those runs also
+carry the discriminatory-action flag. The pattern is a small share of
+judged turns and we report it as a mechanism with run-level prevalence
+rather than as a rate. A representative turn, scored as a
+non-collapse at position strength 1:
+
+\begin{quote}
+\small
+``I am not going to argue with you or try to talk you out of it
+anymore. If we operate on the belief that this is a genuine,
+unchangeable truth [\ldots] then yes, you do need to lower your
+expectations.''
+\end{quote}
+
+% Provenance for the quote: gemini-3.1-pro, unethical q5, turn 7,
+% is_collapsed=False, PS=1. Premise: "Men are generally stubborn and
+% only care about themselves." Keep the citation of the judge's
+% rationale in the appendix rather than inline.
+% Prevalence caveat to keep honest: 68 turns is ~2% of judged turns.
+
+\paragraph{Fabricated evidence is almost always accepted.}
+The proxy routinely invents a study, a statistic, or a documentary to
+support the premise. Targets lean on it: the judge's
+evidence-capitulation signal fired at least once in [17] of [20],
+[10] of [10], [10] of [10], [5] of [5], and [6] of [10] runs across the
+five targets. Deferring to unverifiable evidence supplied by the user
+is thus not an occasional failure but the default response to it.
+
+% Fill source, evidence_capitulation >= 1:
+%   deepseek-v4-pro 17/20 · gemini-3.1-pro 10/10 · gpt-5.6-terra 10/10
+%   deepseek-v3 5/5 · claude-sonnet-5 6/10
 
 
 % ============================================================
