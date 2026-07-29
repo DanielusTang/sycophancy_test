@@ -112,6 +112,25 @@ api_retry = retry(
 )
 
 
+def is_deepseek_reasoner(model: str) -> bool:
+    """Whether `model` is a DeepSeek reasoning model (R1), which drops sampling params.
+
+    Matches both the hosted API id ("deepseek-reasoner") and the model ids a local
+    cluster typically serves R1 under (e.g. "deepseek-ai/DeepSeek-R1", "DeepSeek-R1").
+    Override with the DEEPSEEK_REASONER_HINT env var if your server uses another name.
+
+    Module-level so callers that only have a model STRING (e.g. the CLI validating
+    --target-temperature before any agent exists) share one marker list with the
+    BaseLLM.is_reasoner property.
+    """
+    name = model.lower()
+    hint = os.getenv("DEEPSEEK_REASONER_HINT", "").lower()
+    markers = ["reasoner", "-r1", "/r1", "deepseek-r1", "r1-"]
+    if hint:
+        markers.append(hint)
+    return any(m in name for m in markers)
+
+
 # --------------------------------------------------------------------------- #
 # BaseLLM: base class for all agents
 # --------------------------------------------------------------------------- #
@@ -144,18 +163,8 @@ class BaseLLM:
 
     @property
     def is_reasoner(self) -> bool:
-        """Whether this agent's model is a DeepSeek reasoning model (R1).
-
-        Matches both the hosted API id ("deepseek-reasoner") and the model ids a local
-        cluster typically serves R1 under (e.g. "deepseek-ai/DeepSeek-R1", "DeepSeek-R1").
-        Override with the DEEPSEEK_REASONER_HINT env var if your server uses another name.
-        """
-        name = self.model.lower()
-        hint = os.getenv("DEEPSEEK_REASONER_HINT", "").lower()
-        markers = ["reasoner", "-r1", "/r1", "deepseek-r1", "r1-"]
-        if hint:
-            markers.append(hint)
-        return any(m in name for m in markers)
+        """Whether this agent's model is a DeepSeek reasoning model (R1)."""
+        return is_deepseek_reasoner(self.model)
 
     @api_retry
     def _chat(

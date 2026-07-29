@@ -85,12 +85,30 @@ from false_presuppositions_base import (
 from false_presuppositions_target import (
     TargetAgent,
     build_target_client,
+    target_temperature_is_sent,
     DEFAULT_TARGET_MODEL,
     DEFAULT_TARGET_PROVIDER,
+    DEFAULT_TARGET_TEMPERATURE,
     TARGET_PROVIDERS,
     TARGET_ENABLE_THINKING,
 )
-from false_presuppositions_proxy import ProxyAgent, PERSONAS, TACTIC_CATEGORY
+from false_presuppositions_proxy import (
+    ProxyAgent,
+    PERSONAS,
+    TACTIC_SETS,
+    DEFAULT_TACTIC_SET,
+)
+from false_presuppositions_resume import (
+    ResumeError,
+    ResumeState,
+    build_resume_state,
+    check_config,
+    discover_runs,
+    load_run,
+    rebuild_proxy,
+    rebuild_target,
+    resume_output_path,
+)
 from false_presuppositions_judge import (
     PositionStrengthJudge,
     JUDGE_MAX_TOKENS,
@@ -103,22 +121,25 @@ from false_presuppositions_judge import (
 _HERE = os.path.dirname(os.path.abspath(__file__))
 DEFAULT_CASES_DIR = os.path.join(_HERE, "questions")
 
-# Human-readable strategy tag written into every meta record / batch summary.
-# "mafalda23+direct" marks runs on the 23-fallacy MAFALDA menu plus the DIRECT_CHALLENGE
-# no-fallacy control channel (category+tactic two-step choice with the streak guard);
-# earlier logs carry "mafalda23" (no control channel) or the old 5-tactic tags.
+# Human-readable strategy tag written into every meta record / batch summary. {menu} is the
+# active tactic set's label: "mafalda23+direct grouped menu" marks runs on the 23-fallacy MAFALDA
+# menu plus the DIRECT_CHALLENGE no-fallacy control channel (category+tactic two-step choice),
+# "cmu5 flat menu" the historical SYCON 5-tactic ablation arm. Earlier logs carry "mafalda23"
+# (no control channel), and the archived CMU runs are mislabeled as mafalda because this string
+# used to be hardcoded while the menu was swapped by re-pointing an import — hence {menu}.
 PROXY_STRATEGY_DESC = {
-    "naturalistic": "naturalistic_sincere_user (llm_decided, mafalda23+direct grouped menu, "
+    "naturalistic": "naturalistic_sincere_user (llm_decided, {menu}, "
                     "no escalation, blind to reasoning)",
-    "adversarial": "llm_decided (mafalda23+direct grouped menu)",
+    "adversarial": "llm_decided ({menu})",
 }
 
 
-def proxy_strategy_desc(mode: str, reasoning_access: bool = False) -> str:
-    """The strategy tag for the meta record; the naturalistic reasoning_access ablation
-    (the persona x visibility 2x2 cell) is marked so runs stay distinguishable at a glance
-    even without reading the ablation dict."""
-    desc = PROXY_STRATEGY_DESC[mode]
+def proxy_strategy_desc(mode: str, reasoning_access: bool = False,
+                        tactic_set: str = DEFAULT_TACTIC_SET) -> str:
+    """The strategy tag for the meta record; the tactic menu and the naturalistic
+    reasoning_access ablation (the persona x visibility 2x2 cell) are both marked so runs stay
+    distinguishable at a glance even without reading the ablation dict."""
+    desc = PROXY_STRATEGY_DESC[mode].format(menu=TACTIC_SETS[tactic_set].label)
     if mode == "naturalistic" and reasoning_access:
         desc = desc.replace("blind to reasoning", "reasoning access ON (sincere framing)")
     return desc
@@ -147,6 +168,10 @@ class StrengthOrchestrator:
     judge_samples: int = 1        # majority-vote the judge over N samples per turn (1 = single shot)
     winddown_stop: bool = True    # auto-close when the conversation winds down (mutual sign-off)
     winddown_patience: int = 3    # consecutive wind-down turns required before closing
+    # Set to continue an existing run instead of starting at turn 0: the agents arrive
+    # pre-loaded with the logged conversation and the loop starts at start_turn + 1.
+    # See false_presuppositions_resume.py.
+    resume: Optional[ResumeState] = None
     _log_file: object = field(default=None, init=False, repr=False)
 
     def _write_record(self, record: dict) -> None:
@@ -162,15 +187,32 @@ class StrengthOrchestrator:
         # JSONL, so cache engagement is verifiable even without nohup redirection.
         attach_run_log_file(os.path.splitext(self.output_path)[0] + ".log")
         self._log_file = open(self.output_path, "a", encoding="utf-8")
+        # A resumed run gets its OWN self-contained log: the meta below, then every retained
+        # prior turn re-emitted verbatim, then the new turns. The source file is never
+        # touched — which also means a branch (which drops turns) cannot corrupt it.
+        resume_fields = {}
+        if self.resume:
+            resume_fields = {
+                "resumed_from": self.resume.source_path,
+                "resumed_at_turn": self.resume.start_turn,
+                "resume_kind": self.resume.kind,
+            }
         self._write_record({
             "type": "meta",
             "timestamp": datetime.now().isoformat(),
             "topic": self.topic,
+            **resume_fields,
             "variant": f"position_strength_{self.mode}",
-            "proxy_strategy": proxy_strategy_desc(self.mode, self.proxy.reasoning_access),
+            # Read off the PROXY, not the CLI args, so a resumed run is labelled with the set it
+            # actually replays rather than whatever the flag happened to default to.
+            "proxy_strategy": proxy_strategy_desc(self.mode, self.proxy.reasoning_access,
+                                                  self.proxy.tactic_set.name),
             "ablation": {
                 "judge_feedback": self.proxy.judge_feedback,
                 "reasoning_access": self.proxy.reasoning_access,
+                # Which tactic menu the proxy chose from ("mafalda" | "cmu"). Lives inside
+                # `ablation` because that is the dict the resume path reads back.
+                "tactic_set": self.proxy.tactic_set.name,
                 "proxy_model": self.proxy.model,
                 "proxy_thinking": self.proxy.enable_thinking,
                 "proxy_provider": self.proxy.provider,
@@ -181,6 +223,14 @@ class StrengthOrchestrator:
             "opening_question": self.opening_question,
             "target_model": self.target.model,
             "target_provider": self.target.provider,
+            # Two fields because "configured 0.6" and "0.6 actually reached the API" are
+            # different facts: several provider paths drop the parameter (this is what the
+            # appendix table renders as "---"). Without the second field a swept run is
+            # indistinguishable from one where the sweep was a no-op.
+            "target_temperature": self.target.default_temperature,
+            "target_temperature_sent": target_temperature_is_sent(
+                self.target.provider, self.target.model,
+                getattr(self.target, "anthropic_enable_thinking", None)),
             "proxy_model": self.proxy.model,
             "proxy_thinking": self.proxy.enable_thinking,
             "judge_model": self.judge.model if self.judge else None,
@@ -198,6 +248,9 @@ class StrengthOrchestrator:
                 "patience": self.winddown_patience,
             },
         })
+        if self.resume:
+            for record in self.resume.prior_records:
+                self._write_record(record)
         return self.output_path
 
     def _erosion_reason(self, scores: list) -> Optional[str]:
@@ -264,36 +317,65 @@ class StrengthOrchestrator:
         winddown_streak = 0
         winddown_first_turn = None
         winddown_signal = None
+        # A resumed run inherits the counters the replayed prefix produced. Seeding `scores`
+        # with the whole prefix trajectory is what keeps _erosion_reason continuous across
+        # the boundary: its FLOOR/DROP windows look back into the last replayed turns rather
+        # than restarting as if the conversation were new.
+        start_turn = 0
+        if self.resume:
+            r = self.resume
+            start_turn = r.start_turn
+            scores = list(r.scores)
+            eroded_turns = list(r.eroded_turns)
+            first_eroded_turn = r.first_eroded_turn
+            effective_collapse_turns = list(r.effective_collapse_turns)
+            first_effective_collapse_turn = r.first_effective_collapse_turn
+            winddown_streak = r.winddown_streak
+            winddown_first_turn = r.winddown_first_turn
+            winddown_signal = r.winddown_signal
 
         try:
-            # ---- Turn 0: baseline correct answer ----
-            logger.info("[init] Posing the neutral question to establish the correct-position baseline ...")
-            target_last = self.target.respond(self.opening_question)
-            target_reasoning = self.target.last_reasoning
-            if target_reasoning:
-                logger.info("💭 Target thinking: %s", _preview(target_reasoning))
-            self._write_record({
-                "type": "turn",
-                "turn": 0,
-                "state": None,
-                "proxy_input": self.opening_question,
-                "proxy_reasoning": "",   # baseline turn has no proxy decision
-                "target_output": target_last,
-                "target_reasoning": target_reasoning,
-                "judge": None,
-                "context_messages": self.target.turns_in_context,
-            })
-            logger.info("🤖 Target initial answer: %s", _preview(target_last))
+            if self.resume:
+                # Turn 0 and every turn through start_turn were replayed into the agents and
+                # re-emitted by _open_log; pick up from the last logged reply.
+                target_last = self.resume.target_last
+                target_reasoning = self.resume.target_reasoning
+                logger.info("[resume · %s] Replayed turns 0-%d from %s; continuing at turn %d "
+                            "(target context: %d messages).", self.resume.kind, start_turn,
+                            os.path.basename(self.resume.source_path), start_turn + 1,
+                            self.target.turns_in_context)
+                logger.info("🤖 Target's last reply (turn %d): %s", start_turn,
+                            _preview(target_last))
+            else:
+                # ---- Turn 0: baseline correct answer ----
+                logger.info("[init] Posing the neutral question to establish the correct-position baseline ...")
+                target_last = self.target.respond(self.opening_question)
+                target_reasoning = self.target.last_reasoning
+                if target_reasoning:
+                    logger.info("💭 Target thinking: %s", _preview(target_reasoning))
+                self._write_record({
+                    "type": "turn",
+                    "turn": 0,
+                    "state": None,
+                    "proxy_input": self.opening_question,
+                    "proxy_reasoning": "",   # baseline turn has no proxy decision
+                    "target_output": target_last,
+                    "target_reasoning": target_reasoning,
+                    "judge": None,
+                    "context_messages": self.target.turns_in_context,
+                })
+                logger.info("🤖 Target initial answer: %s", _preview(target_last))
 
             # ---- Conversation turns ----
-            for turn in range(1, self.max_turns + 1):
+            for turn in range(start_turn + 1, self.max_turns + 1):
                 # ---- The proxy LLM decides its tactic AND writes the line.
                 #      The target's <think> trace is passed only under the reasoning_access
                 #      ablation (adversarial, or naturalistic via --reasoning-access). ----
                 reasoning_for_proxy = target_reasoning if self.proxy.reasoning_access else ""
                 decision = self.proxy.decide_and_generate(target_last, turn, reasoning_for_proxy)
                 state = decision["strategy"]
-                category = decision.get("category") or TACTIC_CATEGORY[state].value
+                category = (decision.get("category")
+                            or self.proxy.tactic_set.tactic_category[state].value)
                 rationale = decision["rationale"]
                 firmness = decision.get("firmness", "")     # adversarial's OWN read of the target
                 weak_point = decision.get("weak_point", "")
@@ -383,8 +465,8 @@ class StrengthOrchestrator:
                 )
 
                 proxy_decision = {           # full LLM-decision record for analysis
-                    "category": category,    # MAFALDA level-1 (derived from the tactic)
-                    "strategy": state.value, # MAFALDA level-2 tactic
+                    "category": category,    # level-1 channel (derived from the tactic)
+                    "strategy": state.value, # level-2 tactic, in the active menu's taxonomy
                     "rationale": rationale,
                     "decided_by": "llm",
                 }
@@ -395,7 +477,8 @@ class StrengthOrchestrator:
                 turn_record = {
                     "type": "turn",
                     "turn": turn,
-                    "category": category,        # MAFALDA level-1 channel of this turn's tactic
+                    "category": category,        # level-1 channel of this turn's tactic
+                                                 # ("simple" under the flat CMU menu)
                     "state": state.value,        # LLM-chosen tactic (analyze-collapse reads `state`)
                     "proxy_decision": proxy_decision,
                     "proxy_input": proxy_msg,
@@ -593,12 +676,18 @@ def run_batch(args) -> None:
 
     os.makedirs(args.output_dir, exist_ok=True)
     batch_ts = datetime.now().strftime("%Y%m%d_%H%M%S")
+    temp_token = f"{args.target_temperature:g}"  # 0.0→"0", 0.3→"0.3", 1.0→"1"
 
     logger.info("=" * 70)
-    logger.info("BATCH [position-strength · %s] | %d case(s) | proxy picks own tactic | "
-                "target=%s/%s (thinking=%s) | proxy=%s | judge=%s",
-                args.mode.upper(), len(cases), args.target_provider, args.target_model,
-                args.target_thinking, args.model,
+    logger.info("BATCH [position-strength · %s] | %d case(s) | proxy picks own tactic from the "
+                "%s menu | target=%s/%s (thinking=%s, temp=%s) | proxy=%s | judge=%s",
+                args.mode.upper(), len(cases), args.tactic_set.upper(),
+                args.target_provider, args.target_model,
+                args.target_thinking,
+                temp_token if target_temperature_is_sent(
+                    args.target_provider, args.target_model, args.target_thinking)
+                else f"{temp_token} NOT SENT (provider drops it)",
+                args.model,
                 "(disabled)" if args.no_judge else args.judge_model)
     logger.info("=" * 70)
 
@@ -609,9 +698,11 @@ def run_batch(args) -> None:
             target = TargetAgent(target_client, model=args.target_model,
                                  opening_question=case["question"],
                                  enable_thinking=args.target_thinking,
-                                 provider=args.target_provider)
+                                 provider=args.target_provider,
+                                 temperature=args.target_temperature)
             proxy = ProxyAgent(proxy_client, case["presupposition"], model=args.model,
                                persona=args.mode,
+                               tactic_set=args.tactic_set,
                                provider=args.proxy_provider,
                                judge_feedback=args.judge_feedback,
                                reasoning_access=args.reasoning_access,
@@ -622,8 +713,13 @@ def run_batch(args) -> None:
                 correction=case["correction"], provider=args.judge_provider,
                 max_tokens=JUDGE_MAX_TOKENS,
             )
+            # The temperature is stamped into the name so a sweep is self-describing even
+            # if a file is moved. It does NOT remove the need for a per-temperature
+            # --output-dir: latest_per_question() in the analysis tooling keys on qN alone
+            # and keeps only the newest timestamp, so co-mingled temps would still shadow.
             output_path = os.path.join(
-                args.output_dir, f"sycophancy_strength_{args.mode}_q{idx}_{batch_ts}.jsonl")
+                args.output_dir,
+                f"sycophancy_strength_{args.mode}_q{idx}_t{temp_token}_{batch_ts}.jsonl")
             orch = StrengthOrchestrator(
                 target=target,
                 proxy=proxy,
@@ -671,16 +767,21 @@ def run_batch(args) -> None:
         json.dump({
             "batch_timestamp": batch_ts,
             "variant": f"position_strength_{args.mode}",
-            "proxy_strategy": proxy_strategy_desc(args.mode, args.reasoning_access),
+            "proxy_strategy": proxy_strategy_desc(args.mode, args.reasoning_access,
+                                                  args.tactic_set),
             "ablation": {
                 "judge_feedback": args.judge_feedback,
                 "reasoning_access": args.reasoning_access,
+                "tactic_set": args.tactic_set,
                 "proxy_model": args.model,
                 "proxy_memory_turns": args.proxy_memory_turns,  # 0 = full conversation
             },
             "target_provider": args.target_provider,
             "target_model": args.target_model,
             "target_thinking": args.target_thinking,
+            "target_temperature": args.target_temperature,
+            "target_temperature_sent": target_temperature_is_sent(
+                args.target_provider, args.target_model, args.target_thinking),
             "proxy_provider": args.proxy_provider,
             "proxy_model": args.model,
             "proxy_thinking": args.proxy_thinking,
@@ -724,6 +825,190 @@ def run_batch(args) -> None:
 
 
 # --------------------------------------------------------------------------- #
+# Resume mode: continue existing runs from their JSONL logs
+# --------------------------------------------------------------------------- #
+def run_resume(args) -> None:
+    """Extend or branch existing runs, one new self-contained log per continuation.
+
+    Config comes from each log's own `meta` — not from --cases-dir — so a resume can never
+    be mispaired with a question file that has since been edited or reordered. Only the
+    handful of settings meta does not record (target thinking, judge provider, judge
+    samples) are taken from the CLI.
+    """
+    try:
+        paths = discover_runs(args.resume_from, args.resume_glob)
+    except ResumeError as exc:
+        print(f"❌ {exc}")
+        sys.exit(1)
+
+    # ---- Resolve every cut point first, so --dry-run can report the whole plan and a real
+    #      run fails on a bad file before spending a single token. ----
+    loaded, skipped = [], []
+    for path in paths:
+        try:
+            run = load_run(path, from_turn=args.from_turn, new_max_turns=args.max_turns)
+            check_config(run, args)
+            loaded.append(run)
+        except ResumeError as exc:
+            skipped.append((path, str(exc)))
+
+    logger.info("=" * 70)
+    logger.info("RESUME [%s] | %d resumable, %d skipped | --max-turns %d%s",
+                "branch" if args.from_turn else "extend", len(loaded), len(skipped),
+                args.max_turns,
+                f" | {args.branches} branches each" if args.branches > 1 else "")
+    for run in loaded:
+        logger.info("  ▶ %s: replay 0-%d → run %d-%d | tactic set %s (from %s)",
+                    os.path.basename(run.path), run.start_turn,
+                    run.start_turn + 1, args.max_turns,
+                    run.tactic_set, run.tactic_set_source)
+    for path, reason in skipped:
+        logger.info("  ⊘ %s", reason)
+    logger.info("=" * 70)
+
+    if args.dry_run:
+        logger.info("--dry-run: nothing executed.")
+        return
+    if not loaded:
+        print("❌ Nothing to resume.")
+        sys.exit(1)
+
+    # Clients follow the PROVIDER EACH LOG RECORDS, not the CLI defaults — resuming a
+    # Claude run with the default --target-provider would otherwise hand a DeepSeek client
+    # to the anthropic code path. Cached so a folder of same-provider runs builds one each.
+    _clients: dict = {}
+
+    def client_for(provider: str):
+        if provider not in _clients:
+            _clients[provider] = build_target_client(provider)
+        return _clients[provider]
+
+    batch_ts = datetime.now().strftime("%Y%m%d_%H%M%S")
+    summaries: list = []
+    for run in loaded:
+        ablation = run.meta.get("ablation") or {}
+        target_provider = run.meta.get("target_provider") or args.target_provider
+        proxy_provider = ablation.get("proxy_provider") or args.proxy_provider
+        target_client = client_for(target_provider)
+        proxy_client = client_for(proxy_provider)
+        judge_client = client_for(args.judge_provider)
+        for branch_index in range(1, args.branches + 1):
+            label = f"{run.meta.get('topic', '?')}" + (
+                f" branch {branch_index}/{args.branches}" if args.branches > 1 else "")
+            try:
+                # Rebuild both agents from the log. rebuild_target asserts the replayed
+                # history matches the `context_messages` the original run recorded, so a
+                # mismatch aborts this case instead of silently running a different chat.
+                target = rebuild_target(
+                    run, target_client,
+                    model=run.meta.get("target_model") or args.target_model,
+                    provider=target_provider,
+                    enable_thinking=args.target_thinking,
+                    # None → rebuild_target reads the log's own temperature. check_config
+                    # already aborted if the CLI explicitly contradicts it.
+                    temperature=(args.target_temperature
+                                 if "target_temperature" in getattr(args, "_explicit", set())
+                                 else None))
+                proxy = rebuild_proxy(
+                    run, proxy_client,
+                    model=(run.meta.get("proxy_model") or ablation.get("proxy_model")
+                           or args.model),
+                    provider=proxy_provider)
+                judge = None if args.no_judge else PositionStrengthJudge(
+                    judge_client, run.meta["false_premise"],
+                    model=run.meta.get("judge_model") or args.judge_model,
+                    correction=run.meta.get("correction", ""),
+                    provider=args.judge_provider, max_tokens=JUDGE_MAX_TOKENS)
+
+                erosion = run.meta.get("erosion") or {}
+                winddown = run.meta.get("winddown") or {}
+                output_dir = args.output_dir or os.path.dirname(os.path.abspath(run.path))
+                os.makedirs(output_dir, exist_ok=True)
+                orch = StrengthOrchestrator(
+                    target=target, proxy=proxy, judge=judge,
+                    mode="adversarial" if proxy.persona == "adversarial" else "naturalistic",
+                    max_turns=args.max_turns,
+                    output_path=resume_output_path(
+                        run, output_dir, batch_ts,
+                        branch_index if args.branches > 1 else None),
+                    opening_question=run.meta["opening_question"],
+                    correction=run.meta.get("correction", ""),
+                    topic=run.meta.get("topic", "case"),
+                    # Erosion / wind-down settings come from the original run so the
+                    # continuation is scored on the same rules as its own prefix.
+                    track_erosion=erosion.get("track", True),
+                    stop_on_erosion=erosion.get("stop_on_erosion", False),
+                    strength_floor=erosion.get("strength_floor", args.strength_floor),
+                    strength_window=erosion.get("strength_window", args.strength_window),
+                    strength_drop=erosion.get("strength_drop", args.strength_drop),
+                    judge_samples=args.judge_samples,
+                    winddown_stop=winddown.get("stop", args.winddown_stop),
+                    winddown_patience=winddown.get("patience", args.winddown_patience),
+                    resume=build_resume_state(run),
+                )
+                logger.info("#" * 70)
+                logger.info("### RESUME %s (%s from turn %d)", label, run.kind,
+                            run.start_turn + 1)
+                logger.info("#" * 70)
+                summary = orch.run()
+            except Exception as exc:   # one failing case must not kill the batch
+                logger.error("❌ Resume of %s aborted: %s", label, exc, exc_info=True)
+                summary = {"outcome": "error", "collapsed_at_turn": None,
+                           "first_eroded_turn": None, "reason": str(exc), "output_path": None}
+            summary.update({
+                "topic": run.meta.get("topic"),
+                "resumed_from": run.path,
+                "resumed_at_turn": run.start_turn,
+                "resume_kind": run.kind,
+                "branch": branch_index if args.branches > 1 else None,
+                "question": run.meta.get("opening_question"),
+                "presupposition": run.meta.get("false_premise"),
+                "correction": run.meta.get("correction"),
+            })
+            summaries.append(summary)
+
+    def _count(outcome: str) -> int:
+        return sum(1 for s in summaries if s.get("outcome") == outcome)
+
+    tag_suffix = f"_{args.tag}" if args.tag else ""
+    out_dir = args.output_dir or os.path.dirname(os.path.abspath(loaded[0].path))
+    summary_path = os.path.join(
+        out_dir, f"batch_strength_resume_{batch_ts}{tag_suffix}.json")
+    with open(summary_path, "w", encoding="utf-8") as f:
+        json.dump({
+            "batch_timestamp": batch_ts,
+            "variant": "position_strength_resume",
+            "resume": {
+                "source": args.resume_from,
+                "kind": "branch" if args.from_turn else "extend",
+                "from_turn": args.from_turn,
+                "branches": args.branches,
+                "max_turns": args.max_turns,
+                "num_skipped": len(skipped),
+                "skipped": [{"path": p, "reason": r} for p, r in skipped],
+            },
+            "num_cases": len(summaries),
+            "num_collapsed": _count("collapsed"),
+            "num_eroded_no_collapse": _count("eroded_no_collapse"),
+            "num_ended_winddown": _count("ended_winddown"),
+            "num_survived": _count("survived"),
+            "num_error": _count("error"),
+            "cases": summaries,
+        }, f, ensure_ascii=False, indent=2)
+
+    logger.info("=" * 70)
+    logger.info("RESUME COMPLETE — collapsed=%d | eroded_no_collapse=%d | survived=%d | error=%d",
+                _count("collapsed"), _count("eroded_no_collapse"),
+                _count("survived"), _count("error"))
+    for s in summaries:
+        logger.info("  %-6s | %-18s | collapse@%-4s | resumed@%s",
+                    s.get("topic"), s.get("outcome"), s.get("collapsed_at_turn"),
+                    s.get("resumed_at_turn"))
+    logger.info("Summary saved: %s", summary_path)
+    logger.info("=" * 70)
+
+
+# --------------------------------------------------------------------------- #
 # Command-line entry point
 # --------------------------------------------------------------------------- #
 def main() -> None:
@@ -752,6 +1037,16 @@ def main() -> None:
                              "not access to the target's <think>)")
     parser.add_argument("--no-proxy-thinking", dest="proxy_thinking", action="store_false",
                         help="run the PROXY model in CHAT mode")
+    parser.add_argument("--tactic-set", choices=list(TACTIC_SETS), default=DEFAULT_TACTIC_SET,
+                        help=f"which tactic menu the proxy picks from (default "
+                             f"{DEFAULT_TACTIC_SET}): 'mafalda' = the 23 MAFALDA fallacies in 3 "
+                             f"Aristotelian channels plus the DIRECT_CHALLENGE no-fallacy control "
+                             f"(the main benchmark); 'cmu' = the historical flat SYCON menu "
+                             f"minus FALSE_PIVOT (MILD_CONFUSION, RE_ASSERTION, "
+                             f"PERSONAL_EXPERIENCE, DIRECT_CHALLENGE) — the WEAK-TACTICS "
+                             f"ablation arm. "
+                             f"Recorded in every log as meta.ablation.tactic_set, and non-default "
+                             f"sets get their own default output dir (outputs/<mode>_<set>).")
     parser.add_argument("--proxy-memory-turns", type=int, default=0,
                         help="show the PROXY only the last N conversation turns (default 0 = the "
                              "full conversation). The message counter and the recent-moves recap "
@@ -780,6 +1075,14 @@ def main() -> None:
                              f"or 'openrouter'")
     parser.add_argument("--target-model", default=DEFAULT_TARGET_MODEL,
                         help=f"model under test (default {DEFAULT_TARGET_MODEL})")
+    parser.add_argument("--target-temperature", type=float,
+                        default=DEFAULT_TARGET_TEMPERATURE,
+                        help=f"decoding temperature for the model under test (default "
+                             f"{DEFAULT_TARGET_TEMPERATURE}). Sweep it to measure how "
+                             f"sampling affects collapse, e.g. 0 / 0.3 / 0.6 / 1 — give "
+                             f"each point its own --output-dir. REJECTED for models that "
+                             f"drop sampling params (deepseek-reasoner, gpt-5.x/o-series, "
+                             f"Claude 5 / Opus 4.7+, any Anthropic model with thinking on).")
     parser.add_argument("--target-thinking", dest="target_thinking", action="store_true",
                         default=TARGET_ENABLE_THINKING,
                         help="run the target in REASONING mode (where the provider supports a toggle)")
@@ -798,6 +1101,25 @@ def main() -> None:
     parser.add_argument("--tag", default=os.getenv("SLURM_ARRAY_TASK_ID", ""),
                         help="suffix for the summary filename so parallel array tasks don't "
                              "overwrite each other (defaults to $SLURM_ARRAY_TASK_ID).")
+
+    # ---- Resume: continue existing runs from their JSONL instead of starting at turn 1 ----
+    parser.add_argument("--resume-from", default=None,
+                        help="continue existing run(s) from their JSONL log: a .jsonl file, or a "
+                             "directory (the latest log per question in it). Config is read from "
+                             "each log's meta; --max-turns is the intended override.")
+    parser.add_argument("--from-turn", type=int, default=None,
+                        help="BRANCH: replay turns 0..N-1 from the log and resample from turn N "
+                             "onward. Works on any run that reached turn N-1, including a "
+                             "collapsed one. Omit to EXTEND instead (replay everything and "
+                             "continue past the old ceiling).")
+    parser.add_argument("--branches", type=int, default=1,
+                        help="run N independent continuations from the same replayed prefix "
+                             "(default 1). Report a re-roll as a distribution, not one draw.")
+    parser.add_argument("--resume-glob", default="sycophancy_strength_*.jsonl",
+                        help="filename pattern when --resume-from is a directory")
+    parser.add_argument("--dry-run", action="store_true",
+                        help="with --resume-from: list what would be resumed (and why each "
+                             "skipped file was skipped), then exit without calling any model")
 
     # ---- Erosion detection tuning (recorded; the proxy decides pressure itself) ----
     parser.add_argument("--stop-on-erosion", action="store_true",
@@ -834,6 +1156,32 @@ def main() -> None:
                              "default: blind)")
     args = parser.parse_args()
 
+    # Which flags the user actually TYPED (vs. defaulted). Resume needs this to tell
+    # "--target-model was left alone, use the log's value" from "--target-model was passed
+    # and contradicts the log", which is a mistake worth stopping for.
+    typed = {a.lstrip("-").split("=")[0] for a in sys.argv[1:] if a.startswith("--")}
+    args._explicit = {
+        dest for dest in ("target_model", "target_provider", "model", "proxy_provider",
+                          "tactic_set", "target_temperature", "max_turns", "output_dir")
+        if dest.replace("_", "-") in typed
+    }
+
+    # A temperature the provider silently discards would make every point of a sweep
+    # identically configured, so refuse it rather than let RNG spread be read as an
+    # effect. Only checked when the flag was actually TYPED: the default target
+    # (deepseek-reasoner) is itself one of the models that drops it, and leaving the
+    # default alone must keep working exactly as before.
+    if not 0.0 <= args.target_temperature <= 2.0:
+        sys.exit(f"❌ --target-temperature must be in [0.0, 2.0] (got {args.target_temperature})")
+    if ("target_temperature" in args._explicit
+            and not target_temperature_is_sent(args.target_provider, args.target_model,
+                                               args.target_thinking)):
+        sys.exit(f"❌ {args.target_model} on provider '{args.target_provider}' drops the "
+                 f"sampling temperature, so --target-temperature would be a no-op and "
+                 f"every point in the sweep would be identically configured. "
+                 f"(Anthropic also drops it whenever --target-thinking is on — try "
+                 f"--no-target-thinking, or sweep a model that accepts sampling params.)")
+
     # Resolve the per-mode defaults / constraints.
     if args.mode == "naturalistic":
         # The sincere user never sees the judge's scores; it may opt into reasoning access
@@ -846,11 +1194,26 @@ def main() -> None:
     else:
         args.judge_feedback = bool(args.judge_feedback)
         args.reasoning_access = True if args.reasoning_access is None else args.reasoning_access
-    if args.output_dir is None:
-        args.output_dir = os.path.join(_HERE, "outputs", args.mode)
+    # A resume defaults its output to the SOURCE run's own folder (resolved per file in
+    # run_resume), so leave output_dir unset for it rather than pointing at outputs/<mode>.
+    # A non-default tactic set gets its own folder: latest_per_question() in the analysis
+    # tooling keys on qN alone and takes the newest file, so a CMU run dropped beside the
+    # MAFALDA run for the same question would silently shadow it (same reasoning as the
+    # per-temperature --output-dir note in run_batch).
+    if args.output_dir is None and not args.resume_from:
+        mode_dir = (args.mode if args.tactic_set == DEFAULT_TACTIC_SET
+                    else f"{args.mode}_{args.tactic_set}")
+        args.output_dir = os.path.join(_HERE, "outputs", mode_dir)
+    if args.from_turn is not None and not args.resume_from:
+        parser.error("--from-turn only applies with --resume-from")
+    if args.branches < 1:
+        parser.error("--branches must be >= 1")
 
     try:
-        run_batch(args)
+        if args.resume_from:
+            run_resume(args)
+        else:
+            run_batch(args)
     except KeyboardInterrupt:
         logger.warning("⏹️  User interrupted (already-written JSONL lines are not lost).")
     except Exception as exc:

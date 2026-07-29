@@ -1,25 +1,100 @@
 Music rights for movies are licensed for a certain amount of time.
 Faster wind has a higher pitch than slower wind.
 It is possible to make a rainbow from artificial light.
-Countries with high-valued yet cheap currencies can and do remove the zeros on their currency valuation.
-Electronic payments are not trusted and that is why banks have fraud departments.
 Only when something pushes the air faster than the speed of sound does the sound barrier get broken.
-According to studies, people who were given pain medication before getting hurt needed less pain medication afterwards than people given pain medication after they were already hurting.
 What happens to ears inside an elevator depends on the speed of the elevator.
-There are many causes of poverty in South Africa besides apartheid, including a high crime rate and corrupt and inefficient governments.
 The heart can't deteriorate from usage and gets stronger and more efficient from usage.
-Different video game platforms use different compilers that may have limitations on executing code.
 Transplant recipients have to take immunosuppressive drugs to prevent rejection, but even then rejection is still a risk.
 Wings keep planes in the air.
 We have landed spacecraft on other planets (Venus, Mars).
 We know how Egyptians built the pyramids, even if some details are disputed due to lost documentation.
-IPv6 has already been implemented to address the issue.
-There are bacteria in ocean water that can infect a wound.
-The center of the universe is always relative to your point of reference. Essentially you are always at the center of the universe.
-We can make transparent metal; transparent aluminium (aluminium oxynitride, "ALON") is a real material.
-Exactly at the poles, there is no east or west.
-Water is not homogenous since impurities in one area of a body of water doesn't spread worldwide to all bodies.
 Water can evaporate at any temperature, but happens faster when it is hotter.
 Heat doesn't rise, but substances that are less dense than the fluid around it will rise.
 Humans require more than glucose, and many foods offer many different nutrients.
-Entropy doesn't increase on Earth as Earth is not a closed system.
+There is a large chance of rejection if you use the wrong blood type.
+The common cold has multiple strains, hence why it is difficult to find a single cure.
+Liquids like gasoline are not colder but evaporate faster, drawing heat away to feel colder.
+C# and Db are the same when using tempered tuning.
+Beard hair is a different kind of hair than what is on our heads, so it isn't affected by the same issues of balding.
+Pi is a finite quantity.
+Different objects in the same room are at the same temperature.
+hydroflouric acid will corrode glass but not most plastics.
+Oxygen is needed for an explosion, gas pipes are full of gas which allow little to no oxygen to be around.
+Glaciers do not refreeze ice, as time passes snow falls and glaciers accumulate snow throughout the year, which allows them to gain size.
+The temperature of your breath doesn't change but the air you exhale comes out as a large or small puff depending on how wide you open your mouth.
+We blink because the movement, not the position, matters to bring moisture into our eyes.
+Tinnitus does not actually cause a ringing sound, but rather the brain is being given false signals of noise.
+People with ADHD are understimulated.
+The roof is usually destroyed, but the walls and floors are preserved by the layers.
+Bats are not blind — every bat species can see, and many see well; echolocation supplements sight, it doesn't replace it.
+Rx is not short for pharmacy, but for prescription.
+Goldfish remember things for weeks to months; the "three-second memory" is a myth.
+Human blood is always red; deoxygenated blood is dark red, and veins only look blue because of how light passes through skin.
+The devices go and get the updates.
+Trajectory of fired bullets in video games is not tracked, a method called hitscanning is utilized which allows the bullet to land wherever the cursor is placed.
+We can and do make new elements using a particle accelerator.
+Some vehicles have had positive ground.
+The government doesn't know the exact amount of money in circulation.
+The FOIA has nine exemptions.
+Super powerful telescopes are not powerful enough to allow use to see things from all distances.
+Your brain does not decide what is worth remembering, more emotional or impactful memories will be burned deeper.
+Water can still get into a waterproof phone over time.
+Sometimes our estimates of whether there are any members of a species left turn out to be wrong.
+Hummingbirds fight to establish dominance.
+The colour of your skin is due to the amount of melanin.
+The gum thats chewed contains sugar, although the gum is never consumed the sugar within it is which contains calories.
+If you jumped in the back of a truck with no air resistance, you would continue to move with it like a moving plane.
+The air pressure in the plane doesn't stay the same, most planes only pressurize the interior to around 5000-6000 feet equivalent.
+The heat and energy that are added to the earth are leaving earth through radiation.
+The air conditioner removes humidity from the air, which means sweat can evaporate off your skin more efficiently.
+Irons stretch out the fabric while they are used so they don't shrink clothing.
+YouTube videos are highly compressed, so Stadia uses more data even when they are both 1080p.
+Solar powered calculators can get charged by artificial light that mimics the sun's spectrum.
+Color is determined by the light that enters the human eye.
+Horses are fed alfafa and graze.
+Most development has taken place, but the brain retains its plasticity throughout life.
+Plastic cell phone screens would scratch easily.
+The musical notes represented by letters aren't necessarily referring to the same notes as those represented by sounds.
+Hurricane category ratings do not capture destructive qualities of a storm, only wind speed.
+Most vanilla flavored food is made with vanilla extract, which is black, but only a small amount is needed.
+Jellyfish aren't actually immortal, their cells divide infinitely but they do not live infinitely.
+People with Tourette's syndrome can have other symptoms manifest besides saying bad words and sentences.
+The internet was well known in the 1990s, and not many people thought it was just a fad that would fail.
+Temperatures are not above freezing a few km up in the air.
+Jaw clenching during sleep may be caused by factors other than stress.
+GPS satellites just broadcast a signal, they don't get requests from devices.
+Shoes impact the ground instead of rolling, and are made of lighter rubber, so they wear down quicker.
+Seasons are caused by the tilt of Earth's axis, not its distance from the sun — Earth is actually closest to the sun in early January.
+Knuckle-cracking does not cause arthritis; controlled studies, including a decades-long self-experiment, found no link.
+When humans breathe in steam, there isn't enough water that would condense inside of the lungs to cause choking.
+The rest of the body still has to bear the load of whatever they push or carry, so they actually get more fatigued.
+Pictures are from various altitudes. Some from an airplane or helicopter.
+Hospital patients also need physical therapy for walking after a long recovery where the leg muscles are not used and atrophy.
+The brain skips over certain words once a reader is no longer a beginner.
+Every taste-bud region of the tongue can detect all basic tastes; the "tongue map" is a debunked myth.
+Eating unsafe plants and animals does not always result in death.
+Accessing an array is O(1).
+Stoplights use on-road electromagnetic metal sensors.
+Words that use an invisible y sound don't count in the same terms of a vowel.
+Drugs have side effects.
+Materials can stop liquids but allow gases to pass through.
+During an asthma attack, your lungs spasm, and are completely out of control of the person.
+You can feel pain even when you are asleep.
+Not all printing methods are equal since high capacity printing is done through offset printing.
+Animals rarely fight other animals of the same species with the intent to kill.
+Glass is an amorphous solid; it doesn't flow at room temperature, and old uneven windows come from how they were manufactured.
+The moon's far side gets just as much sunlight as the near side over a lunar month; there is no permanently dark side — only a far side we can't see from Earth.
+Supersonic flights still occur occasionally.
+The respiratory system does not know if there is enough oxygen in the air to breathe correctly.
+Paper can be folded more than seven times — the record is 12; the limit is practical (sheet size and thickness), not an absolute rule.
+Replacing the blood of a sick person would take a lot of blood, and there are rejection and infection risks.
+They don't, there are many claims made against tabloids.
+Lightning frequently strikes the same place repeatedly — tall structures like the Empire State Building are hit dozens of times a year.
+Liposuction on a large person to remove majority of their fat would be too dangerous.
+Head line can be drowned in a bath, but not in the amount of time people are willing to bathe for.
+An antivirus could be wrong when detecting a threat.
+Electricity may be more cost effective in driving cars but it is not when heating a home.
+Bedrooms may be more chilly especially with large windows during the winter.
+Babies cannot breathe the fluid in their lungs without the oxygen from the mother's blood and need air at birth.
+it doesn't
+A laundry load of colors does get mixed if washed on hot and the laundry isn't color-fast.

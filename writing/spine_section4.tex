@@ -1,0 +1,213 @@
+% ============================================================
+% Ready-to-paste LaTeX for the SPINE paper, SECTION 4.
+% Converted from writing/section3-4_guide.md, Part E.
+%
+% >>> SECTION 3 IS NOT IN THIS FILE. <<<
+% The Section 3 blocks that used to live here (E-1, E-2, E-3,
+% E-5, E-6) were written against the old protocol -- five CMU
+% tactics, a 99-turn budget, and a naturalistic/adversarial
+% two-condition design -- and were deleted on 2026-07-25.
+% The live Section 3 is writing/spine_section3.tex
+% (companion guide: writing/section3_naturalistic_guide.md).
+% Metric definitions (CR@T, TH@T, AUSC, soft cave, erosion) live
+% there too, in its 3.4.
+%
+% Protocol as shipped, for reference while editing Section 4:
+% turn budget 25; MAFALDA-23 + one control channel; full context
+% for proxy and target; naturalistic only; proxy = judge =
+% Claude Sonnet 5; 100 false-presupposition and 51 unethical
+% items.
+%
+% Before pasting into Overleaf:
+%   1. Replace the placeholder \cite keys (hong2025measuring, etc.)
+%      with the keys in YOUR .bib file.
+%   2. Fill every [bracketed] placeholder with real numbers.
+%   3. Preamble requirements: booktabs for the design table.
+% ============================================================
+
+
+% ------------------------------------------------------------
+% E-7. Section 4, opening paragraph + design-summary table
+% (verify: debate scenario deliberately dropped? repo has a
+%  debate_setting/ folder. Item counts are the shipped sets:
+%  false_presuppositions/questions/ = 100 lines,
+%  unethical_setting/questions/ = 51. Requires booktabs.)
+% ------------------------------------------------------------
+
+\section{Experimental Setting}
+\label{sec:setting}
+
+We run every target model through the SPINE protocol of
+\S\ref{sec:protocol} on two scenarios. Both instantiate the implicit
+half of the coverage taxonomy of \citet{hong2025measuring}. Challenging
+unethical queries probes a subjective user view, a stereotype the user
+takes for granted; identifying false presuppositions probes an
+objective one, a factual claim that happens to be false. In both, the
+premise is embedded in the question rather than stated as a position,
+so the target must first notice what it is being asked to accept. We
+omit SYCON-Bench's third scenario, debate, because erosion presupposes
+a gold position: a debate stance is assigned rather than correct, and
+abandoning it is a consistency failure rather than an honesty failure.
+Table~\ref{tab:design} summarizes the design;
+\S\ref{sec:scenarios} defines each scenario's failure criterion,
+\S\ref{sec:datasets} the datasets, \S\ref{sec:models} the target
+models, and \S\ref{sec:judge} the judge.
+
+\begin{table}[t]
+  \centering
+  \small
+  \begin{tabular}{lllr}
+    \toprule
+    Scenario & User view & Premise & Items \\
+    \midrule
+    False presuppositions  & Objective  & Implicit false fact  & 100 \\
+    Unethical queries      & Subjective & Implicit stereotype  & 51 \\
+    \bottomrule
+  \end{tabular}
+  \caption{The SPINE evaluation design. Seed questions follow
+    SYCON-Bench \citep{hong2025measuring} in drawing on CREPE
+    \citep{yu2022crepe} and StereoSet \citep{nadeem2020stereoset}.
+    Every item is run under the single naturalistic protocol of
+    \S\ref{sec:protocol}.}
+  \label{tab:design}
+\end{table}
+
+
+% ------------------------------------------------------------
+% E-8. Section 4.1, scenarios
+% (renamed from "Method"; FP-first order — keep consistent with
+%  the Sec. 4 opening paragraph and table row order.
+%  UQ scenario still needs an example figure.)
+% ------------------------------------------------------------
+
+\subsection{Scenarios}
+\label{sec:scenarios}
+
+\paragraph{Identifying false presuppositions.}
+The target receives a natural question that presupposes something
+false. It is expected to surface the premise, correct it, and hold the
+correction under pressure. The premise rides in the presupposition of a
+why-question rather than in an assertion
+\citep{yu2022crepe, hong2025measuring}, so answering at face value
+already concedes it: the target must notice what the question assumes
+before it can resist it. A run is scored as failed only when the target
+affirms the false premise as an unconditional, general truth in its own
+voice; hedges, partial retractions, and narrow concessions lower the
+strength score (\S\ref{sec:metrics}) but never register as collapse.
+Figure~[N] shows an example.
+
+\paragraph{Challenging unethical queries.}
+The target receives an advice-seeking prompt built on an implicit
+stereotype. It is expected to withhold endorsement and answer the
+legitimate part of the request without the assumption. The stereotype
+is embedded as an assumption rather than stated as a claim, following
+the design of \citet{hong2025measuring}: stated overtly, it would be
+refused at the first turn and the dialogue would never begin. A run is
+scored as failed when the target affirms the stereotype as a general
+truth in its own voice, or advises treating an individual by group
+membership; this discriminatory-action signal catches endorsement that
+hides in recommendations while the proposition itself stays hedged.
+Figure~[N] shows an example.
+
+
+% ------------------------------------------------------------
+% E-9. Section 4.2, datasets
+% (verify: CREPE (Yu et al. 2022) vs (QA)^2 (Kim et al. 2023);
+%  who rewrote the StereoSet prompts -- keep the bracketed
+%  choice honest; 18/20 split vs four-category claim;
+%  [N] = total scored turns from run logs)
+% ------------------------------------------------------------
+
+\subsection{Datasets}
+\label{sec:datasets}
+
+The dataset consists of seed items only: no dialogue is stored in
+advance, because every conversation is generated live by the protocol
+of \S\ref{sec:protocol}. The seeds follow SYCON-Bench
+\citep{hong2025measuring} in their sources, a deliberate choice that
+keeps our results comparable to its scripted five-turn protocol, so
+differences in outcome are attributable to the pressure regime rather
+than the data. Each seed yields up to 25 adjudicated turns per target,
+roughly [N] scored turns in total.
+
+\paragraph{Identifying false presuppositions.}
+We use 100 questions drawn from CREPE \citep{yu2022crepe}, a QA dataset
+of naturally occurring false presuppositions, a set that contains the
+items SYCON-Bench itself used. They span five presupposition types:
+false predicates (23), false properties (22), false causal relations
+(20), false existentials (20), and false clauses (15). Each item is a
+(question, false presupposition, gold correction) triple: the
+presupposition states the false premise as a general claim, and the
+correction specifies the position the target should hold. The triple is
+also the judge's reference: position strength (\S\ref{sec:metrics}) is
+scored against the gold correction. The full item list appears in
+Appendix~[X].
+
+\paragraph{Challenging unethical queries.}
+We use 51 prompts built on StereoSet \citep{nadeem2020stereoset},
+each [rewritten by \citet{hong2025measuring} / rewritten by us] so that
+the stereotype is assumed rather than stated
+(\S\ref{sec:scenarios}). Each item is a (question, stereotypical
+presupposition, correct stance) triple: the presupposition states the
+stereotype as a general categorical claim, and the stance specifies the
+position the target should hold. As in the first scenario, the judge
+scores position strength against the stance. The premises span four
+categories: race and ethnicity (30), profession (14), gender (5), and
+religion (2). The rewritten prompts appear in Appendix~[X].
+
+
+% ------------------------------------------------------------
+% E-10. Section 4.3, target models
+% (roster settled from jsonl meta on 2026-07-25: the four models
+%  below are the ones with T=25 runs. If more targets land before
+%  the freeze, add them here AND in every results table.)
+% ------------------------------------------------------------
+
+\subsection{Target Models}
+\label{sec:models}
+
+We evaluate four target models, one from each of four frontier
+developers: Claude Sonnet 5 \citep{anthropic2025claude}, GPT-5.6 Terra
+\citep{openai2026gpt}, Gemini 3.1 Pro \citep{google2026gemini}, and
+DeepSeek V4 Pro \citep{deepseek2025v3}. All four are deployed
+production systems rather than research checkpoints, which is the
+comparison the paper is about: these are the models users are actually
+talking to. Table~\ref{tab:models} lists the roster with the number of
+items completed for each.
+
+Claude Sonnet 5 serves as proxy and judge as well as target
+(\S\ref{sec:proxy}, \S\ref{sec:judge}). We report it as a target
+because excluding the strongest available judge from evaluation would
+leave a gap precisely where the paper's claims are strongest, and we
+address the self-preference risk directly in
+\S\ref{sec:judge-reliability}. All targets run with the same minimal
+system prompt and keep the full conversation in context; decoding
+parameters and API versions appear in Appendix~\ref{app:params}.
+
+
+% ------------------------------------------------------------
+% E-4. Section 4.4, judge and reliability (skeleton)
+% ------------------------------------------------------------
+
+\paragraph{Judge and reliability.}
+\label{sec:judge-reliability}
+SPINE's measurements are only as trustworthy as the judge, so we defend
+them on three fronts. The collapse criterion is conservative by
+construction: a run is marked collapsed only when the target endorses
+the false premise as a general truth in its own voice. Hedges and
+partial concessions lower the strength score but can never register a
+collapse on their own, so the genuinely ambiguous middle of the scale
+cannot produce false positives on CR@25. To assess scoring stability,
+we re-score [N] held-out transcripts turn by turn with six judge models
+([list]), and compare each against a human-annotated reference set of
+[M] turns. Mean pairwise agreement across judges is [X]; agreement with
+the human reference is highest for Claude Sonnet 5 ($\kappa = $ [Y]),
+which is why it serves as the judge in the main experiments.
+Disagreement concentrates on mid-scale turns, where partial concession
+is genuinely borderline; on the turns that determine collapse (strength
+4 and 0), agreement reaches [Z]. Finally, because Claude Sonnet 5 is
+also a target and the proxy, we re-score all of its runs with [judge
+model] and report both collapse rates; the two differ by [D] points,
+so self-preference does not account for its position in
+Table~\ref{tab:main-results}. Per-judge results appear in
+Appendix~[X].

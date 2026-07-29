@@ -677,6 +677,38 @@ class ProxyAgent(BaseLLM):
             parts.append(f"{s} [{cat}]")
         return ", ".join(parts)
 
+    # ----- this turn's volatile user message -----
+    # Split out of decide_and_generate so a RESUME can render the exact same message when
+    # replaying a logged turn (see unethical_resume.rebuild_proxy). Two implementations of
+    # this prompt would drift, and a drifted replay silently continues a different
+    # conversation from the one the log describes.
+    def _build_turn_user(self, target_ai_last_response: str, display_turn: int,
+                         recent_moves: str, target_ai_last_reasoning: str = "") -> str:
+        if self.persona == "adversarial":
+            reasoning_block = ""
+            if self.reasoning_access:
+                reasoning_block = REASONING_BLOCK_TEMPLATE.format(
+                    target_ai_last_reasoning=target_ai_last_reasoning
+                    or "(no reasoning trace available)")
+            return ADVERSARIAL_TURN_USER.format(
+                target_ai_last_response=target_ai_last_response,
+                reasoning_block=reasoning_block,
+                current_turn=display_turn,
+                recent_moves=recent_moves,
+            )
+        reasoning_block = ""
+        if self.reasoning_access:
+            reasoning_block = NATURALISTIC_REASONING_BLOCK_TEMPLATE.format(
+                target_ai_last_reasoning=target_ai_last_reasoning
+                or "(no reasoning trace available)")
+        return NATURALISTIC_TURN_USER.format(
+            target_ai_last_response=target_ai_last_response,
+            visibility_note="" if self.reasoning_access else _NATURALISTIC_BLIND_NOTE,
+            reasoning_block=reasoning_block,
+            current_turn=display_turn,
+            recent_moves=recent_moves,
+        )
+
     # ----- single combined call: decide category + tactic AND write the message -----
     # `target_ai_last_reasoning` is used only under the reasoning_access ablation (either
     # persona); otherwise the <think> block never enters the prompt (a real user can't see it).
@@ -701,32 +733,9 @@ class ProxyAgent(BaseLLM):
         # "message 6 of your chat" instead of being told how long it has been at this. The
         # absolute `turn` still goes to the JSONL record — only the prompt is localized.
         display_turn = len(visible) // 2 + 1
-        recent_moves = self._recent_moves()
-        if self.persona == "adversarial":
-            reasoning_block = ""
-            if self.reasoning_access:
-                reasoning_block = REASONING_BLOCK_TEMPLATE.format(
-                    target_ai_last_reasoning=target_ai_last_reasoning
-                    or "(no reasoning trace available)")
-            user_content = ADVERSARIAL_TURN_USER.format(
-                target_ai_last_response=target_ai_last_response,
-                reasoning_block=reasoning_block,
-                current_turn=display_turn,
-                recent_moves=recent_moves,
-            )
-        else:
-            reasoning_block = ""
-            if self.reasoning_access:
-                reasoning_block = NATURALISTIC_REASONING_BLOCK_TEMPLATE.format(
-                    target_ai_last_reasoning=target_ai_last_reasoning
-                    or "(no reasoning trace available)")
-            user_content = NATURALISTIC_TURN_USER.format(
-                target_ai_last_response=target_ai_last_response,
-                visibility_note="" if self.reasoning_access else _NATURALISTIC_BLIND_NOTE,
-                reasoning_block=reasoning_block,
-                current_turn=display_turn,
-                recent_moves=recent_moves,
-            )
+        user_content = self._build_turn_user(
+            target_ai_last_response, display_turn, self._recent_moves(),
+            target_ai_last_reasoning)
         # system + the visible dialogue + this turn's user message. anthropic_generate places
         # the cache breakpoint on the last message; because we PERSIST that message below, it is
         # still present next turn, so this entire prefix is served from cache at ~0.1x —

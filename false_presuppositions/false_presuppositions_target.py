@@ -49,6 +49,7 @@ from false_presuppositions_base import (
     DEEPSEEK_BASE_URL,
     api_retry,
     build_client,
+    is_deepseek_reasoner,
     logger,
 )
 
@@ -63,6 +64,10 @@ from false_presuppositions_base import (
 # (api.zhizengzeng.com gets TLS-reset by some network filters). Override via env if needed.
 TARGET_BASE_URL = os.getenv("TARGET_BASE_URL", "https://api.zzz-api.top/v1")
 DEFAULT_TARGET_MODEL = os.getenv("TARGET_MODEL", "deepseek-reasoner")  # under test (DeepSeek R1)
+# Decoding temperature for the model under test. Override per run with
+# --target-temperature to sweep (e.g. 0 / 0.3 / 0.6 / 1). NOTE: several provider paths
+# drop the parameter entirely — see target_temperature_is_sent() below.
+DEFAULT_TARGET_TEMPERATURE = float(os.getenv("TARGET_TEMPERATURE", "0.6"))
 # Qwen3 is a single set of weights with a thinking toggle: enable_thinking=True is the
 # "reasoning" condition, False is the "chat" condition. It is the cleanest way to vary
 # reasoning-vs-chat without confounding model identity. Sent via extra_body because the
@@ -411,6 +416,25 @@ def _openai_reasoning_model(model: str) -> bool:
     return m.startswith(("gpt-5", "o1", "o3", "o4"))
 
 
+def target_temperature_is_sent(provider: str, model: str, enable_thinking) -> bool:
+    """Whether a configured temperature actually reaches this provider/model.
+
+    Four paths drop it silently (deepseek-reasoner, OpenAI reasoning models, Anthropic
+    models that reject sampling params or have thinking on). A temperature sweep across
+    any of those produces N runs with IDENTICAL sampling config that differ only by RNG,
+    so the CLI refuses it rather than letting the result be misread as a temperature
+    effect. Mirrors the live conditions in BaseLLM._chat, anthropic_generate, and
+    openai_generate — keep in sync with them.
+    """
+    if provider == "gemini":
+        return True  # native generationConfig.temperature, always sent
+    if provider == "anthropic":
+        return not enable_thinking and not _anthropic_rejects_temperature(model)
+    if provider == "openai":
+        return not _openai_reasoning_model(model)
+    return not is_deepseek_reasoner(model)  # deepseek / qwen / openrouter → BaseLLM._chat
+
+
 @api_retry
 def openai_generate(
     client: OpenAI,
@@ -494,7 +518,8 @@ class TargetAgent(BaseLLM):
 
     def __init__(self, client: OpenAI, model: str = DEFAULT_TARGET_MODEL,
                  opening_question: str = "", enable_thinking: Optional[bool] = None,
-                 provider: str = "qwen", **kwargs) -> None:
+                 provider: str = "qwen", temperature: Optional[float] = None,
+                 **kwargs) -> None:
         self.provider = provider
         if provider == "gemini":
             # Gemini target runs on the NATIVE :generateContent endpoint (not the OpenAI
@@ -541,7 +566,9 @@ class TargetAgent(BaseLLM):
             # its own chain-of-thought), so --target-thinking is a no-op for this provider.
             extra_body = None
             stream = False
-        super().__init__(client, model, name="TargetAgent", default_temperature=0.6,
+        super().__init__(client, model, name="TargetAgent",
+                         default_temperature=(DEFAULT_TARGET_TEMPERATURE
+                                              if temperature is None else temperature),
                          extra_body=extra_body, stream=stream, **kwargs)
         self.opening_question = opening_question
         system_prompt = TARGET_SYSTEM_PROMPT_TEMPLATE.format(question=opening_question)

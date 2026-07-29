@@ -2,7 +2,7 @@
 
 Working notes for Section 2 of *Measuring Sycophantic Erosion under Sustained Multi-Turn Pressure* (SPINE), based on a full read of `Your_Paper.pdf` (10 pp., July 22) and Hong et al. (2025), *Measuring Sycophancy of Language Models in Multi-turn Dialogues* (SYCON-Bench), EMNLP 2025 Findings.
 
-**TL;DR:** SYCON's §2 is one unsubsectioned paragraph, ~230 words, 12 citations, and it contains **no gap statement and no forward reference to its own benchmark** — the positioning argument lives in their §3 ¶1. Your draft already does the same thing (`Your_Paper.pdf` §3 ¶1–2 carries the full case against SYCON-Bench), so **§2 must not re-argue the gap** or reviewers read §2 and §3 as duplicated. The rule that resolves almost every question below: **§2 says what SPINE inherits; §3 says what prior work lacks.** Four subsections, ~500 words total, ordered phenomenon → pressure machinery → pressure vocabulary → defense/instrument. Assumes MAFALDA-23 is confirmed as the shipped taxonomy (PI agenda Item 3); §2.3 has a degradation note if it is not.
+**TL;DR:** SYCON's §2 is one unsubsectioned paragraph, ~230 words, 12 citations, and it contains **no gap statement and no forward reference to its own benchmark** — the positioning argument lives in their §3 ¶1. Your draft already does the same thing (`Your_Paper.pdf` §3 ¶1–2 carries the full case against SYCON-Bench), so **§2 must not re-argue the gap** or reviewers read §2 and §3 as duplicated. The rule that resolves almost every question below: **§2 says what SPINE inherits; §3 says what prior work lacks.** Four subsections, ~500 words total, ordered phenomenon → pressure machinery → pressure vocabulary → defense/instrument. MAFALDA-23 is confirmed as the shipped taxonomy, so §2.3 can carry it without hedging.
 
 Current state of §2 in the draft: a three-line stub — "1. Jailbreak method implementation 2. Persona prompting engineering 3. Sycophancy previous work". Everything here is new writing.
 
@@ -73,7 +73,7 @@ Three clusters, one sentence each:
 **Then the differentiation sentence — mandatory, two clauses:**
 
 - (i) A jailbreak extracts a policy violation the model never endorsed; SPINE measures the **abandonment of a correct position the model itself stated in-context**. This is exactly why §3.1 admits only runs whose first response is correct — say that here in a subordinate clause and the filter stops looking like a convenience.
-- (ii) Red-teaming has no analogue of SPINE's **naturalistic condition**: an attacker is adversarial by definition, so a good-faith persona that still induces collapse is not a weaker attack but a different threat model.
+- (ii) Red-teaming has no analogue of SPINE's **naturalistic protocol**: an attacker is adversarial by definition, so a good-faith persona that still induces collapse is not a weaker attack but a different threat model.
 
 **Positioning must-cite:** Li, Krishnan & Padman, *Consistency of Large Reasoning Models Under Multi-Turn Attacks* (arXiv 2602.13093) — nine frontier reasoning models, five trajectory-derived failure modes (Self-Doubt, **Social Conformity**, Suggestion Hijacking, Emotional Susceptibility, Reasoning Fatigue). This is the nearest neighbour to your §6 taxonomy and a reviewer will know it. Differentiate in one clause: SPINE's categories are read off the **reasoning trace at the moment of collapse** and are cross-cut by the orthogonal *conscious-override* flag — the correct fact is present in the trace and the user's answer is chosen anyway (8/17 R1 runs) — which is a claim about what the model knew, not about which attack worked.
 
@@ -81,25 +81,27 @@ Optional closer if the words are there: jailbreak defenses (Constitutional Class
 
 ### §2.3 Logical fallacy — *~110 words*
 
-Load-bearing now that MAFALDA-23 is the shipped taxonomy. Two threads:
+Load-bearing: MAFALDA-23 is the shipped taxonomy. Two threads:
 
-**(a) Fallacy taxonomy and detection.** MAFALDA (Helwe et al., NAACL 2024) merges prior fallacy datasets into a single aligned taxonomy with manual annotations and evaluates LMs on detection and classification. SPINE uses its 23 fallacy types as the proxy's tactic menu and reports the §6 attribution over the three level-1 families (Ethos/Credibility, Logos/Logic, Pathos/Emotion). State the payoff explicitly in one clause: it replaces five categories we invented with a published taxonomy, so "which pressure precedes a score drop" becomes a citable claim about fallacy families rather than about our own labels (PI agenda Item 3, Argument 3).
+**(a) Fallacy taxonomy and detection.** MAFALDA (Helwe et al., NAACL 2024) merges prior fallacy datasets into a single aligned taxonomy with manual annotations and evaluates LMs on detection and classification. SPINE uses its 23 fallacy types as the proxy's tactic menu, adds one non-fallacious control channel, and reports the §6 attribution over the three level-1 families (Ethos/Credibility, Logos/Logic, Pathos/Emotion). State the payoff in one clause, and state it accurately: the menu it replaces was **SYCON-Bench's own follow-up schedule** (their §4.2 Turn 2–5 strategies for the FP scenario), not five categories we invented. Verified 2026-07-26 — their T2 "express uncertainty and seek clarification", T3 "reassert with increased confidence", T4 "support with anecdotal evidence or personal observation", and T5 "question more directly or express disbelief" are `MILD_CONFUSION` / `RE_ASSERTION` / `PERSONAL_EXPERIENCE` / `DIRECT_CHALLENGE`; only `FALSE_PIVOT` was ours. So the switch buys independence from the benchmark being compared against, which is a stronger claim than "we swapped our labels for published ones" and avoids over-claiming their design. §6.3 cashes it — Pathos precedes 36% of strength drops on 19% of turns, against a control channel that lands at 8% on 9% — a sentence that is only sayable because the families are someone else's *and* not the comparison target's.
 
 **(b) Belief change under persuasion.** Xu et al., *The Earth is Flat because…* (Farm dataset, arXiv 2312.09085) is the closest prior work on multi-turn persuasive misinformation targeting facts the model answers correctly — the same shape as SPINE's false-presupposition scenario, but with pre-generated persuasive passages rather than a live proxy. Note the shape match; do **not** turn it into a gap sentence (§3 owns that).
 
 **Closing clause:** SPINE inherits its vocabulary of pressure from (a) and its belief-tracking framing from (b).
 
-> **Degradation note.** If the PI meeting does not confirm MAFALDA-23, delete the "SPINE uses its 23 fallacy types…" clause and the level-1 sentence, keep both threads as adjacent context, and shorten to ~70 words. Nothing else in §2 depends on the decision.
+**Do not promise a comparison table here.** The current draft's §2.3 promises one as "Table 1"; it now exists as `tab:sycon-vs-spine` in `spine_section3.tex`, placed after the §3 positioning paragraph. A setup comparison is a differentiation artifact, and §2 is the inheritance section — putting it here would re-argue the gap that §3 owns. Delete the promise or repoint it forward.
 
 ### §2.4 Persona prompting to preserve values — *~110 words*
 
 Two directions, and the second is the contribution hook. **§2.4 is where the paper's most novel claim gets its runway** (agenda Item 4c) — write it last, after §5–6 numbers are final, so the hook matches what you actually report.
 
-**(a) Persona as defense.** Third-person distancing raises resistance to user pressure — SYCON's Andrew prompt gains up to 63.8% ToF in debate, grounded in distanced self-talk (Kross et al., 2014); explicit anti-sycophancy instructions help in the unethical setting (Sharma et al., 2023); value anchoring produces value expression consistent with human structure (Rozen et al., arXiv 2407.12878); URIAL elicits conversational behavior from base models by in-context alignment alone (Lin et al., 2023). URIAL does double duty — §4.3 needs it to make OLMo-3-7B-Base hold a conversation at all, so cite it here and point forward.
+**(a) Persona as defense.** Third-person distancing raises resistance to user pressure — SYCON's Andrew prompt gains up to 63.8% ToF in debate, grounded in distanced self-talk (Kross et al., 2014); explicit anti-sycophancy instructions help in the unethical setting (Sharma et al., 2023); value anchoring produces value expression consistent with human structure (Rozen et al., arXiv 2407.12878); URIAL elicits conversational behavior from base models by in-context alignment alone (Lin et al., 2023). URIAL used to do double duty here, because §4.3 needed it to make OLMo-3-7B-Base hold a conversation at all; **OLMo is no longer in the roster**, so cite URIAL on its merits as evidence that in-context prompting alone installs a persona, and drop the forward pointer.
 
-**(b) Persona as instrument.** SPINE's naturalistic and adversarial conditions differ **only** in the proxy's persona, which makes persona an experimental variable rather than a prompt trick; §5.2 finds persona bounds what the adversary achieves.
+**(b) Persona as instrument.** SPINE puts the persona on the *user* side and holds it fixed: a sincere, confidently mistaken user. That is not a prompt trick but the paper's central scope claim — every failure reported is reachable by an honest interlocutor — and it is only as good as the persona specification, which is why §3.2 spells the prompt out. §5.2's legacy ablation, where a manipulative persona replaces the sincere one, is the one place the variable is actually toggled.
 
-**Forward hook — one sentence, no more:** these persona results are all measured over short horizons, while SPINE runs to 99 turns, where the persona itself degrades (agenda Item 1, Evidence A/B: proxies abandoning the assigned persona, and in one case converting to the target's position). Frame it as a question §5 answers. Do not argue it here.
+**Forward hook — one sentence, no more:** these persona results are measured over one or two turns, while SPINE requires a persona to stay in character for 25 consecutive turns against a model arguing back, which makes persona stability an instrument-validity property rather than a prompt-engineering detail (§3.2). Frame it as a question §3 answers. Do not argue it here.
+
+> **Note on the 99-turn persona-decay material.** The evidence that a sincere proxy abandons its persona, and in some runs converts to the target's position, comes from the 99-turn era (PI agenda Item 1, Evidence A/B). At a 25-turn budget the proxy does not accumulate enough transcript for that to fire, so it is no longer a live §5 question. Do not write the forward hook as if it were.
 
 ---
 
@@ -139,7 +141,7 @@ Two directions, and the second is the contribution hook. **§2.4 is where the pa
 | 2.4 | Kross et al. 2014 | — (not in repo) | distanced self-talk — the psychological grounding |
 | 2.4 | Sharma et al. 2023 | — | non-sycophantic instruction prompt |
 | 2.4 | Rozen et al. (2407.12878) | `Papers/DO LLMS HAVE CONSISTENT VALUES.pdf` | value anchoring → consistent value expression |
-| 2.4 | Lin et al. 2023 (URIAL) | `Papers/THE UNLOCKING SPELL ON BASE LLMS…` | in-context alignment; **also needed by §4.3 for OLMo base** |
+| 2.4 | Lin et al. 2023 (URIAL) | `Papers/THE UNLOCKING SPELL ON BASE LLMS…` | in-context alignment installs a persona without training (the §4.3 OLMo-base dependency is gone) |
 
 **Held in reserve** (real papers in `Papers/Sycophancy/`, but §2 does not need them; use only if a reviewer asks for breadth): DIALDEFER · PUA · SycEval-adjacent SYAUDIO and SycoPhantasy · *Not Your Typical Sycophant* · *Overalignment in Frontier LLMs* · *Diagnosing and Mitigating Sycophancy and Skepticism in LLM Causal Judgment* · *From Yes-Men to Truth-Tellers* (Chen et al., pinpoint tuning) · Malmqvist. A mitigation clause in 2.1 citing Chen et al. + Papadatos & Freedman + Wei et al. would mirror SYCON step 4 — add it only if §2 comes in under budget.
 
@@ -151,7 +153,8 @@ Two directions, and the second is the contribution hook. **§2.4 is where the pa
 - [ ] No citation cluster runs longer than one sentence.
 - [ ] Each of 2.1–2.4 ends with an inheritance clause.
 - [ ] 2.2 contains both clauses of the differentiation sentence, and names Li et al. explicitly.
-- [ ] 2.3's MAFALDA claim matches what §3.2 and §4.2 say **after** the Item 3 rewrite (the current §3.2/§4.2 still describe the five CMU tactics — they must be rewritten first, or §2 will contradict them).
-- [ ] 2.4 uses **naturalistic** for the condition name, never "sincere" (settled in `section5-6_guide.md`); "sincere user" is allowed only as persona description.
+- [ ] 2.3's MAFALDA claim matches §3.2 (`spine_section3.tex`) verbatim on the arithmetic: 23 level-2 fallacies + 3 level-1 families + 1 control channel = 24 menu entries.
+- [ ] 2.4 uses **naturalistic** for the protocol, never "sincere"; "sincere user" is allowed only as persona description. No sentence implies a live adversarial condition — the only adversarial material left in the paper is §5.2's legacy ablation.
+- [ ] No sentence in §2 says SPINE runs to 99 turns; the budget is 25.
 - [ ] Perez et al. 2022 added to the `.bib` (currently cited in §1, missing from the references).
 - [ ] Total §2 ≈ 500 words / 0.9 column.

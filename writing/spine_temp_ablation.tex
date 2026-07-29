@@ -1,0 +1,82 @@
+% ---------------------------------------------------------------------------
+% Decoding-temperature ablation, DeepSeek V4 Pro, false-presupposition setting.
+% 4 cells x 100 items = 400 runs, T = 25, naturalistic proxy (Claude Sonnet 5,
+% thinking on, full-window memory), judge Claude Sonnet 5, wind-down stop off.
+% Only the target's sampling temperature varies across rows.
+%
+% Requires: booktabs.
+% ---------------------------------------------------------------------------
+\begin{table}[t]
+  \centering
+  \small
+  \begin{tabular}{lccccc}
+    \toprule
+    & \multicolumn{5}{c}{False Presupposition} \\
+    \cmidrule(l){2-6}
+    \textbf{Target temperature} & $n$ & CR@5 & CR@25 & TH@25 & AUSC \\
+    \midrule
+    $\tau = 0.0$          & 100 & 49\% & 86\% & 7.8 & 0.22 \\
+    $\tau = 0.3$          & 100 & 46\% & 90\% & 8.0 & 0.23 \\
+    $\tau = 0.6$ (default)& 100 & 49\% & 88\% & 7.7 & 0.23 \\
+    $\tau = 1.0$          & 100 & 48\% & 85\% & 8.5 & 0.24 \\
+    \midrule
+    \multicolumn{1}{l}{\emph{spread}} & --- & 3\,pt & 5\,pt & 0.8 & 0.02 \\
+    \bottomrule
+  \end{tabular}
+  \caption{Decoding temperature does not affect sycophantic collapse.
+    DeepSeek V4 Pro under the naturalistic proxy at $T=25$, with the target's
+    sampling temperature the only variable ($400$ runs total; every other
+    setting, including proxy, judge, turn budget and random item order, held
+    fixed). No metric separates the four cells: collapse rate spans
+    $85$--$90\%$, and the ordering is not monotonic in $\tau$ --- $\tau=0.3$ is
+    the most collapse-prone cell and $\tau=1.0$ the least. A $\chi^{2}$ test
+    across the four collapse counts gives $p=0.72$; a Kruskal--Wallis test on
+    the collapse-turn distributions gives $p=0.77$. The benchmark therefore
+    measures a property of the model rather than an artifact of the decoding
+    configuration, and the $\tau=0.6$ operating point used throughout the paper
+    is not a favourable choice.}
+  \label{tab:temp-ablation}
+\end{table}
+
+% ---------------------------------------------------------------------------
+% NOTES FOR THE AUTHORS -- delete before submission.
+%
+% 1. INCLUSION FILTER NOT APPLIED. These four rows are computed over all 100
+%    items per cell. The baseline inclusion filter (drop runs whose turn-0
+%    reply does not state the correct position) is applied offline and its
+%    exclusion list is not stored in the repository, so it could not be
+%    reproduced for the three new cells. The tau=0.6 row here is the same
+%    corpus as the main-table DeepSeek V4 Pro row but UNFILTERED: 88/100 = 88%
+%    here vs 76/88 = 86% published. Applying the filter uniformly to all four
+%    cells would shift every row by a similar amount and would not change the
+%    null conclusion, but the rows as printed are NOT directly comparable to
+%    the main results table. Re-run the filter before merging the two tables.
+%
+% 2. TH@25 DEFINITION MISMATCH. This table uses the Section 3.4 definition,
+%    TH@T = E_i[min(t^c_i - 1, T)], which counts non-collapsed runs at the full
+%    budget T. The published DeepSeek V4 Pro row reports TH@25 = 6.3, which
+%    equals the MEAN COLLAPSE TURN AMONG COLLAPSED RUNS ONLY for this corpus,
+%    not the Section 3.4 expectation (which is 7.7 unfiltered, ~8.7 filtered).
+%    Under the mean-collapse-turn reading the four cells are:
+%        tau=0.0: 6.0   tau=0.3: 7.1   tau=0.6: 6.3   tau=1.0: 6.5
+%    (spread 1.1 turns; still a null result either way). Decide which
+%    definition the paper uses and make Section 3.4, the main table and this
+%    table agree.
+%
+% 3. UNETHICAL SETTING COLUMNS OMITTED. No temperature sweep was run in the
+%    stereotype setting. unethical_main.py now accepts --target-temperature,
+%    so the mirrored cells can be produced if the table is wanted in the
+%    two-panel form of the main results table.
+%
+% 4. JUDGE NOISE IS NOT CONTROLLED. All 400 runs used --judge-samples 1, and
+%    Claude Sonnet 5 discards its configured temperature of 0, so the judge is
+%    itself nondeterministic. Part of the 5-point CR@25 spread is judge
+%    variance rather than target variance. --judge-samples 3 would tighten it.
+%
+% 5. HOLD SETS ARE NOT STABLE ACROSS CELLS. 28 distinct items hold at least
+%    once, but only 3 hold in all four cells (q63, q67, q68); 14 hold in
+%    exactly one. Pairwise Jaccard overlap between hold sets is 0.25-0.38. Of
+%    the 51 holds across all cells, 31 end at final position strength 1, the
+%    boundary value. If a robustness claim is made about WHICH items survive,
+%    it needs re-rolls; the aggregate rate is the only stable quantity here.
+% ---------------------------------------------------------------------------

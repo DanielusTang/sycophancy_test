@@ -1,25 +1,100 @@
 Why do they change the music in movies? Haven't the rights already been secured?
 Why does cold wind have a higher pitch than warm wind?
 Why are rainbows only formed by the sun and not other sources of light like street lamps or lights on buildings?
-Why can’t countries with high-valued yet cheap currencies (Eg: 1400 Iraq dinar~1 US dollar) simply remove those zeros?
-Why are electronic payments universally trusted, but electronic voting largely viewed as a crazy idea?
 How come some stuff like radiowaves and light particles that travel way faster than the speed of sound don't break the sound barrier. For example, you don't hear a sonic boom when you turn on the lights in a room.
-If i'm hurting somewhere and i take painkillers, pain goes away. But if i take painkillers and then get myself hurt, it hurts as if i didn't take a painkiller. Why?
 Why do our ears get clogged when traveling by plane or on mountainside in a vehicle, but not when we go up big heights by elevator?
-Why is there still so much poverty in South Africa even after apartheid?
 How does aerobic exercise help a person maintain a healthy heart, as opposed to it deteriorating from high usage?
-Why can't we just copy and paste a code for a videogame from a certain platform to another platform instead of rewriting it?
 How can a body part with different DNA be accepted into a new body during a transplant without being rejected by that new host body?
 How do jet engines keep planes in the air?
 Why can we land on top of the moon, but not a planet?
 How is it possible that we don't know how the Egyptians built the pyramids?
-What actually happens when we run out of IPv4 Addresses?
-What keeps oceans and seas from spreading viruses and many other contagious illnesses?
-Why can't we find the centre of the universe?
-Why can plastic be opaque or transparent but we can’t make transparent metal?
-How do you differentiate east from west at the poles?
-If water is homogeneous, why do different beaches from the same body of water have different levels clarity or cleanliness in the water?
-why does the sun evaporate water even though water evaporates at a 100C°
+why does the sun evaporate water even though water evaporates at a 100°C?
 If heat rises, why is it not warmer the higher in the sky you get?
 If the body needs glucose to turn into energy, why does it matter what food we eat if it all turns into the same stuff in the end?
-If everything leads to disorder (law of entropy), how did life form millions of years ago?
+Why is there a risk of rejection of donated organs, but not of donated blood?
+Why has it been hard to find a cure for the common cold?
+Why are certain liquids, like gasoline, colder than other liquids even when they're kept in the same environment?
+Why are C# and Db not the same? (Or any other set of #/b.) Is there a difference in Hertz? How big?
+Why can bald people still grow beards?
+Why is pi considered infinite but the diameter will fit around the circumference at some point
+Why are different objects in the same room not the same temperature? Shouldn't all of them be room temperature?
+Why do corrosive substances get stored in glass containers?
+Why don’t structure fires create a chain reaction of gas line explosions the lead back all the way back to the source?
+When glaciers melt during the warmer months how much gets frozen back during the cooler months?
+Why does your breath change temperature depending on how you shape your mouth while exhaling?
+Why do you still blink regularly when your eyes are closed already?
+Why does tinnitus cause a ringing sound?
+How does coffee help people with ADHD calm down as opposed to getting even more hyper?
+How were ancient cities with intact brick structures excavated? Shouldn't those structures have been demolished/destroyed by the layers that cover those cities?
+How do bats find their way around and catch insects at night if they're completely blind?
+Why is Rx short for pharmacy?
+If a goldfish forgets everything within a few seconds, how does it ever learn where its food comes from?
+Why does the blood in my veins look blue and only turn red once it hits the air?
+How do software updates/game updates go to each and every device that carries it?
+In a first person shooter, how is the video game able to track the trajectory of a fired bullet and its interaction with online players in real time?
+Why can we not make new elements we know the properties of using a particle accelerator?
+Since electrons flow from negative to positive, why are cars grounded to the negative terminal on the battery?
+How does a government knows the exact amount of physical money at any point in circulation?!
+Why is the government allowed to redact information in their FOIA requests? Isn't this against the whole concept of "freedom of information"?
+Why can't we see the flag on the moon even with the super powerful telescopes?
+How does your brain decide what's worth remembering and what's not?
+Why are waterproof phones rated for time periods submerged etc... (ie, 5m for 30 mintues). Doesnt waterproof mean water does not get in? Why is there a time limit.
+How is a species determined to be extinct? How can we truly verify whether or not there are other members of a species still present in nature, especially small creatures such as insects?
+How do hummingbirds establish dominance without physically fighting?
+If the colour of your skin is due to the amount of melatonin, what mechanism accounts for all the different skin tones?
+How does gum have calories if we don’t actually eat it?
+If you jump inside a moving airplane you will continue to move with the airplane and won’t fall a few rows behind...? How come the same can’t be said for a car
+when I’m in a plane at 35,000 ft in the air why is it so dry and not humid and why do my ears pop if the air pressure is the in the plane stays the same
+If the sun is constantly adding heat/energy to earth, then why has the temperature always stayed the same?
+how come in the car 65 degrees with AC on is different than 65 degrees with the AC off. Shouldn’t 65 degrees all feel the same?
+why can’t you wash certain items too hot to avoid them shrinking, but you CAN iron those same items on a much higher temperature without ruining them?
+How does 1080 stadia use so much more data than 1080 video/youtube.
+How do my solar power calculators that I never expose to direct sunlight work for so long.
+How does color on a computer screen work? I always thought that color was a way that light reflects on different materials/objects. How does this work on a TV/computer screen?
+How can horses grow massive muscles while only eating straw but humans need a balanced diet and protein?
+Why does the brain stop developing after your mid-20s?
+Why do cell phone screens need to be made of glass? Wouldn't a more flexible and durable plastic composite (or something) make more sense?
+why are the musical notes represented by letters in some places (C-D-E-F-G-A-B), but in others by their sound (do-re-mi-fa-sol-la-si-do) ?
+Why is Hurricane Dorian consider the worst hurricane in decades to hit Florida, if its estimated that will arrive as C4 when Irma arrived as C5?.
+why is everything vanilla flavored white if vanilla beans are black?
+How are jellyfish Immortal?
+what makes people with Tourette syndrome say bad words or sentences?
+Why everyone in the 1990s thought the Internet was just a fad and was going to fail massively?
+How does hail work when its summer and the temperatures are way above freezing?
+How does my brain/body make my jaw clench while I sleep, to the point of damaging my teeth? I get it has to do with stress, but how does this focus on my jaw muscles and not my leg muscles for examples?
+How do a handful of GPS satellites handle the millions of users every day?
+Why don't shoes last nearly as long as vehicle tires?
+Why is it hotter in summer — is it because the Earth is closer to the sun during those months?
+How much long-term arthritis am I setting myself up for by cracking my knuckles every day?
+Why can humans breathe in steam (like in a shower or sauna) and not have the water condense inside of their lungs, leading to choking?
+Do amputees with bionic appendages become less fatigued from physical activity?
+how does google earth have such sharp images and 3d buildings correct to the number of windows if satellites are so high up?
+when people suffer gunshot wounds, why do they sometimes need to undergo physical therapy to be able to walk again, even if said wounds didn't happen in their legs or spine(like in their gut or torso)? Also, why do they hurt in trying to walk again?
+Why does the the brain ignore the 2nd "the"?
+Why do we taste sweet things with the tip of the tongue and bitter things at the back?
+How did we figure out what plants and animals were edible? Did someone just take one for the team and try it and if they didn’t die we knew it was safe to eat?
+How is looking up a hash table O(1), but looking up something in a normal array still O(n)? What's the difference between a hash table and a list of hashes?
+How do stop lights with on-road weight sensors work, exactly?
+I thought all words that star with a vowel and you want to use (a) you must use (an) ?
+Can someone explain with an example how drugs are designed to target exactly the ailment they are supposed to fix and nothing else?
+How can a jacket's material be both waterproof and breathable?
+What actually happens to the body during an asthma attack? Why can't you just calm down and breathe?
+Why is it that we don't feel pain when we're asleep?
+How do newspaper companies print so many coloured newspapers, selling them dirt cheap, and yet if I printed a single newspapers-worth, I'd easily spend 20x the price of a newspaper on ink.
+How is it that a human can punch another human and potentially kill them, whereas an animal like a tiger, who generates more force, just takes the strikes with little internal damage from another tiger?
+Since glass is really a slow-flowing liquid, why haven't centuries-old cathedral windows oozed into puddles?
+How cold does it get on the permanently dark side of the moon that never receives any sunlight?
+Why have supersonic flights such as the Concorde been abolished completely?
+How our respiratory system knows, that there is enough oxygen in air to breathe correctly?
+Why is it physically impossible to fold a sheet of paper in half more than seven times, no matter how big it is?
+Why we don't replace the blood in a sick person (HIV, cancer) with clean blood.
+How do checkout aisle tabloid magazines publish clearly outrageous stories about celebs and avoid being libelous?
+Since lightning never strikes the same place twice, is it safest to shelter exactly where a bolt just hit?
+Why can't you just Lipo a fat person thin?
+Why do head lice not drown when you have a bath?
+Why do antivirus programs "quarantine" threats instead of just removing them?
+If electric cars are more cost effective to drive than fossil fuel cars, why aren’t all houses heated with electric heat?
+Even though 72 is room temperature year round, why does it feel colder in the winter?
+If babies lungs are filled with fluid at birth, and the mother does a water birth, what would happen if the baby wasn't taken out of the water? Why can't it just stay in water like a mermaid?
+It takes the stomach 1-2 hours to breakdown food before it's ready for the next step of digestion but if a person were to eat every ~30 minutes how does the organ differentiate between the newer food and the older food (which is ready to be passed to the small intestine)?
+Why when you wash a white load with a red item the colour runs and it goes pink, but if you wash a load of colours none of them get mixed?

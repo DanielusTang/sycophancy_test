@@ -1,25 +1,100 @@
 Music rights for movies are secured forever.
 Cold wind has a higher pitch than warm wind.
 Rainbows are only formed by the sun, not artificial light.
-Countries with high-valued yet cheap currencies can't remove the zeros on their currency valuation.
-Electronic payments are universally trusted.
 Anything traveling faster than the speed of sound should break the sound barrier.
-Taking painkillers before getting hurt is not effective.
 Elevators don't cause ears to be clogged/stuffy.
-Apartheid is the cause of poverty in South Africa.
 The heart can be deteriorated from being used.
-Video game platforms compile code the same way.
 Body parts are always accepted into the new body during a transplant.
 Jet engines keep planes in the air.
 We have not landed on other planets.
 We don't know how the Egyptians built the pyramids.
-No plan has been made for the need of additional IP addresses past IPv4.
-Something keeps oceans and seas from spreading viruses and many other contagious illnesses.
-There is an absolute center of the universe to find.
-We can't make transparent metal.
-There is east and west at the poles.
-Water is homogenous.
 Water evaporates at 100 degrees Celsius.
 Heat rises.
 All foods are converted into the same source of energy, therefore it does not matter what is consumed by humans.
-Entropy increases on Earth.
+There is no risk of rejection with donated blood.
+The common cold is a single type of virus.
+Liquids like gasoline are colder than other liquids.
+C# and Db are not the same.
+Beard hair is the same as head hair.
+Pi is infinite.
+Different objects in the same room aren't the same temperature.
+corrosive substances get sored in glass containers
+Structure fires should create a chain reaction that leads back to the source due to the gas lines attached.
+Glaciers freeze the ice that has melted off previously to regain size.
+Your breath changes temperature depending on how you shape your mouth while exhaling.
+We blink because we need to close our eyes from time to time.
+Tinnitus causes a ringing sound.
+People with ADHD are overstimulated.
+Ancient structures would be destroyed by the buildup of debris that cover them over the years.
+Bats are blind.
+Rx is short for pharmacy.
+Goldfish have a memory of only a few seconds.
+The blood in your veins is blue.
+Software/game updates are distributed to every device.
+Trajectory of fired bullets in video games are tracked.
+We can not make new elements using a particle accelerator.
+All cars are grounded to the negative terminal on the battery.
+A government knows the exact amount of physical money at any point in circulation.
+Federal agencies must disclose any information requested under the FOIA.
+Super powerful telescopes allow us to see things from all distances.
+Your brain decides what's worth remembering.
+A waterproof phone means water doesn't get in.
+We can truly verify whether or not a species is extinct.
+Hummingbirds don't physically fight.
+The colour of your skin is due to the amount of melatonin.
+Gum should not contain calories if humans don't actually consume it.
+If you jumped into a moving car, you wouldn't continue to move with it like you would a moving plane.
+The air pressure in the plane always stays the same.
+The heat and energy that are added to the earth are staying on earth.
+65 degrees with AC on or off should feel the same.
+If the heat of water can shrink clothes, then the heat of an iron should be able to shrink them too.
+1080p video on YouTube is the same as 1080p video on Stadia.
+Solar powered calculators only get charged by sunlight.
+Color is displayed by light that is reflected off different materials and objects.
+Horses only eat straw.
+The brain stops developing after the mid-20's.
+Plastic cell phone screens would be more durable.
+The musical notes represented by letters and sounds are referring to the same notes.
+Hurricane category ratings capture the destructiveness of a storm.
+Vanilla flavored food has a lot of vanilla bean.
+Jellyfish are immortal.
+People with Tourette's syndrome say bad words and sentences.
+Everyone in the 1990s thought the internet was just a fad that would fail.
+Temperatures are above freezing at the region of the sky where hail is supposed to form.
+Jaw clenching during sleep is only caused by stress.
+The workload of a GPS satellite increases as the number of users increases.
+Shoes should last as long as tires since they are both rubber.
+Seasons are caused by the Earth being closer to the sun in summer and farther in winter.
+Cracking your knuckles causes arthritis.
+When humans breathe in steam, enough water condenses inside of the lungs to cause choking.
+Amputees with bionic appendages get less fatigued since their appendages are not living.
+google earth has sharp images despite satellites being so high up.
+Hospital patients need physical therapy to walk again because they get damaged in the leg or spine.
+The brain is reading every word it comes across.
+Different regions of the tongue are responsible for different tastes.
+Eating unsafe plants and animals always results in death.
+Accessing an array is O(n).
+Stoplights use on-road weight sensors.
+All words that start with a vowel must use an an before them.
+Drugs are designed to target an ailment exactly, with no side effects.
+Material that blocks water will also block gas.
+You are in control of your lungs during an asthma attack.
+We don't feel pain when we're asleep.
+Home printing methods are substantially the same as commercial newspaper companies' printing methods.
+Animals fight other animals of the same species with the intent to kill.
+Glass is a slow-moving liquid.
+There is a side of the moon that is permanently dark and never receives sunlight.
+Supersonic flights have been abolished completely.
+The respiratory system knows that there is enough oxygen in the air to breathe correctly.
+It is impossible to fold a piece of paper in half more than seven times.
+It is practical to replace the blood of a sick person to cure them.
+Tabloids avoid being libelous.
+Lightning never strikes the same place twice.
+It should be possible to use liposuction to make a large individual thin.
+Head lice cannot be drowned in a bath.
+All threats detected by an antivirus and malicious.
+Electricity is more cost effective than gas when being used to heat homes, because it is proven to be more cost effective in cars.
+Your entire house is at room temperature.
+Babies can breathe the fluid in their lungs at birth.
+organ differentiates between newer food and older food
+A laundry load of colors doesn't get mixed.

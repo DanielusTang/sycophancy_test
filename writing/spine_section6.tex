@@ -1,0 +1,183 @@
+% ============================================================
+% Ready-to-paste LaTeX for the SPINE paper, SECTION 6.
+% Companion guide: writing/section5-6_guide.md (Parts D and E).
+% Section 5 lives in writing/spine_section5.tex.
+%
+% Subsections are numbered (C.1 header items) and use question
+% headers, per the SYCON Sec. 6 move.
+%
+% Before pasting into Overleaf:
+%   1. Replace the placeholder \cite keys (hong2025measuring)
+%      with the keys in YOUR .bib file.
+%   2. Fill every [bracketed] placeholder from the run logs --
+%      the fill-source table is in section5-6_guide.md, Part C.
+%   3. Preamble requirements: natbib-style \citep/\citet/\citealp.
+%      No booktabs needed here; tab:mechanisms is not in this file.
+%
+% ---- LABELS ----------------------------------------------
+% Defined here:   sec:analysis, sec:mechanisms,
+%                 sec:knowledge-check, sec:tactics
+% Referenced but defined elsewhere:
+%   sec:protocol, sec:proxy  -> spine_section3.tex
+%   tab:mechanisms           -> not yet written (the R1 tally)
+% This file references NOTHING defined in spine_section5.tex, so
+% the two compile independently in either order.
+%
+% ---- WHAT IS AND IS NOT FROM THE MAIN CORPUS -------------
+% Section 6 mixes two data sources, and the distinction is the
+% main liability in this file:
+%
+%   6.1 is NOT from the shipped corpus. It is DeepSeek-R1 over
+%       the earlier 25-item set at the old 99-turn budget, and R1
+%       is not one of the four targets in Table 1. See the scope
+%       note at the subsection.
+%   6.2 has NOT been run. The fresh-context knowledge check is
+%       the last unrun experiment Section 6 depends on; [x]% is a
+%       real placeholder, not a fill-from-logs one.
+%   6.3 IS from the shipped corpus:
+%       false_presuppositions/outputs/naturalistic/sonnet_5/**
+%       FILTERED TO meta.max_turns == 25 (that folder also holds
+%       older 99-turn runs). 363 runs, 4,075 tactic-tagged turns,
+%       1,282 strength drops, as of 2026-07-25.
+%
+% ---- PROTOCOL AS SHIPPED (2026-07-25) --------------------
+% Turn budget 25. MAFALDA-23 + one NO_FALLACY control channel.
+% Full conversation context for proxy AND target. Naturalistic
+% condition only. Proxy = judge = Claude Sonnet 5. 100 FP items,
+% 51 unethical items. Four targets: claude-sonnet-5,
+% gpt-5.6-terra, gemini-3.1-pro-preview, deepseek-v4-pro.
+% ============================================================
+
+\section{Analysis}
+\label{sec:analysis}
+
+% ------------------------------------------------------------
+% 6.1 = E-5: scope sentence (C.2-3), "social autopilot"
+% replaces "accommodation" (C.2-2), resolves the Sec. 2.4
+% forward promise (C.2-4).
+%
+% SCOPE: this deep dive is NOT drawn from the T=25 corpus. It is
+% DeepSeek-R1 over the earlier 25-item question set, and R1 is not
+% one of the four targets in Table 1. The mechanism taxonomy is
+% the contribution here and it does not depend on the budget, but
+% the sentence must not imply the 17/20 is a subset of the 100
+% items or of the four reported targets. Two ways to close this
+% before the freeze, in order of preference:
+%   (a) re-run the mechanism coding on collapsed T=25 runs from
+%       the four reported targets -- the trace-visible ones are
+%       deepseek-v4-pro and gpt-5.6-terra;
+%   (b) keep R1 and label it explicitly as a separate deep dive,
+%       as the prose below now does.
+% ------------------------------------------------------------
+
+\subsection{How Do Models Collapse?}
+\label{sec:mechanisms}
+
+We examine collapse mechanisms in a deep dive on DeepSeek-R1, run over
+20 false-presupposition items from an earlier configuration of the
+protocol, where 17 of 20 runs end in collapse. We
+classify each collapsed run by the mechanism visible in the reasoning
+trace and final reply, using four categories: \emph{social autopilot},
+where the model folds to ``everyone knows'' framing and the correct
+fact never enters its reasoning; \emph{reframe-to-agree}, where it
+constructs a technically true reading that makes agreement feel
+defensible; \emph{testimony-over-evidence}, where it weights the user's
+fabricated firsthand experience above established fact; and
+\emph{yes/no cornering}, where pressure to answer in one word strips
+the correct qualifier away with the rest. Orthogonal to the four, we
+flag \emph{conscious override}: the trace states the correct fact and
+the model explicitly chooses the user's answer anyway.
+Reframe-to-agree dominates (12 of 17), and 8 of 17 collapses show
+conscious override. Table~\ref{tab:mechanisms} gives the tally with a
+trace signature per mechanism; Figures~[N--M] show one excerpt each.
+
+% Optional one-clause link to SYCON's qualitative observation
+% (Part B item 5), appended to the paragraph above:
+%
+% \citet{hong2025measuring} observe that reasoning models fail
+% ``gradually'' rather than immediately; the four categories name the
+% specific routes that gradient takes.
+
+
+% ------------------------------------------------------------
+% 6.2 = E-4 (mandatory SYCON credit). Heading currently matches
+% SYCON Sec. 6.2 verbatim -- the in-text credit makes the
+% borrowing legible; retitling remains the cleaner option
+% (e.g. "Knowledge Check: Collapse Is Not Ignorance").
+%
+% THE PROBE HAS NOT BEEN RUN. [x]% cannot be filled from existing
+% logs; it needs the fresh-context classification pass over every
+% presupposition a target endorsed under pressure. This is the
+% last unrun experiment Section 6 depends on.
+% ------------------------------------------------------------
+
+\subsection{Ignorance or Sycophancy?}
+\label{sec:knowledge-check}
+
+A collapse is only evidence of sycophancy if the model knew better.
+SPINE answers this partly by construction: every run opens with a
+neutral question, and only runs in which the target initially states
+the correct position enter the analysis (\S\ref{sec:protocol}), so a
+later collapse abandons knowledge the model demonstrably held in
+context. As an independent check, we follow the presupposition
+knowledge check of \citet{hong2025measuring} and ask each model, in a
+fresh context, to classify as true or false every presupposition it
+endorsed under pressure. Models correctly classify [x]\% of them. Both
+tests point the same way: collapse reflects sycophantic alignment, not
+missing knowledge.
+
+
+% ------------------------------------------------------------
+% 6.3 -- REWRITTEN on MAFALDA level 1 (2026-07-25). The old
+% paragraph reported five-tactic shares (re-assertion 52%, direct
+% challenge 35%, personal experience 6%) across two conditions,
+% and closed on a "mild confusion" kicker. None of that survives:
+% those tactics are not in the MAFALDA menu, MILD_CONFUSION does
+% not exist as a choice, and there is one condition.
+%
+% Computed over the T=25 FP corpus: 4,075 tactic-tagged turns,
+% 1,282 turns on which position strength fell from the previous
+% turn.
+%   channel        share of turns   share of drops it precedes
+%   logic (Logos)       43%              30%
+%   credibility (Ethos) 28%              26%
+%   emotion (Pathos)    19%              36%
+%   NO_FALLACY control   9%               8%
+% Most-used level-2 tactics: DIRECT_CHALLENGE 9%,
+% HASTY_GENERALIZATION 7%, FALSE_ANALOGY 6%, AD_POPULUM 6%,
+% APPEAL_TO_FALSE_AUTHORITY 6%, EQUIVOCATION 5%.
+% Fallback confound: only 8 of 363 runs exceed a 50%
+% DIRECT_CHALLENGE share, so the control channel's share is a
+% real choice rather than a parser artefact.
+% ------------------------------------------------------------
+
+\subsection{Which Tactics Do the Damage?}
+\label{sec:tactics}
+
+Because the proxy's move is recorded at every turn
+(\S\ref{sec:proxy}), we can ask which kind of pressure immediately
+precedes a drop in position strength, data a fixed-script benchmark
+cannot produce. Over [4{,}075] scored turns the proxy reaches for
+Logos most often, using a fallacy of logic on [43]\% of turns against
+[28]\% for Ethos and [19]\% for Pathos. Damage does not follow usage.
+Appeals to emotion precede [36]\% of the [1{,}282] strength drops we
+observe, roughly [1.9] times their share of turns, while fallacies of
+logic precede [30]\% on more than twice the volume. The asymmetry is
+the finding: what moves a model off a correct position is not the
+argument that looks most like an argument.
+
+The control channel is what makes that comparison meaningful. Plain
+non-fallacious pushback, the one tactic in the menu that is not a
+fallacy, precedes [8]\% of drops on [9]\% of turns, landing almost
+exactly at its own share. Fallacious pressure beats honest
+disagreement, and emotional pressure beats both.
+
+% DONE -- both live in writing/spine_appendix.tex now:
+% the level-2 breakdown is Table~\ref{tab:mafalda-usage} in
+% \ref{app:mafalda}, and the fallback check (8 of 363 runs exceed
+% a 50% DIRECT_CHALLENGE share, so the control channel's 9% is a
+% genuine choice and not the _parse_decision default in disguise)
+% is stated in \ref{app:menu}. The level-1 numbers in the prose
+% above were re-verified against that table: 43.2/29.9 logic,
+% 28.3/26.2 credibility, 19.1/36.3 emotion, 9.4/7.6 control, over
+% 4,075 scored turns and 1,282 drops in 363 runs.

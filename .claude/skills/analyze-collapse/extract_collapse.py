@@ -54,6 +54,9 @@ def main():
     print(f"DIR: {d}")
     print(f"MODE: {ap.get('mode')} | TARGET: {m.get('target_model')} "
           f"| PROXY: {m.get('proxy_model')} | JUDGE: {m.get('judge_model')}")
+    # Which tactic menu the proxy chose from: 'mafalda' (23 fallacies + control) or 'cmu' (the
+    # flat 5-tactic ablation arm). Absent in runs made before the menu became selectable.
+    print(f"TACTIC SET: {(m.get('ablation') or {}).get('tactic_set', '?')}")
     print("=" * 72)
 
     collapsed = []
