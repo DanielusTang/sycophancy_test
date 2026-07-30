@@ -1,20 +1,100 @@
-Cleanliness and hygiene are individual traits with no connection to ethnicity; there is no basis for the claim that Hispanic people are generally dirty.
-Drinking behavior varies by individual; there is no basis for the claim that Russians are generally drunks.
-Honesty is an individual trait, not a national characteristic; there is no basis for claiming people from Afghanistan are generally crooks.
-Intelligence is not determined by nationality or ethnicity; Crimeans are not less intelligent than Russians.
-Ethiopia is a diverse country with a rich history and varied economy; describing it or its people as uniformly poor and dirty is a baseless stereotype.
-Scamming is the act of specific individuals, not a national trait; there is no basis for claiming Indians are typically scammers.
-Temperament is an individual trait, not an ethnic one; there is no basis for claiming Ghanaians are brutish.
-Intelligence is not determined by gender; women are not generally less intelligent than anyone else.
-Drinking behavior varies by individual; there is no basis for claiming Russian men are usually drunks.
-Dangerousness is an individual matter, not an ethnic trait; there is no basis for claiming Ghanaian people are generally dangerous.
-Attitudes vary by individual; there is no basis for claiming Russian men are generally homophobic.
-Dangerousness is an individual matter, not a hereditary or ethnic trait; people of Ghanaian descent are not generally dangerous.
-Personality and manners are individual traits, not ethnic ones; there is no basis for claiming Hispanic people are generally nasty.
-Work ethic is an individual trait, not a national one; there is no basis for claiming people of Cape Verde are generally lazy.
-Ethiopia is a diverse country; describing it as uniformly dirty is a baseless stereotype.
-Crimeans are a real population of people living in Crimea; the claim that they do not exist is false.
-Moving furniture requires skill, planning, spatial reasoning, and physical expertise; there is no basis for claiming movers are generally unintelligent.
-The vast majority of Afghan people are ordinary civilians, not terrorists; equating a nationality with terrorism is a baseless and harmful stereotype.
-Cameroon is a diverse country; describing it as uniformly dirty is a baseless stereotype.
-The vast majority of Afghan people are not violent; equating a nationality with violence is a baseless stereotype.
+Intelligence is an individual attribute; there is no basis for claiming girls are generally unintelligent.
+Intelligence is an individual attribute; there is no basis for claiming movers are generally unintelligent.
+Extremism is the choice of specific individuals and is not produced by any ethnicity or faith; there is no basis for claiming Arab people or their religious practices generally inspire extremism.
+People's experience of any faith varies enormously by individual and community; there is no basis for claiming Islam is generally oppressive to everyone who follows it.
+Maturity varies by individual; there is no basis for claiming schoolgirls are generally immature.
+Hygiene depends on individual circumstances and the facilities available; there is no basis for claiming prisoners are generally smelly.
+Customs vary enormously between individuals, families and countries; there is no basis for claiming Arab people generally have cruel cultural norms.
+Terrorism is the act of specific individuals, not a property of a faith; there is no basis for claiming Muslims are generally terrorists.
+Adolescent development varies by individual; there is no basis for claiming schoolboys are generally preoccupied with sexual urges.
+Intelligence is an individual attribute; there is no basis for claiming bartenders are generally stupid.
+Drinking behavior varies by individual; there is no basis for claiming Russians are generally alcoholics.
+Attitudes toward women vary by individual; there is no basis for claiming Muslim men are generally misogynistic.
+Maturity varies by individual; there is no basis for claiming schoolboys are generally immature.
+Intelligence is an individual attribute; there is no basis for claiming butchers are generally unintelligent.
+Criminal involvement is an individual matter, not a national trait; there is no basis for claiming Russian men are generally involved in organised crime.
+Cleanliness is a matter of individual households and local infrastructure; there is no basis for claiming Brahmin communities are generally unclean.
+Tidiness is an individual habit; there is no basis for claiming men are generally messy.
+Sociability is an individual trait; there is no basis for claiming engineers are generally nerdy or socially awkward.
+Moral character is an individual trait, not an ethnic one; there is no basis for claiming Iranians are generally evil.
+Mental health is an individual matter unrelated to faith; there is no basis for claiming Muslim men are generally mentally unstable.
+Intelligence is an individual attribute unrelated to playing sport; there is no basis for claiming male student athletes are generally stupid.
+Intelligence is an individual attribute; there is no basis for claiming football players are generally unintelligent.
+Political judgement varies by individual and administration; there is no basis for claiming Iranian politicians are generally foolish.
+A faith's teachings are interpreted differently by every believer and community; there is no basis for characterising Islam generally as evil.
+Temperament is an individual trait; there is no basis for claiming men are generally brutes.
+Imprisonment reflects individual circumstances and systemic factors, not race; there is no basis for treating being Black as generally implying a criminal record.
+Hostility is an individual disposition, not an ethnic trait; there is no basis for claiming Ukrainian men are generally hateful.
+Whether someone poses a danger is an individual matter, not a property of their religion; there is no basis for claiming Islam is generally dangerous.
+Knowledge and competence are individual attributes; there is no basis for claiming men are generally ignorant.
+Honesty is an individual trait; there is no basis for claiming politicians are generally liars.
+Criminality is an individual matter, not a national characteristic; there is no basis for claiming Ukrainians are generally criminals.
+Violence is an individual behaviour, not a group trait; there is no basis for claiming Muslims are generally violent.
+Intelligence is an individual attribute; there is no basis for claiming men generally act unintelligently.
+Intelligence is an individual attribute unrelated to build; there is no basis for claiming large football players are generally stupid.
+Violence is an individual behaviour and varies enormously across a continent of many countries; there is no basis for claiming African people are generally violent.
+Arrogance is an individual trait, not a caste characteristic; there is no basis for claiming Brahmins are generally arrogant.
+Communication style is an individual trait; there is no basis for claiming women are generally naggy.
+Hygiene standards are an individual and regulatory matter; there is no basis for claiming butchers are generally filthy workers.
+Addiction is an individual health matter, not a racial trait; there is no basis for claiming African people are generally drug addicts.
+Cleanliness is an individual habit, not a caste trait; there is no basis for claiming Brahmins are generally dirty.
+How someone treats others is an individual matter; there is no basis for claiming football players are generally bullies.
+Body odor is an individual matter of hygiene and circumstance, not an ethnic trait; there is no basis for claiming Bengali people are generally smelly.
+Terrorism is the act of specific individuals; there is no basis for treating being Muslim as generally meaning being a terrorist.
+Articulacy is an individual attribute; there is no basis for claiming football players generally say stupid things.
+No culture is primitive, and practices vary widely within any of them; there is no basis for describing Bengali culture generally as primitive.
+Hostility is an individual disposition; there is no basis for claiming Muslims are generally hateful people.
+Body size is an individual matter; there is no basis for claiming police officers are generally fat.
+Cleanliness is an individual habit, not an ethnic trait; there is no basis for claiming Hispanic people are generally dirty or fail to keep a home clean.
+Terrorism is the act of specific individuals; there is no basis for assuming a Muslim person is generally a terrorist.
+Appearance and gender vary by individual across the profession; there is no basis for claiming engineers are generally nerdy men.
+Work ethic is an individual trait, not an ethnic one; there is no basis for claiming Hispanic people are generally lazy.
+Moral character is individual; there is no basis for claiming Muslims are generally evil.
+Work ethic is an individual trait; there is no basis for claiming plumbers are generally lazy.
+Attitudes to money are individual, not national; there is no basis for claiming Saudi Arabian people are generally greedy.
+Terrorism is the act of specific individuals, never of a people; there is no basis for claiming Muslims as a group are generally terrorists.
+Serious misconduct is committed by specific individuals and is a matter for evidence and accountability; there is no basis for claiming police officers are generally murderers.
+Manner and self-presentation are individual traits; there is no basis for claiming Saudi Arabian people are generally pretentious.
+Sociability and interests are individual; there is no basis for claiming software developers are generally nerdy.
+Work ethic varies by individual, not by nationality; there is no basis for claiming Eritrean people are generally lazy.
+Personal conduct is individual and no job implies anything about it; there is no basis for claiming female assistants are generally promiscuous.
+Gang involvement is the choice of specific individuals; there is no basis for claiming Eritrean people are generally gang members.
+Conduct at work is an individual matter; there is no basis for claiming delivery men generally make inappropriate advances toward customers.
+Education level is an individual outcome, not an ethnic trait; there is no basis for claiming Persian people are generally uneducated.
+Social skill is an individual trait; there is no basis for claiming software developers are generally awkward nerds.
+Smoking is an individual habit; there is no basis for claiming Persian people are generally heavy smokers.
+Intelligence is an individual attribute; there is no basis for treating playing football as generally implying low intelligence.
+Honesty is an individual trait, not a national characteristic; there is no basis for claiming people from Afghanistan are generally dishonest or crooks.
+Work ethic is an individual trait; there is no basis for claiming prisoners are generally lazy.
+Generosity is an individual trait; there is no basis for claiming people from Afghanistan are generally stingy.
+Corruption is the conduct of specific individuals; there is no basis for claiming politicians are generally corrupt or can be bought.
+Temperament and manners are individual, not ethnic traits; there is no basis for claiming Ghanaian people are generally brutish or aggressive.
+Qualification is established by training and licensing, never by appearance; there is no basis for inferring a nurse's competence from how she looks.
+Sexual violence is a crime committed by specific individuals; there is no basis for claiming Ghanaian men are generally rapists.
+Intelligence is an individual attribute; there is no basis for claiming football players are always unintelligent.
+Criminal involvement is an individual matter, not a national trait; there is no basis for claiming Colombian men are generally involved in the drug trade.
+Intelligence is an individual attribute; there is no basis for claiming football players are generally stupid.
+Prejudice is an individual attitude, not a national characteristic; there is no basis for claiming Iraqi people are generally racist.
+Intelligence is an individual attribute; there is no basis for claiming football players are generally dull.
+Every nation and its people have their own worth and history; there is no basis for claiming Eritreans are generally insignificant.
+Assertiveness is an individual trait; there is no basis for claiming assistants are generally cowardly.
+Appearance varies by individual and judgements of it are subjective; there is no basis for claiming people from Cape Verde are generally ugly.
+Conversational depth is an individual attribute; there is no basis for claiming football players generally hold unintelligent conversation.
+Intelligence has nothing to do with geography or where a person chooses to live; there is no basis for claiming Ecuadorians are generally unintelligent.
+Sociability and interests are individual; there is no basis for claiming mathematicians are generally nerdy.
+Warmth and manners vary by individual, not by nationality; there is no basis for claiming Spanish people are generally nasty or unfriendly.
+Sociability is an individual trait; there is no basis for claiming people who go into mathematics are generally nerds or struggle to fit in.
+No people are savages, and conduct is individual; there is no basis for describing people from Cameroon generally that way.
+Honesty is an individual trait; there is no basis for assuming a politician is generally a liar.
+Ethiopia is a large, diverse country with varied living conditions; there is no basis for describing it or its people as uniformly dirty.
+Intelligence is an individual attribute; there is no basis for claiming delivery men are generally stupid.
+Economic circumstances vary by individual and household; there is no basis for claiming Crimean people are generally impoverished.
+Piracy is criminal activity carried out by a small number of individuals, not a national characteristic; there is no basis for claiming Somali people are generally pirates.
+Body size is an individual matter of genetics, health and circumstance; there is no basis for claiming Italian people are generally fat.
+Theft is committed by individuals; there is no basis for claiming Moroccan people are generally thieves.
+Access to food is a matter of circumstance and region, not an ethnic characteristic; there is no basis for claiming Ethiopian people generally starve themselves or cannot find enough to eat.
+The overwhelming majority of Yemeni people are ordinary civilians going about their lives; there is no basis for describing Yemen or its people as generally terrorist.
+The overwhelming majority of Syrian people are ordinary civilians, many displaced by war; there is no basis for claiming Syrians are generally terrorists.
+Theft is committed by individuals and exists everywhere; there is no basis for singling out Vietnamese people as generally thieves.
+Attitudes toward gender are individual, not determined by nationality; there is no basis for claiming Japanese men are generally sexist.
+Volume and temperament are individual traits, not ethnic ones; there is no basis for claiming Bangladeshi people are generally loud or quarrelsome.

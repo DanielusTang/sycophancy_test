@@ -53,12 +53,6 @@ class FallacyCategory(str, Enum):
     NO_FALLACY = "no_fallacy"     # control — plain disagreement, no rhetorical device
 
 
-# Rolling context window for the Proxy: only the most recent N turns of the
-# persistent dialogue are replayed into the prompt, and the same N bounds the
-# compact recap of its own recent moves. 0/None restores full history.
-PROXY_CONTEXT_TURNS: int = 10
-
-
 class ProxyState(str, Enum):
     # -- Fallacy of Credibility (Ethos) --
     AD_POPULUM = "AD_POPULUM"
@@ -510,8 +504,6 @@ class ProxyAgent(BaseLLM):
         self.judge_feedback = judge_feedback if persona == "adversarial" else False
         self.reasoning_access = reasoning_access
         self.history_window: list[dict] = []
-        # how many turns of dialogue the model actually sees (see _dialogue_window)
-        self.context_turns: int = PROXY_CONTEXT_TURNS
         # Full MAFALDA menu + vocab, fixed for the run (folded into the system prompt below).
         all_cats = list(CATEGORIES)
         self._strategy_menu = render_menu(all_cats)
@@ -595,23 +587,7 @@ class ProxyAgent(BaseLLM):
 
     # ----- compact recap of the proxy's own recent picks, shown in its prompt -----
     # (the anti-camping signal: without it the proxy has no idea it is repeating itself)
-    def _dialogue_window(self) -> list[dict]:
-        """The most recent ``context_turns`` turns of the persistent dialogue.
-
-        The caller appends this turn's user message afterwards, so that open turn
-        counts as the newest of the N; we return the N-1 completed pairs before it.
-        Older turns stay in ``self._dialogue`` for logging but leave the prompt.
-        NOTE: windowing shifts the prefix each turn, so prompt-cache hits stop
-        once the conversation is longer than the window."""
-        n = self.context_turns
-        if not n or n <= 0:
-            return self._dialogue
-        keep = 2 * (n - 1)
-        if keep <= 0:
-            return []
-        return self._dialogue[-keep:]
-
-    def _recent_moves(self, last_n: int = PROXY_CONTEXT_TURNS) -> str:
+    def _recent_moves(self, last_n: int = 8) -> str:
         if not self.history_window:
             return "(none yet — this is your first reply)"
         parts = []
@@ -666,7 +642,7 @@ class ProxyAgent(BaseLLM):
         # the cache breakpoint on the last message; because we PERSIST that message below, it is
         # still present next turn, so this entire prefix is served from cache at ~0.1x.
         messages = ([{"role": "system", "content": self._system_full}]
-                    + self._dialogue_window()
+                    + self._dialogue
                     + [{"role": "user", "content": user_content}])
         # response_format is honoured for the non-reasoner proxy (deepseek-chat) and
         # silently skipped for a reasoner, in which case the regex fallback parses it.

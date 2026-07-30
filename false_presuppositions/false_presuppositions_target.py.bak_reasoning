@@ -377,7 +377,6 @@ def openai_generate(
     *,
     temperature: float = 0.6,
     max_tokens: int = 4096,
-    extra_body: Optional[dict] = None,
     timeout: float = REQUEST_TIMEOUT,
 ) -> tuple[str, str]:
     """Call OpenAI's Chat Completions and return (answer, reasoning).
@@ -394,22 +393,10 @@ def openai_generate(
     else:
         kwargs["max_tokens"] = max_tokens
         kwargs["temperature"] = temperature
-    if extra_body:
-        # Vendor-specific request fields (e.g. vLLM's chat_template_kwargs). Only merged
-        # in when supplied, so requests to the real OpenAI API stay unchanged.
-        kwargs["extra_body"] = extra_body
     resp = client.chat.completions.create(**kwargs)
     msg = resp.choices[0].message
     content = (msg.content or "").strip()
     reasoning = (getattr(msg, "reasoning_content", None) or "").strip()
-    if not reasoning:
-        # OpenAI-compatible servers do not agree on the field name; check the aliases
-        # that land in model_extra before giving up on the chain-of-thought.
-        extra = getattr(msg, "model_extra", None) or {}
-        for key in ("reasoning", "thinking", "thought"):
-            reasoning = str(extra.get(key) or "").strip()
-            if reasoning:
-                break
     return content, reasoning
 
 
@@ -422,34 +409,6 @@ Question: {question}
 Answer:"""
 
 _THINK_RE = re.compile(r"<think>(.*?)</think>", re.DOTALL | re.IGNORECASE)
-
-# Model ids that are SUPPOSED to expose a chain-of-thought. Used only to decide whether
-# an empty reasoning field deserves a warning (see TargetAgent.respond).
-_REASONING_MODEL_RE = re.compile(r"think|reasoner|qwq|-r1(?![0-9])", re.IGNORECASE)
-
-
-def _expect_reasoning(model: str) -> bool:
-    """True when the model id advertises a chain-of-thought, so an empty reasoning
-    field is a misconfiguration worth flagging rather than normal behaviour."""
-    return bool(_REASONING_MODEL_RE.search(model or ""))
-
-
-def _extra_body_from_env() -> Optional[dict]:
-    """Per-run request-body overrides from TARGET_EXTRA_BODY_JSON (a JSON object).
-
-    Lets a locally-served model receive server-specific knobs (e.g. vLLM's
-    {"chat_template_kwargs": {...}}) without another code change. Malformed input is a
-    hard error rather than a silent skip: a run mislabelled as "thinking" is worse
-    than a crash.
-    """
-    blob = (os.getenv("TARGET_EXTRA_BODY_JSON") or "").strip()
-    if not blob:
-        return None
-    value = json.loads(blob)
-    if not isinstance(value, dict):
-        raise ValueError("TARGET_EXTRA_BODY_JSON must be a JSON object, got "
-                         + type(value).__name__)
-    return value
 
 
 def _split_think_tags(text: str) -> tuple[str, str]:
@@ -529,8 +488,7 @@ class TargetAgent(BaseLLM):
             # reasoning internally and hide it, so --target-thinking is a no-op here.
             # TARGET_MAX_TOKENS lets locally-served reasoning models (e.g. Olmo3-Think
             # on vLLM) get extra headroom, since their CoT counts against max_tokens.
-            # TARGET_EXTRA_BODY_JSON optionally adds server-specific request fields.
-            extra_body = _extra_body_from_env()
+            extra_body = None
             stream = False
             kwargs.setdefault("max_tokens", int(os.getenv("TARGET_MAX_TOKENS", "4096")))
         elif provider == "urial":
@@ -559,7 +517,6 @@ class TargetAgent(BaseLLM):
         system_prompt = TARGET_SYSTEM_PROMPT_TEMPLATE.format(question=opening_question)
         self.history: list[dict] = [{"role": "system", "content": system_prompt}]
         self.last_reasoning: str = ""  # chain-of-thought from the most recent reply
-        self._warned_no_reasoning = False  # warn at most once per agent (see respond)
         # how many turns of history the model actually sees (see _context)
         self.context_turns: Optional[int] = TARGET_CONTEXT_TURNS
 
@@ -613,7 +570,6 @@ class TargetAgent(BaseLLM):
                 ctx,
                 temperature=self.default_temperature,
                 max_tokens=self.max_tokens,
-                extra_body=self.extra_body,
             )
         elif self.provider == "urial":
             # Base model: render the chat history into the URIAL text prompt and hit the
@@ -627,25 +583,13 @@ class TargetAgent(BaseLLM):
             )
         else:
             reply, reasoning = self._chat(ctx, return_reasoning=True)
-        # Fallback for a local reasoning model served WITHOUT a working reasoning parser:
-        # the chain-of-thought comes back inline inside content instead of in a separate
-        # reasoning_content field. Split it out so the think block never pollutes the
+        # Fallback for local R1 served WITHOUT a reasoning parser: the chain-of-thought
+        # comes back inline as <think>...</think> inside content instead of in a separate
+        # reasoning_content field. Split it out so the <think> block never pollutes the
         # judge's input or the conversation history, and the proxy still gets the trace.
-        # A BARE closing tag counts too: Olmo3-Think's chat template emits the opening
-        # <think> in the PROMPT, so its reply legitimately starts mid-block.
-        low = reply.lower()
-        if "<think>" in low or "</think>" in low:
+        if "<think>" in reply.lower():
             reply, inline_reasoning = _split_think_tags(reply)
             reasoning = reasoning or inline_reasoning
-        if not reasoning and _expect_reasoning(self.model) and not self._warned_no_reasoning:
-            # Loud, once per agent: a silently empty CoT makes the thinking condition
-            # indistinguishable from the non-thinking one and quietly voids the run.
-            self._warned_no_reasoning = True
-            print(f"[warn] {self.model}: reply carried no chain-of-thought (no "
-                  f"reasoning_content field and no </think> in content) - "
-                  f"target_reasoning will be empty for this run. Check the server's "
-                  f"--reasoning-parser and the model's chat template.",
-                  file=sys.stderr, flush=True)
         # IMPORTANT: only the final content goes back into history. deepseek-reasoner
         # rejects requests that include reasoning_content in the message history.
         self.history.append({"role": "assistant", "content": reply})

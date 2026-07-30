@@ -13,9 +13,6 @@ Provider backends supported (select with `--target-provider` in the CLI):
     anthropic  — Claude, via the official `anthropic` SDK (Messages API), with
                 extended-thinking support.
     openai     — GPT, via the native OpenAI Chat Completions API.
-    urial      — a BASE model (e.g. OLMo-3-7B-base) aligned tuning-free via URIAL:
-                a raw-text /v1/completions call with the URIAL system prompt + 3
-                restyled in-context examples (see false_presuppositions_urial.py).
 """
 
 from __future__ import annotations
@@ -52,7 +49,6 @@ from false_presuppositions_base import (
     build_client,
     logger,
 )
-from false_presuppositions_urial import urial_generate
 
 # --------------------------------------------------------------------------- #
 # Target-under-test configuration (Qwen via the 智增增 OpenAI-compatible proxy)
@@ -134,7 +130,7 @@ OPENAI_BASE_URL = os.getenv("OPENAI_BASE_URL", "https://api.openai.com/v1")
 DEFAULT_OPENAI_MODEL = os.getenv("OPENAI_MODEL", "gpt-4o")
 
 # The choices accepted by --target-provider.
-TARGET_PROVIDERS = ("qwen", "gemini", "deepseek", "anthropic", "openai", "urial")
+TARGET_PROVIDERS = ("qwen", "gemini", "deepseek", "anthropic", "openai")
 DEFAULT_TARGET_PROVIDER = os.getenv("TARGET_PROVIDER", "deepseek").lower()
 
 
@@ -316,17 +312,13 @@ def anthropic_generate(
         else:
             convo.append({"role": role, "content": text})
 
-    # Cache the conversation prefix (grows each turn) for multi-turn savings.
-    if convo:
-        _last = convo[-1]
-        _last["content"] = [{"type": "text", "text": _last["content"], "cache_control": {"type": "ephemeral"}}]
     kwargs: dict = {
         "model": model,
         "max_tokens": max_tokens,
         "messages": convo,
     }
     if system_txt:
-        kwargs["system"] = [{"type": "text", "text": system_txt, "cache_control": {"type": "ephemeral"}}]
+        kwargs["system"] = system_txt
     if enable_thinking:
         if _anthropic_adaptive_thinking(model):
             # Opus 4.6+/Sonnet 4.6/Fable 5: adaptive only (budget_tokens 400s here).
@@ -377,7 +369,6 @@ def openai_generate(
     *,
     temperature: float = 0.6,
     max_tokens: int = 4096,
-    extra_body: Optional[dict] = None,
     timeout: float = REQUEST_TIMEOUT,
 ) -> tuple[str, str]:
     """Call OpenAI's Chat Completions and return (answer, reasoning).
@@ -394,22 +385,10 @@ def openai_generate(
     else:
         kwargs["max_tokens"] = max_tokens
         kwargs["temperature"] = temperature
-    if extra_body:
-        # Vendor-specific request fields (e.g. vLLM's chat_template_kwargs). Only merged
-        # in when supplied, so requests to the real OpenAI API stay unchanged.
-        kwargs["extra_body"] = extra_body
     resp = client.chat.completions.create(**kwargs)
     msg = resp.choices[0].message
     content = (msg.content or "").strip()
     reasoning = (getattr(msg, "reasoning_content", None) or "").strip()
-    if not reasoning:
-        # OpenAI-compatible servers do not agree on the field name; check the aliases
-        # that land in model_extra before giving up on the chain-of-thought.
-        extra = getattr(msg, "model_extra", None) or {}
-        for key in ("reasoning", "thinking", "thought"):
-            reasoning = str(extra.get(key) or "").strip()
-            if reasoning:
-                break
     return content, reasoning
 
 
@@ -422,34 +401,6 @@ Question: {question}
 Answer:"""
 
 _THINK_RE = re.compile(r"<think>(.*?)</think>", re.DOTALL | re.IGNORECASE)
-
-# Model ids that are SUPPOSED to expose a chain-of-thought. Used only to decide whether
-# an empty reasoning field deserves a warning (see TargetAgent.respond).
-_REASONING_MODEL_RE = re.compile(r"think|reasoner|qwq|-r1(?![0-9])", re.IGNORECASE)
-
-
-def _expect_reasoning(model: str) -> bool:
-    """True when the model id advertises a chain-of-thought, so an empty reasoning
-    field is a misconfiguration worth flagging rather than normal behaviour."""
-    return bool(_REASONING_MODEL_RE.search(model or ""))
-
-
-def _extra_body_from_env() -> Optional[dict]:
-    """Per-run request-body overrides from TARGET_EXTRA_BODY_JSON (a JSON object).
-
-    Lets a locally-served model receive server-specific knobs (e.g. vLLM's
-    {"chat_template_kwargs": {...}}) without another code change. Malformed input is a
-    hard error rather than a silent skip: a run mislabelled as "thinking" is worse
-    than a crash.
-    """
-    blob = (os.getenv("TARGET_EXTRA_BODY_JSON") or "").strip()
-    if not blob:
-        return None
-    value = json.loads(blob)
-    if not isinstance(value, dict):
-        raise ValueError("TARGET_EXTRA_BODY_JSON must be a JSON object, got "
-                         + type(value).__name__)
-    return value
 
 
 def _split_think_tags(text: str) -> tuple[str, str]:
@@ -486,24 +437,16 @@ def _split_think_tags(text: str) -> tuple[str, str]:
 # --------------------------------------------------------------------------- #
 # TargetAgent: the model under test (stateful)
 # --------------------------------------------------------------------------- #
-# Rolling context window for the Target: only the most recent N turns are
-# sent to the model (the system prompt is always kept). None/0 restores the
-# old unbounded full-history behaviour.
-TARGET_CONTEXT_TURNS: Optional[int] = 10
-
-
 class TargetAgent(BaseLLM):
     """
     The model under test. **Stateful**: maintains the full, continuously growing
-    conversation history, but only the most recent TARGET_CONTEXT_TURNS turns of
-    it are sent to the model on each reply (see _context).
+    conversation history, and each reply is based on all context so far.
     """
 
     def __init__(self, client: OpenAI, model: str = DEFAULT_TARGET_MODEL,
                  opening_question: str = "", enable_thinking: Optional[bool] = None,
                  provider: str = "qwen", **kwargs) -> None:
         self.provider = provider
-        default_temperature = 0.6
         if provider == "gemini":
             # Gemini target runs on the NATIVE :generateContent endpoint (not the OpenAI
             # client) so we can capture its thinking trace; thinking is always on with a
@@ -529,19 +472,9 @@ class TargetAgent(BaseLLM):
             # reasoning internally and hide it, so --target-thinking is a no-op here.
             # TARGET_MAX_TOKENS lets locally-served reasoning models (e.g. Olmo3-Think
             # on vLLM) get extra headroom, since their CoT counts against max_tokens.
-            # TARGET_EXTRA_BODY_JSON optionally adds server-specific request fields.
-            extra_body = _extra_body_from_env()
-            stream = False
-            kwargs.setdefault("max_tokens", int(os.getenv("TARGET_MAX_TOKENS", "4096")))
-        elif provider == "urial":
-            # OLMo-3-7B-BASE via URIAL on a vLLM /v1/completions endpoint (raw text, no
-            # chat template). Greedy by default (paper setting) for reproducibility; the
-            # answer is a single short turn, so keep max_tokens modest. Override the
-            # window/decoding via URIAL_* env vars in false_presuppositions_urial.py.
             extra_body = None
             stream = False
-            default_temperature = 0.0
-            kwargs.setdefault("max_tokens", int(os.getenv("TARGET_MAX_TOKENS", "768")))
+            kwargs.setdefault("max_tokens", int(os.getenv("TARGET_MAX_TOKENS", "4096")))
         elif provider == "qwen":
             # Qwen: enable_thinking=None → don't send the param (provider default).
             # True/False → explicitly select Qwen's reasoning vs chat mode for this run.
@@ -553,47 +486,22 @@ class TargetAgent(BaseLLM):
             # its own chain-of-thought), so --target-thinking is a no-op for this provider.
             extra_body = None
             stream = False
-        super().__init__(client, model, name="TargetAgent", default_temperature=default_temperature,
+        super().__init__(client, model, name="TargetAgent", default_temperature=0.6,
                          extra_body=extra_body, stream=stream, **kwargs)
         self.opening_question = opening_question
         system_prompt = TARGET_SYSTEM_PROMPT_TEMPLATE.format(question=opening_question)
         self.history: list[dict] = [{"role": "system", "content": system_prompt}]
         self.last_reasoning: str = ""  # chain-of-thought from the most recent reply
-        self._warned_no_reasoning = False  # warn at most once per agent (see respond)
-        # how many turns of history the model actually sees (see _context)
-        self.context_turns: Optional[int] = TARGET_CONTEXT_TURNS
-
-    def _context(self) -> list[dict]:
-        """System prompt + the most recent ``context_turns`` turns of dialogue.
-
-        A turn is a (user, assistant) pair; the in-progress user message counts
-        as the newest turn. Older turns are dropped from the prompt but stay in
-        ``self.history``, so the transcript/log is still complete."""
-        n = self.context_turns
-        if not n or n <= 0:
-            return self.history
-        system, rest = self.history[:1], self.history[1:]
-        if not rest:
-            return self.history
-        if rest[-1].get("role") == "user":
-            keep = 2 * (n - 1) + 1  # N-1 completed turns + the open one
-        else:
-            keep = 2 * n
-        if keep >= len(rest):
-            return self.history
-        return system + rest[-keep:]
 
     def respond(self, user_message: str) -> str:
-        """Add the user message to history, generate a reply from the rolling
-        context window (see _context), and append the reply back."""
+        """Add the user message to history, generate a reply from full context, and append it back."""
         self.history.append({"role": "user", "content": user_message})
-        ctx = self._context()  # rolling window actually sent to the model
         if self.provider == "gemini":
             # Native endpoint returns the readable thought summary alongside the answer.
             reply, reasoning = gemini_generate_native(
                 self.gemini_api_key,
                 self.model,
-                ctx,
+                self.history,
                 temperature=self.default_temperature,
                 max_tokens=self.max_tokens,
             )
@@ -601,7 +509,7 @@ class TargetAgent(BaseLLM):
             reply, reasoning = anthropic_generate(
                 self.client,
                 self.model,
-                ctx,
+                self.history,
                 temperature=self.default_temperature,
                 max_tokens=self.max_tokens,
                 enable_thinking=self.anthropic_enable_thinking,
@@ -610,42 +518,19 @@ class TargetAgent(BaseLLM):
             reply, reasoning = openai_generate(
                 self.client,
                 self.model,
-                ctx,
-                temperature=self.default_temperature,
-                max_tokens=self.max_tokens,
-                extra_body=self.extra_body,
-            )
-        elif self.provider == "urial":
-            # Base model: render the chat history into the URIAL text prompt and hit the
-            # completions endpoint. No chain-of-thought channel, so reasoning is always "".
-            reply, reasoning = urial_generate(
-                self.client,
-                self.model,
-                ctx,
+                self.history,
                 temperature=self.default_temperature,
                 max_tokens=self.max_tokens,
             )
         else:
-            reply, reasoning = self._chat(ctx, return_reasoning=True)
-        # Fallback for a local reasoning model served WITHOUT a working reasoning parser:
-        # the chain-of-thought comes back inline inside content instead of in a separate
-        # reasoning_content field. Split it out so the think block never pollutes the
+            reply, reasoning = self._chat(self.history, return_reasoning=True)
+        # Fallback for local R1 served WITHOUT a reasoning parser: the chain-of-thought
+        # comes back inline as <think>...</think> inside content instead of in a separate
+        # reasoning_content field. Split it out so the <think> block never pollutes the
         # judge's input or the conversation history, and the proxy still gets the trace.
-        # A BARE closing tag counts too: Olmo3-Think's chat template emits the opening
-        # <think> in the PROMPT, so its reply legitimately starts mid-block.
-        low = reply.lower()
-        if "<think>" in low or "</think>" in low:
+        if "<think>" in reply.lower():
             reply, inline_reasoning = _split_think_tags(reply)
             reasoning = reasoning or inline_reasoning
-        if not reasoning and _expect_reasoning(self.model) and not self._warned_no_reasoning:
-            # Loud, once per agent: a silently empty CoT makes the thinking condition
-            # indistinguishable from the non-thinking one and quietly voids the run.
-            self._warned_no_reasoning = True
-            print(f"[warn] {self.model}: reply carried no chain-of-thought (no "
-                  f"reasoning_content field and no </think> in content) - "
-                  f"target_reasoning will be empty for this run. Check the server's "
-                  f"--reasoning-parser and the model's chat template.",
-                  file=sys.stderr, flush=True)
         # IMPORTANT: only the final content goes back into history. deepseek-reasoner
         # rejects requests that include reasoning_content in the message history.
         self.history.append({"role": "assistant", "content": reply})
@@ -655,7 +540,7 @@ class TargetAgent(BaseLLM):
     @property
     def turns_in_context(self) -> int:
         """Number of messages in the current context (including system), to observe context growth."""
-        return len(self._context())
+        return len(self.history)
 
 
 def build_target_client(provider: str = "qwen"):
@@ -705,13 +590,6 @@ def build_target_client(provider: str = "qwen"):
             print("❌ Set OPENAI_API_KEY (OpenAI key for the GPT target) in your .env")
             sys.exit(1)
         return build_client(key, base_url=OPENAI_BASE_URL)
-
-    if provider == "urial":
-        # Base model (OLMo-3-7B-base) served on a local vLLM /v1/completions endpoint.
-        # No real API key needed locally; URIAL_BASE_URL points at the GPU node, e.g.
-        #   export URIAL_BASE_URL=http://<gpu-node>:8000/v1
-        base = os.getenv("URIAL_BASE_URL", "http://localhost:8000/v1")
-        return build_client(os.getenv("URIAL_API_KEY", "EMPTY"), base_url=base)
 
     key = os.getenv("ZZZ_API_KEY") or os.getenv("TARGET_API_KEY")
     if not key:

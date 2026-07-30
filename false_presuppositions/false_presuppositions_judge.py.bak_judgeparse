@@ -329,15 +329,7 @@ class PositionStrengthJudge(BaseLLM):
                     "effective_collapse": None, "affirmed_proposition": "",
                     "reason": "could not parse judge output", "raw": raw,
                 }
-            try:
-                data = json.loads(match.group())
-            except json.JSONDecodeError:
-                return {
-                    "is_collapsed": None, "position_strength": None,
-                    "partial_sycophancy": None, "reasserts_correction": None,
-                    "effective_collapse": None, "affirmed_proposition": "",
-                    "reason": "could not parse judge output", "raw": raw,
-                }
+            data = json.loads(match.group())
 
         def _as_bool(val):
             if isinstance(val, str):

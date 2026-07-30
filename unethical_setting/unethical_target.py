@@ -13,9 +13,13 @@ Provider backends supported (select with `--target-provider` in the CLI):
     anthropic  — Claude, via the official `anthropic` SDK (Messages API), with
                 extended-thinking support.
     openai     — GPT, via the native OpenAI Chat Completions API.
-    urial      — a BASE model (e.g. OLMo-3-7B-base) aligned tuning-free via URIAL:
-                a raw-text /v1/completions call with the URIAL system prompt + 3
-                restyled in-context examples (see false_presuppositions_urial.py).
+    openrouter — any model on the OpenRouter gateway (OpenAI-compatible), e.g. the
+                OLMo 3.1 32B instruct/think pair.
+
+The Target is topic-agnostic — it is asked the case's neutral opening question and then
+simply talks to whoever is on the other side, so this module is identical in shape to
+`false_presuppositions/false_presuppositions_target.py`. It is kept as a SELF-CONTAINED
+copy (no imports from false_presuppositions/) so the stereotype pipeline stands alone.
 """
 
 from __future__ import annotations
@@ -44,15 +48,15 @@ try:
 except ImportError:
     anthropic = None
 
-from false_presuppositions_base import (
+from unethical_base import (
     BaseLLM,
     REQUEST_TIMEOUT,
     DEEPSEEK_BASE_URL,
     api_retry,
     build_client,
+    is_deepseek_reasoner,
     logger,
 )
-from false_presuppositions_urial import urial_generate
 
 # --------------------------------------------------------------------------- #
 # Target-under-test configuration (Qwen via the 智增增 OpenAI-compatible proxy)
@@ -65,6 +69,10 @@ from false_presuppositions_urial import urial_generate
 # (api.zhizengzeng.com gets TLS-reset by some network filters). Override via env if needed.
 TARGET_BASE_URL = os.getenv("TARGET_BASE_URL", "https://api.zzz-api.top/v1")
 DEFAULT_TARGET_MODEL = os.getenv("TARGET_MODEL", "deepseek-reasoner")  # under test (DeepSeek R1)
+# Decoding temperature for the model under test. Override per run with
+# --target-temperature to sweep (e.g. 0 / 0.3 / 0.6 / 1). NOTE: several provider paths
+# drop the parameter entirely — see target_temperature_is_sent() below.
+DEFAULT_TARGET_TEMPERATURE = float(os.getenv("TARGET_TEMPERATURE", "0.6"))
 # Qwen3 is a single set of weights with a thinking toggle: enable_thinking=True is the
 # "reasoning" condition, False is the "chat" condition. It is the cleanest way to vary
 # reasoning-vs-chat without confounding model identity. Sent via extra_body because the
@@ -133,8 +141,23 @@ ANTHROPIC_THINKING_BUDGET = int(os.getenv("ANTHROPIC_THINKING_BUDGET", "4096"))
 OPENAI_BASE_URL = os.getenv("OPENAI_BASE_URL", "https://api.openai.com/v1")
 DEFAULT_OPENAI_MODEL = os.getenv("OPENAI_MODEL", "gpt-4o")
 
+# --------------------------------------------------------------------------- #
+# Alternative target provider: OpenRouter (any model on the OpenRouter gateway)
+# --------------------------------------------------------------------------- #
+# OpenRouter is OpenAI-API compatible, so the same openai SDK works — only base_url,
+# key, and model id differ. Select with `--target-provider openrouter` and pass the
+# OpenRouter model slug with `--target-model`, e.g.
+#   --target-provider openrouter --target-model allenai/olmo-3.1-32b-instruct
+#   --target-provider openrouter --target-model allenai/olmo-3.1-32b-think
+# The model id selects the mode (like DeepSeek: the -think slug IS the reasoning
+# condition), so --target-thinking is a no-op for this provider. Reasoning models
+# return their chain-of-thought in message.reasoning (OpenRouter's normalized field,
+# picked up by BaseLLM._chat) or as inline <think> tags (split by TargetAgent).
+# Key comes from OPENROUTER_API_KEY in the repo-root .env.
+OPENROUTER_BASE_URL = os.getenv("OPENROUTER_BASE_URL", "https://openrouter.ai/api/v1")
+
 # The choices accepted by --target-provider.
-TARGET_PROVIDERS = ("qwen", "gemini", "deepseek", "anthropic", "openai", "urial")
+TARGET_PROVIDERS = ("qwen", "gemini", "deepseek", "anthropic", "openai", "openrouter")
 DEFAULT_TARGET_PROVIDER = os.getenv("TARGET_PROVIDER", "deepseek").lower()
 
 
@@ -298,6 +321,7 @@ def anthropic_generate(
     max_tokens: int = 4096,
     enable_thinking: bool = False,
     thinking_budget: int = ANTHROPIC_THINKING_BUDGET,
+    cache_prompt: bool = False,
     timeout: float = REQUEST_TIMEOUT,
 ) -> tuple[str, str]:
     """Call Claude's Messages API and return (answer, reasoning).
@@ -305,6 +329,15 @@ def anthropic_generate(
     OpenAI-style `messages` are mapped to Anthropic's schema: the system turn becomes the
     top-level `system` string; user/assistant turns pass through. Returns the visible text
     as `answer` and (when thinking is enabled) the chain-of-thought as `reasoning`.
+
+    Prompt caching (opt-in on Anthropic, unlike the automatic prefix caching on
+    DeepSeek/OpenAI/Gemini): the system prompt always carries a cache breakpoint, and the
+    final message gets one too when the conversation is multi-turn (the stateful Target —
+    each turn re-reads the whole prior conversation at ~0.1x input price and writes only
+    the extension) or when `cache_prompt=True` (a caller that will resend this exact
+    prompt, e.g. the Judge's majority-vote samples). Single-shot callers with unique
+    prompts leave `cache_prompt` off: a breakpoint on content that is never resent pays
+    the 1.25x cache-write premium with zero reads.
     """
     system_txt = ""
     convo: list[dict] = []
@@ -316,17 +349,28 @@ def anthropic_generate(
         else:
             convo.append({"role": role, "content": text})
 
-    # Cache the conversation prefix (grows each turn) for multi-turn savings.
-    if convo:
-        _last = convo[-1]
-        _last["content"] = [{"type": "text", "text": _last["content"], "cache_control": {"type": "ephemeral"}}]
     kwargs: dict = {
         "model": model,
         "max_tokens": max_tokens,
         "messages": convo,
     }
     if system_txt:
-        kwargs["system"] = [{"type": "text", "text": system_txt, "cache_control": {"type": "ephemeral"}}]
+        # Cache breakpoint on the system prompt: every call in the run that shares it
+        # reads the cached prefix at ~0.1x input price. Prefixes below the model's
+        # minimum cacheable length (~2k-4k tokens depending on model) are silently not
+        # cached — no error, no extra cost — so this is always safe to set.
+        kwargs["system"] = [{"type": "text", "text": system_txt,
+                             "cache_control": {"type": "ephemeral"}}]
+    if (convo and isinstance(convo[-1]["content"], str) and convo[-1]["content"]
+            and (len(convo) > 1 or cache_prompt)):
+        # Breakpoint on the newest message: multi-turn callers re-read the entire prior
+        # conversation next turn; cache_prompt callers (Judge voting/retries) re-read
+        # the whole identical prompt on the repeat calls. 5-minute TTL, refreshed on use.
+        # Callers that already send content blocks (the Claude proxy) place their own
+        # breakpoints, hence the str guard.
+        convo[-1] = {**convo[-1],
+                     "content": [{"type": "text", "text": convo[-1]["content"],
+                                  "cache_control": {"type": "ephemeral"}}]}
     if enable_thinking:
         if _anthropic_adaptive_thinking(model):
             # Opus 4.6+/Sonnet 4.6/Fable 5: adaptive only (budget_tokens 400s here).
@@ -348,6 +392,14 @@ def anthropic_generate(
         kwargs["temperature"] = temperature
 
     resp = client.with_options(timeout=timeout).messages.create(**kwargs)
+    usage = resp.usage
+    logger.info(
+        "%s cache: read=%d write=%d uncached=%d",
+        model,
+        getattr(usage, "cache_read_input_tokens", 0) or 0,
+        getattr(usage, "cache_creation_input_tokens", 0) or 0,
+        usage.input_tokens,
+    )
     answer_chunks: list[str] = []
     thought_chunks: list[str] = []
     for block in resp.content:
@@ -367,6 +419,25 @@ def _openai_reasoning_model(model: str) -> bool:
     do NOT return a chain-of-thought."""
     m = model.lower()
     return m.startswith(("gpt-5", "o1", "o3", "o4"))
+
+
+def target_temperature_is_sent(provider: str, model: str, enable_thinking) -> bool:
+    """Whether a configured temperature actually reaches this provider/model.
+
+    Four paths drop it silently (deepseek-reasoner, OpenAI reasoning models, Anthropic
+    models that reject sampling params or have thinking on). A temperature sweep across
+    any of those produces N runs with IDENTICAL sampling config that differ only by RNG,
+    so the CLI refuses it rather than letting the result be misread as a temperature
+    effect. Mirrors the live conditions in BaseLLM._chat, anthropic_generate, and
+    openai_generate — keep in sync with them.
+    """
+    if provider == "gemini":
+        return True  # native generationConfig.temperature, always sent
+    if provider == "anthropic":
+        return not enable_thinking and not _anthropic_rejects_temperature(model)
+    if provider == "openai":
+        return not _openai_reasoning_model(model)
+    return not is_deepseek_reasoner(model)  # deepseek / qwen / openrouter → BaseLLM._chat
 
 
 @api_retry
@@ -399,6 +470,15 @@ def openai_generate(
         # in when supplied, so requests to the real OpenAI API stay unchanged.
         kwargs["extra_body"] = extra_body
     resp = client.chat.completions.create(**kwargs)
+    # OpenAI auto-caches prompt prefixes >=1024 tokens and reports the hit count in
+    # usage.prompt_tokens_details.cached_tokens (mirrors the DeepSeek hit/miss log).
+    usage = getattr(resp, "usage", None)
+    if usage is not None:
+        details = getattr(usage, "prompt_tokens_details", None)
+        cached = getattr(details, "cached_tokens", 0) or 0
+        prompt_toks = getattr(usage, "prompt_tokens", 0) or 0
+        logger.info("TargetAgent (%s) cache: hit=%d miss=%d",
+                    model, cached, max(prompt_toks - cached, 0))
     msg = resp.choices[0].message
     content = (msg.content or "").strip()
     reasoning = (getattr(msg, "reasoning_content", None) or "").strip()
@@ -501,9 +581,9 @@ class TargetAgent(BaseLLM):
 
     def __init__(self, client: OpenAI, model: str = DEFAULT_TARGET_MODEL,
                  opening_question: str = "", enable_thinking: Optional[bool] = None,
-                 provider: str = "qwen", **kwargs) -> None:
+                 provider: str = "qwen", temperature: Optional[float] = None,
+                 **kwargs) -> None:
         self.provider = provider
-        default_temperature = 0.6
         if provider == "gemini":
             # Gemini target runs on the NATIVE :generateContent endpoint (not the OpenAI
             # client) so we can capture its thinking trace; thinking is always on with a
@@ -533,15 +613,14 @@ class TargetAgent(BaseLLM):
             extra_body = _extra_body_from_env()
             stream = False
             kwargs.setdefault("max_tokens", int(os.getenv("TARGET_MAX_TOKENS", "4096")))
-        elif provider == "urial":
-            # OLMo-3-7B-BASE via URIAL on a vLLM /v1/completions endpoint (raw text, no
-            # chat template). Greedy by default (paper setting) for reproducibility; the
-            # answer is a single short turn, so keep max_tokens modest. Override the
-            # window/decoding via URIAL_* env vars in false_presuppositions_urial.py.
+        elif provider == "openrouter":
+            # OpenRouter target on the plain OpenAI client. The model slug selects the
+            # mode (e.g. olmo-3.1-32b-instruct vs -think), so --target-thinking is a
+            # no-op. Reasoning tokens count against max_tokens on OpenRouter, so give
+            # think models ample room or the visible answer gets clipped.
             extra_body = None
             stream = False
-            default_temperature = 0.0
-            kwargs.setdefault("max_tokens", int(os.getenv("TARGET_MAX_TOKENS", "768")))
+            kwargs.setdefault("max_tokens", 8192)
         elif provider == "qwen":
             # Qwen: enable_thinking=None → don't send the param (provider default).
             # True/False → explicitly select Qwen's reasoning vs chat mode for this run.
@@ -553,7 +632,9 @@ class TargetAgent(BaseLLM):
             # its own chain-of-thought), so --target-thinking is a no-op for this provider.
             extra_body = None
             stream = False
-        super().__init__(client, model, name="TargetAgent", default_temperature=default_temperature,
+        super().__init__(client, model, name="TargetAgent",
+                         default_temperature=(DEFAULT_TARGET_TEMPERATURE
+                                              if temperature is None else temperature),
                          extra_body=extra_body, stream=stream, **kwargs)
         self.opening_question = opening_question
         system_prompt = TARGET_SYSTEM_PROMPT_TEMPLATE.format(question=opening_question)
@@ -615,16 +696,6 @@ class TargetAgent(BaseLLM):
                 max_tokens=self.max_tokens,
                 extra_body=self.extra_body,
             )
-        elif self.provider == "urial":
-            # Base model: render the chat history into the URIAL text prompt and hit the
-            # completions endpoint. No chain-of-thought channel, so reasoning is always "".
-            reply, reasoning = urial_generate(
-                self.client,
-                self.model,
-                ctx,
-                temperature=self.default_temperature,
-                max_tokens=self.max_tokens,
-            )
         else:
             reply, reasoning = self._chat(ctx, return_reasoning=True)
         # Fallback for a local reasoning model served WITHOUT a working reasoning parser:
@@ -670,6 +741,7 @@ def build_target_client(provider: str = "qwen"):
     provider="anthropic": the official anthropic.Anthropic client; key from
         CLUDE_API_KEY / ANTHROPIC_API_KEY / CLAUDE_API_KEY.
     provider="openai": OpenAI's own API; key from OPENAI_API_KEY.
+    provider="openrouter": the OpenRouter gateway; key from OPENROUTER_API_KEY.
     All keys live in the repo-root .env.
     """
     if provider == "gemini":
@@ -706,12 +778,12 @@ def build_target_client(provider: str = "qwen"):
             sys.exit(1)
         return build_client(key, base_url=OPENAI_BASE_URL)
 
-    if provider == "urial":
-        # Base model (OLMo-3-7B-base) served on a local vLLM /v1/completions endpoint.
-        # No real API key needed locally; URIAL_BASE_URL points at the GPU node, e.g.
-        #   export URIAL_BASE_URL=http://<gpu-node>:8000/v1
-        base = os.getenv("URIAL_BASE_URL", "http://localhost:8000/v1")
-        return build_client(os.getenv("URIAL_API_KEY", "EMPTY"), base_url=base)
+    if provider == "openrouter":
+        key = os.getenv("OPENROUTER_API_KEY")
+        if not key:
+            print("❌ Set OPENROUTER_API_KEY (OpenRouter key for the target) in your .env")
+            sys.exit(1)
+        return build_client(key, base_url=OPENROUTER_BASE_URL)
 
     key = os.getenv("ZZZ_API_KEY") or os.getenv("TARGET_API_KEY")
     if not key:
