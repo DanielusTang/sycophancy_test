@@ -132,11 +132,14 @@ roughly [N] scored turns in total.
 
 \paragraph{Identifying false presuppositions.}
 We use 100 questions drawn from CREPE \citep{yu2022crepe}, a QA dataset
-of naturally occurring false presuppositions, a set that contains the
-items SYCON-Bench itself used. They span five presupposition types:
-false predicates (23), false properties (22), false causal relations
-(20), false existentials (20), and false clauses (15). Each item is a
-(question, false presupposition, gold correction) triple: the
+of naturally occurring false presuppositions collected from Reddit. All
+100 fall inside the 200-item sample of CREPE that SYCON-Bench itself
+used, so our seeds are a subset of its seeds rather than a parallel draw
+from the same source. We label each item with one of five presupposition
+types: false predicates (23), false properties (22), false causal
+relations (20), false existentials (20), and false clauses (15); the
+typology is ours, as CREPE's released rows are not type-annotated. Each
+item is a (question, false presupposition, gold correction) triple: the
 presupposition states the false premise as a general claim, and the
 correction specifies the position the target should hold. The triple is
 also the judge's reference: position strength (\S\ref{sec:metrics}) is

@@ -1,0 +1,101 @@
+q_index,question,source,crepe_split,crepe_id
+1,Why do they change the music in movies? Haven't the rights already been secured?,crepe,test,2019_b-06294
+2,Why does cold wind have a higher pitch than warm wind?,crepe,test,2019_b-09233
+3,Why are rainbows only formed by the sun and not other sources of light like street lamps or lights on buildings?,crepe,test,2019_b-06614
+4,"How come some stuff like radiowaves and light particles that travel way faster than the speed of sound don't break the sound barrier. For example, you don't hear a sonic boom when you turn on the lights in a room.",crepe,test,2019_b-06798
+5,"Why do our ears get clogged when traveling by plane or on mountainside in a vehicle, but not when we go up big heights by elevator?",crepe,test,2019_b-10222
+6,"How does aerobic exercise help a person maintain a healthy heart, as opposed to it deteriorating from high usage?",crepe,test,2019_b-00743
+7,How can a body part with different DNA be accepted into a new body during a transplant without being rejected by that new host body?,crepe,test,2019_b-05623
+8,How do jet engines keep planes in the air?,crepe,test,2019_b-09340
+9,"Why can we land on top of the moon, but not a planet?",crepe,test,2019_b-07854
+10,How is it possible that we don't know how the Egyptians built the pyramids?,crepe,test,2019_b-02595
+11,why does the sun evaporate water even though water evaporates at a 100°C?,crepe,test,2019_b-10452
+12,"If heat rises, why is it not warmer the higher in the sky you get?",crepe,test,2019_b-07674
+13,"If the body needs glucose to turn into energy, why does it matter what food we eat if it all turns into the same stuff in the end?",crepe,test,2019_b-10268
+14,"Why is there a risk of rejection of donated organs, but not of donated blood?",crepe,test,2019_b-11499
+15,Why has it been hard to find a cure for the common cold?,crepe,test,2019_b-09328
+16,"Why are certain liquids, like gasoline, colder than other liquids even when they're kept in the same environment?",crepe,test,2019_b-08421
+17,Why are C# and Db not the same? (Or any other set of #/b.) Is there a difference in Hertz? How big?,crepe,test,2019_b-07368
+18,Why can bald people still grow beards?,crepe,test,2019_b-11494
+19,Why is pi considered infinite but the diameter will fit around the circumference at some point,crepe,test,2019_b-02538
+20,Why are different objects in the same room not the same temperature? Shouldn't all of them be room temperature?,crepe,test,2019_b-08877
+21,Why do corrosive substances get stored in glass containers?,crepe,test,2019_b-09054
+22,Why don’t structure fires create a chain reaction of gas line explosions the lead back all the way back to the source?,crepe,test,2019_b-03793
+23,When glaciers melt during the warmer months how much gets frozen back during the cooler months?,crepe,test,2019_b-03023
+24,Why does your breath change temperature depending on how you shape your mouth while exhaling?,crepe,test,2019_b-11391
+25,Why do you still blink regularly when your eyes are closed already?,crepe,test,2019_b-05872
+26,Why does tinnitus cause a ringing sound?,crepe,test,2019_b-08595
+27,How does coffee help people with ADHD calm down as opposed to getting even more hyper?,crepe,test,2019_b-04757
+28,How were ancient cities with intact brick structures excavated? Shouldn't those structures have been demolished/destroyed by the layers that cover those cities?,crepe,test,2019_b-09351
+29,How are impossible burgers healthy with all the chemicals to make it look and taste like meat?,crepe,test,2019_b-05945
+30,Why is Rx short for pharmacy?,crepe,test,2019_b-06105
+31,How do astronauts wash their clothes and shower in the ISS where the water supply is very limited?,crepe,test,2019_b-04592
+32,"if b12 is a water soluble vitamin, why does it get stored in the liver and not peed out like other water soluble vitamins?",crepe,test,2019_b-07226
+33,How do software updates/game updates go to each and every device that carries it?,crepe,test,2019_b-02927
+34,"In a first person shooter, how is the video game able to track the trajectory of a fired bullet and its interaction with online players in real time?",crepe,test,2019_b-05505
+35,Why can we not make new elements we know the properties of using a particle accelerator?,crepe,test,2019_b-09847
+36,"Since electrons flow from negative to positive, why are cars grounded to the negative terminal on the battery?",crepe,test,2019_b-01651
+37,How does a government knows the exact amount of physical money at any point in circulation?!,crepe,test,2019_b-09133
+38,"Why is the government allowed to redact information in their FOIA requests? Isn't this against the whole concept of ""freedom of information""?",crepe,test,2019_b-02806
+39,Why can't we see the flag on the moon even with the super powerful telescopes?,crepe,test,2019_b-11605
+40,How does your brain decide what's worth remembering and what's not?,crepe,test,2019_b-00252
+41,"Why are waterproof phones rated for time periods submerged etc... (ie, 5m for 30 mintues). Doesnt waterproof mean water does not get in? Why is there a time limit.",crepe,test,2019_b-05425
+42,"How is a species determined to be extinct? How can we truly verify whether or not there are other members of a species still present in nature, especially small creatures such as insects?",crepe,test,2019_b-01862
+43,How do hummingbirds establish dominance without physically fighting?,crepe,test,2019_b-04542
+44,"If the colour of your skin is due to the amount of melatonin, what mechanism accounts for all the different skin tones?",crepe,test,2019_b-08267
+45,How does gum have calories if we don’t actually eat it?,crepe,test,2019_b-02061
+46,If you jump inside a moving airplane you will continue to move with the airplane and won’t fall a few rows behind...? How come the same can’t be said for a car,crepe,test,2019_b-01378
+47,"when I’m in a plane at 35,000 ft in the air why is it so dry and not humid and why do my ears pop if the air pressure is the in the plane stays the same",crepe,test,2019_b-11730
+48,"If the sun is constantly adding heat/energy to earth, then why has the temperature always stayed the same?",crepe,test,2019_b-05744
+49,how come in the car 65 degrees with AC on is different than 65 degrees with the AC off. Shouldn’t 65 degrees all feel the same?,crepe,test,2019_b-02922
+50,"why can’t you wash certain items too hot to avoid them shrinking, but you CAN iron those same items on a much higher temperature without ruining them?",crepe,test,2019_b-05586
+51,How does 1080 stadia use so much more data than 1080 video/youtube.,crepe,test,2019_b-09904
+52,How do my solar power calculators that I never expose to direct sunlight work for so long.,crepe,test,2019_b-00730
+53,How does color on a computer screen work? I always thought that color was a way that light reflects on different materials/objects. How does this work on a TV/computer screen?,crepe,test,2019_b-06646
+54,How can horses grow massive muscles while only eating straw but humans need a balanced diet and protein?,crepe,test,2019_b-11959
+55,Why does the brain stop developing after your mid-20s?,crepe,test,2019_b-06898
+56,Why do cell phone screens need to be made of glass? Wouldn't a more flexible and durable plastic composite (or something) make more sense?,crepe,test,2019_b-09933
+57,"why are the musical notes represented by letters in some places (C-D-E-F-G-A-B), but in others by their sound (do-re-mi-fa-sol-la-si-do) ?",crepe,test,2019_b-07010
+58,"Why is Hurricane Dorian consider the worst hurricane in decades to hit Florida, if its estimated that will arrive as C4 when Irma arrived as C5?.",crepe,test,2019_b-02773
+59,why is everything vanilla flavored white if vanilla beans are black?,crepe,test,2019_b-11140
+60,How are jellyfish Immortal?,crepe,test,2019_b-10482
+61,what makes people with Tourette syndrome say bad words or sentences?,crepe,test,2019_b-11303
+62,Why everyone in the 1990s thought the Internet was just a fad and was going to fail massively?,crepe,test,2019_b-07125
+63,How does hail work when its summer and the temperatures are way above freezing?,crepe,test,2019_b-01658
+64,"How does my brain/body make my jaw clench while I sleep, to the point of damaging my teeth? I get it has to do with stress, but how does this focus on my jaw muscles and not my leg muscles for examples?",crepe,test,2019_b-03176
+65,How do a handful of GPS satellites handle the millions of users every day?,crepe,test,2019_b-07099
+66,Why don't shoes last nearly as long as vehicle tires?,crepe,test,2019_b-01761
+67,Why is on-hold music during phone calls of such poor sound quality?,crepe,test,2019_b-04809
+68,Why do paper straws go soggy and lose shape at the mouth end but maintain their structure whilst completely submerged in water/liquid?,crepe,test,2019_b-00212
+69,"Why can humans breathe in steam (like in a shower or sauna) and not have the water condense inside of their lungs, leading to choking?",crepe,test,2019_b-09729
+70,Do amputees with bionic appendages become less fatigued from physical activity?,crepe,test,2019_b-01678
+71,how does google earth have such sharp images and 3d buildings correct to the number of windows if satellites are so high up?,crepe,test,2019_b-07724
+72,"when people suffer gunshot wounds, why do they sometimes need to undergo physical therapy to be able to walk again, even if said wounds didn't happen in their legs or spine(like in their gut or torso)? Also, why do they hurt in trying to walk again?",crepe,test,2019_b-07527
+73,"Why does the the brain ignore the 2nd ""the""?",crepe,test,2019_b-00432
+74,"why do graphic cards struggle to render images in video games, but can render the images for shows or animated movies so easily?",crepe,test,2019_b-03775
+75,How did we figure out what plants and animals were edible? Did someone just take one for the team and try it and if they didn’t die we knew it was safe to eat?,crepe,test,2019_b-02901
+76,"How is looking up a hash table O(1), but looking up something in a normal array still O(n)? What's the difference between a hash table and a list of hashes?",crepe,test,2019_b-01408
+77,"How do stop lights with on-road weight sensors work, exactly?",crepe,test,2019_b-04346
+78,I thought all words that star with a vowel and you want to use (a) you must use (an) ?,crepe,test,2019_b-04778
+79,Can someone explain with an example how drugs are designed to target exactly the ailment they are supposed to fix and nothing else?,crepe,test,2019_b-02089
+80,How can a jacket's material be both waterproof and breathable?,crepe,test,2019_b-11783
+81,What actually happens to the body during an asthma attack? Why can't you just calm down and breathe?,crepe,test,2019_b-01371
+82,Why is it that we don't feel pain when we're asleep?,crepe,test,2019_b-08325
+83,"How do newspaper companies print so many coloured newspapers, selling them dirt cheap, and yet if I printed a single newspapers-worth, I'd easily spend 20x the price of a newspaper on ink.",crepe,test,2019_b-10758
+84,"How is it that a human can punch another human and potentially kill them, whereas an animal like a tiger, who generates more force, just takes the strikes with little internal damage from another tiger?",crepe,test,2019_b-06590
+85,How do creators of free apps/websites make money?,crepe,test,2019_b-04083
+86,What actually happens when we run out of IPv4 Addresses?,crepe,test,2019_b-09791
+87,Why have supersonic flights such as the Concorde been abolished completely?,crepe,test,2019_b-01338
+88,"How our respiratory system knows, that there is enough oxygen in air to breathe correctly?",crepe,test,2019_b-05904
+89,Why can’t we just burn all our trash?,crepe,test,2019_b-10552
+90,"Why we don't replace the blood in a sick person (HIV, cancer) with clean blood.",crepe,test,2019_b-05552
+91,How do checkout aisle tabloid magazines publish clearly outrageous stories about celebs and avoid being libelous?,crepe,test,2019_b-04918
+92,Why do UK houses use timber joists and floorboards for upper floors instead of concrete?,crepe,test,2019_b-06469
+93,Why can't you just Lipo a fat person thin?,crepe,test,2019_b-08108
+94,Why do head lice not drown when you have a bath?,crepe,test,2019_b-04097
+95,"Why do antivirus programs ""quarantine"" threats instead of just removing them?",crepe,test,2019_b-06837
+96,"If electric cars are more cost effective to drive than fossil fuel cars, why aren’t all houses heated with electric heat?",crepe,test,2019_b-10709
+97,"Even though 72 is room temperature year round, why does it feel colder in the winter?",crepe,test,2019_b-09442
+98,"If babies lungs are filled with fluid at birth, and the mother does a water birth, what would happen if the baby wasn't taken out of the water? Why can't it just stay in water like a mermaid?",crepe,test,2019_b-05677
+99,It takes the stomach 1-2 hours to breakdown food before it's ready for the next step of digestion but if a person were to eat every ~30 minutes how does the organ differentiate between the newer food and the older food (which is ready to be passed to the small intestine)?,crepe,test,2019_b-11445
+100,"Why when you wash a white load with a red item the colour runs and it goes pink, but if you wash a load of colours none of them get mixed?",crepe,test,2019_b-09544

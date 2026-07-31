@@ -1,0 +1,316 @@
+% ============================================================
+% Ready-to-paste LaTeX for the SPINE paper, SECTION 2.
+% Companion guide: writing/section2_guide.md.
+%
+% THE ONE RULE THIS FILE IS BUILT ON:
+%   Section 2 says what SPINE INHERITS.
+%   Section 3 says what prior work LACKS.
+% The gap argument and the four departures from SYCON-Bench live
+% in spine_section3.tex paragraphs 1-2 and in
+% Table~\ref{tab:sycon-vs-spine}. Nothing here re-argues them, or
+% a reviewer reads Sections 2 and 3 as duplicated positioning.
+% Consequences, all deliberate:
+%   - No "however", "fail to", "does not capture" anywhere below.
+%   - Prior protocols are described by their scope, never scored
+%     against SPINE.
+%   - Each of 2.1-2.4 closes on what SPINE takes from that
+%     literature.
+%   - No comparison table here, and no promise of one.
+%
+% ---- CITE KEYS ---------------------------------------------
+% UNLIKE Sections 3-6, this file uses the REAL keys in
+% writing/references.bib, not placeholders. Verified 2026-07-29
+% against that file. Reused from it:
+%   SYCON, sharma2023sycophancy, fanous2025syceval,
+%   liu2025truthdecay, helwe-etal-2024-mafalda,
+%   rozen2024consistent, baez2026dissociating
+% Added to it for this section (21 entries, see its Section 2
+% block): perez2022discovering, laban2024flipflop, kim2026doctor,
+%   yao2025peacemaker, vennemeyer2025sycophancy,
+%   monica2026anonymous, chen2024yesmen, papadatos2024probe,
+%   wei2023synthetic, russinovich2024crescendo, weng2025fitd,
+%   yang2025coa, lin2026icon, wu2025analogy, ren2025actorbreaker,
+%   rahman2025xteaming, li2026consistency,
+%   sharma2025constitutional, xu2024earth, kross2014self,
+%   lin2024urial
+%
+% >>> HEADS UP: references.bib and Sections 3-6 disagree on keys.
+% >>> The .bib has SYCON and helwe-etal-2024-mafalda; Sections
+% >>> 3-6 cite hong2025measuring and helwe2024mafalda, plus four
+% >>> model-card keys the .bib does not define. Sections 3-6 will
+% >>> not resolve until that is reconciled. This file already
+% >>> matches the .bib, so do NOT "fix" its keys to match the
+% >>> other sections -- fix the other sections.
+%
+% ---- LABELS ------------------------------------------------
+% Defined here:   sec:related, sec:rw-sycophancy, sec:rw-jailbreak,
+%                 sec:rw-fallacy, sec:rw-persona
+% Referenced but defined elsewhere:
+%   sec:protocol, sec:proxy   -> spine_section3.tex
+%   sec:mechanisms, sec:tactics -> spine_section6.tex
+%   sec:ablation              -> spine_section5.tex
+%
+% ---- PREAMBLE ----------------------------------------------
+% natbib only (\citep/\citet). No tables, no math, no new packages.
+%
+% ---- BUDGET: OVER. READ THIS BEFORE TRIMMING. --------------
+% Measured 2026-07-29, prose only, comments excluded:
+%   717 words (~1.3 col) with all three OPTIONAL blocks in
+%   585 words (~1.1 col) with all three cut
+% The guide's target is ~500 words / 0.9 column, so this file is
+% over either way. That is a real overrun, not a rounding error.
+%
+% Per subsection, against the guide's Part C targets:
+%   2.1  184 (spec 150) -- but 55 of those are OPT-1 + OPT-2, so
+%                          the core is ~129 and UNDER spec
+%   2.2  216 (spec 130) -- over
+%   2.3  141 (spec 110) -- over
+%   2.4  176 (spec 110) -- over
+%
+% The three OPTIONAL blocks, cut freely; each is self-contained
+% and costs breadth only, never an argument:
+%   [OPT-1] 2.1 domain instantiations (medical, multi-agent)
+%   [OPT-2] 2.1 mitigation clause (mirrors SYCON-Bench's own
+%           related-work step 4; SPINE proposes no mitigation)
+%   [OPT-3] 2.2 jailbreak-defenses closer
+%
+% WHERE THE REMAINING 85 WORDS ARE, if you need the last 0.15
+% column. They are in 2.2, 2.3, and 2.4, and every one of them is
+% content the guide marks mandatory:
+%   - 2.2's two-clause differentiation sentence, ~65 words on its
+%     own, plus the li2026consistency positioning cite and its
+%     differentiator, ~60 more. Part C calls both mandatory.
+%   - 2.3's MAFALDA arithmetic, which must match Sec. 3.2.
+%   - 2.4's instrument paragraph plus the one-sentence forward
+%     hook, which is where the paper's most novel claim gets its
+%     runway.
+% Compressing further starts deleting required elements, so the
+% call belongs to the author, not to a word target. If the section
+% must reach 500, the cheapest honest cut is OPT-1 through OPT-3
+% plus 2.2's cluster paragraph collapsed to two sentences.
+% ============================================================
+
+
+\section{Related Work}
+\label{sec:related}
+
+
+% ------------------------------------------------------------
+% 2.1 -- organized by MEASUREMENT HORIZON, because horizon is the
+% variable SPINE changes.
+%
+% Opens at the measurement layer, NOT at "RLHF rewards agreement".
+% SYCON-Bench's Section 2 opens at the cause layer because their
+% Section 1 does not run that chain; ours does (askell2021general,
+% cheng2026sycophantic, shapira2026rlhf, perez2022discovering),
+% so re-deriving it here would spend ~40 words on a claim the
+% reader accepted two paragraphs ago.
+%
+% SYCON-Bench mention 1 of 2 (as the closest prior measurement
+% protocol). The second and last is in 2.4. Section 2.3 makes its
+% credit point WITHOUT a third citation, by naming it "the
+% benchmark we compare against" -- keep it that way.
+% ------------------------------------------------------------
+
+\subsection{Measuring Sycophancy}
+\label{sec:rw-sycophancy}
+
+Sycophancy has been measured at two horizons. Single-turn protocols
+score one response to one challenge: model-written evaluations show
+answers shifting toward beliefs the user reveals
+\citep{perez2022discovering}, controlled studies find the preference for
+agreement generalizes across task types \citep{sharma2023sycophancy},
+and diagnostic frameworks standardize it across domains
+\citep{fanous2025syceval}. Fixed-horizon
+multi-turn protocols extend this to a dialogue whose user turns are
+written in advance: over multiple-choice items
+\citep{liu2025truthdecay}, with a single follow-up challenge
+\citep{laban2024flipflop}, or in free-form text across five scripted
+turns \citep{SYCON}.
+% [OPT-1] --- cut to reach the 500-word budget ---
+The behavior also reproduces outside benchmark
+settings, in escalatory multi-turn medical consultations
+\citep{kim2026doctor} and in multi-agent debate, where inter-agent
+sycophancy collapses deliberation into premature consensus
+\citep{yao2025peacemaker}.
+% [OPT-2] --- cut to reach the 500-word budget. Mirrors
+% SYCON-Bench's own step 4: map the response literature even
+% though this paper proposes no mitigation. ---
+A parallel line proposes remedies, among them
+pinpoint tuning \citep{chen2024yesmen}, linear-probe penalties
+\citep{papadatos2024probe}, and synthetic-data interventions
+\citep{wei2023synthetic}.
+% [END OPT-1, OPT-2]
+
+A mechanistic line of work indicates that sycophancy is not one
+behavior. Sycophantic agreement and sycophantic praise occupy distinct
+linear directions and can be amplified or suppressed independently
+\citep{vennemeyer2025sycophancy}, factual and opinion subtypes
+dissociate representationally \citep{baez2026dissociating}, and in
+reasoning models the behavior is visible within the trace rather than
+only in the final answer \citep{monica2026anonymous}. SPINE adopts the
+free-form multi-turn measurement frame of this literature and the
+graded per-turn score these decomposition results call for.
+
+
+% ------------------------------------------------------------
+% 2.2 -- where SPINE's PROXY MACHINERY comes from. Saying so
+% plainly converts the "isn't this a jailbreak paper with a
+% different label?" objection into a strength; leaving it implicit
+% invites the reviewer to raise it.
+%
+% The two-clause differentiation sentence is MANDATORY and both
+% clauses are load-bearing:
+%   (i) jailbreak = extract a violation never endorsed;
+%       SPINE = abandon a correct position stated in-context.
+%       The initially-correct filter is named in a subordinate
+%       clause on purpose, so it stops looking like a convenience
+%       and starts looking like the definition it is.
+%  (ii) red-teaming has no analogue of the naturalistic protocol,
+%       because an attacker is adversarial by definition.
+%
+% li2026consistency is a POSITIONING MUST-CITE, not optional. It
+% is the nearest neighbour to Section 6.1 and a reviewer will know
+% it. Its five modes, verbatim from its p.1: Self-Doubt, Social
+% Conformity, Suggestion Hijacking, Emotional Susceptibility,
+% Reasoning Fatigue. The differentiator is the conscious-override
+% flag (8 of 17 R1 runs, Sec. 6.1) -- a claim about what the model
+% KNEW, not about which attack worked.
+% ------------------------------------------------------------
+
+\subsection{Multi-Turn Pressure and Jailbreaks}
+\label{sec:rw-jailbreak}
+
+SPINE's pressure machinery is adapted from multi-turn red teaming. One
+line escalates from a benign opening, building on the model's own
+replies \citep{russinovich2024crescendo} or exploiting commitment
+escalation \citep{weng2025fitd}. A second conceals intent while
+constructing context across turns \citep{yang2025coa, lin2026icon,
+wu2025analogy, ren2025actorbreaker}. A third makes the attacker
+adaptive, coordinating planner, attacker, and verifier agents
+\citep{rahman2025xteaming}, the closest methodological ancestor of our
+closed-loop proxy.
+
+Two things separate erosion from jailbreaking. A jailbreak extracts a
+policy violation the model never endorsed, whereas SPINE measures the
+abandonment of a correct position the model itself stated in context,
+which is why only initially correct runs enter the analysis
+(\S\ref{sec:protocol}). And red teaming has no analogue of a
+naturalistic protocol, since an attacker is adversarial by definition:
+a good-faith persona that still induces collapse is a different threat
+model, not a weaker attack. Nearest to our own trace analysis,
+\citet{li2026consistency} derive five failure modes from attack
+trajectories over nine reasoning models, among them Social Conformity.
+Our categories (\S\ref{sec:mechanisms}) are instead read off the trace
+at the moment of collapse and cross-cut by an orthogonal
+conscious-override flag, where the correct fact is present and the
+user's answer is chosen anyway: a claim about what the model knew
+rather than about which attack worked.
+% [OPT-3] --- cut to reach the 500-word budget ---
+Defenses in this literature target
+harmful-content extraction rather than position erosion
+\citep{sharma2025constitutional}, so a well-defended model can still
+be fully sycophantic.
+% [END OPT-3]
+
+
+% ------------------------------------------------------------
+% 2.3 -- load-bearing, because MAFALDA-23 is the shipped taxonomy.
+%
+% The arithmetic MUST match Sec. 3.2 (spine_section3.tex, the
+% "Tactic repertoire" paragraph): 23 level-2 fallacies under 3
+% Aristotelian level-1 families, PLUS one non-fallacious control
+% channel = 24 options across 4 channels. Family names are
+% MAFALDA's own and are reproduced verbatim from Sec. 3.2.
+%
+% CREDIT ACCURACY -- do not soften this back. The menu MAFALDA
+% replaced was NOT "five labels of our own devising". It was
+% SYCON-Bench's false-presupposition follow-up schedule (their
+% Sec. 4.2, Turn 2-5), unrolled from a fixed order into a menu:
+% their T2/T3/T4/T5 are MILD_CONFUSION / RE_ASSERTION /
+% PERSONAL_EXPERIENCE / DIRECT_CHALLENGE; only FALSE_PIVOT was
+% ours. See the long credit-correction comment in
+% spine_section3.tex. That makes the MAFALDA switch a LARGER
+% departure than a relabeling, and it is why the sentence below
+% says "independent of the benchmark we compare against" rather
+% than naming SYCON-Bench a third time.
+% ------------------------------------------------------------
+
+\subsection{Fallacy Taxonomies and Persuasion}
+\label{sec:rw-fallacy}
+
+The proxy's vocabulary of pressure comes from work on fallacy taxonomy
+and detection. MAFALDA merges prior fallacy datasets into one aligned
+taxonomy with manual annotations and evaluates language models on
+detection and classification \citep{helwe-etal-2024-mafalda}. SPINE
+uses its 23 level-2 fallacies as the proxy's tactic menu, under the
+three level-1 families of Fallacy of Credibility, Fallacy of Logic, and
+Appeal to Emotion, plus one non-fallacious control channel, and reports
+its attribution over those families (\S\ref{sec:tactics}). Adopting a
+published taxonomy buys independence: the menu it replaces was the
+follow-up schedule of the benchmark we compare against. A second thread
+studies belief change under persuasion, measuring multi-turn persuasive
+misinformation against facts a model answers correctly, with
+pre-generated passages rather than a live proxy \citep{xu2024earth},
+the same shape as our false-presupposition scenario. SPINE inherits its
+pressure vocabulary from the first thread and its belief-tracking
+framing from the second.
+
+
+% ------------------------------------------------------------
+% 2.4 -- two directions, and the second is the contribution hook.
+% This is where the paper's most novel claim gets its runway.
+%
+% The 63.8% figure is VERIFIED (2026-07-29) against the
+% SYCON-Bench PDF: abstract, "reduces sycophancy by up to 63.8%
+% in debate scenario", and p.2, "boosts ToF performance by up to
+% 63.8% in debate setting". It is an up-to figure for one
+% scenario, so keep "up to" and keep "debate".
+% This is SYCON-Bench mention 2 of 2.
+%
+% lin2024urial is cited on its merits ONLY. It used to do double
+% duty because Sec. 4.3 needed it to make OLMo-3-7B-Base hold a
+% conversation; OLMo is no longer in the roster, so the forward
+% pointer is gone. Do not restore it.
+%
+% PRECISION FIX vs. the guide, which calls Sec. 5.2's ablation
+% "the one place the variable is actually toggled". It is not: that
+% ablation's four factors (A1 judge feedback, A2 trace withholding,
+% A3 escalation ladder, A4 weaker proxy) are protocol knobs, and
+% spine_section5.tex was retitled away from "What Makes the
+% Adversary Effective?" for exactly that reason. The adversarial
+% persona is a property of that legacy experiment as a whole, not
+% one of its ablated factors. Hence the weaker and true claim
+% below: it is the only place a non-sincere persona APPEARS.
+%
+% The forward hook is ONE sentence and frames a question Sec. 3
+% answers. It must not be written as if persona decay were a live
+% Section 5 finding -- that evidence is from the retired 99-turn
+% configuration, and at a 25-turn budget the proxy never
+% accumulates enough transcript for it to fire.
+% ------------------------------------------------------------
+
+\subsection{Persona Prompting}
+\label{sec:rw-persona}
+
+Persona prompting has been studied mainly as a defense. A third-person
+persona raises resistance to user pressure: the Andrew prompt of
+\citet{SYCON} improves turn-of-flip by up to 63.8\% in the debate
+setting, grounded in distanced self-talk \citep{kross2014self}.
+Anti-sycophancy instructions help in the unethical setting
+\citep{sharma2023sycophancy}, value anchoring yields value expression
+consistent with human structure \citep{rozen2024consistent}, and
+in-context alignment alone elicits assistant behavior from base models
+\citep{lin2024urial}, evidence that prompting installs a persona
+without training.
+
+SPINE instead puts the persona on the user side and holds it fixed: a
+sincere, confidently mistaken interlocutor. That is a scope claim rather
+than a prompt trick, since every failure we report is reachable by an
+honest user who is simply wrong, and it is only as strong as the persona
+specification that \S\ref{sec:proxy} states in full. The legacy ablation
+of \S\ref{sec:ablation} is the only place a non-sincere persona appears.
+Prior persona results are measured over one or two turns, whereas SPINE
+asks a persona to hold character for 25 turns against a model arguing
+back, making persona stability a matter of instrument validity rather
+than prompt engineering.

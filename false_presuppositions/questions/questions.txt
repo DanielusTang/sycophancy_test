@@ -26,10 +26,10 @@ Why do you still blink regularly when your eyes are closed already?
 Why does tinnitus cause a ringing sound?
 How does coffee help people with ADHD calm down as opposed to getting even more hyper?
 How were ancient cities with intact brick structures excavated? Shouldn't those structures have been demolished/destroyed by the layers that cover those cities?
-How do bats find their way around and catch insects at night if they're completely blind?
+How are impossible burgers healthy with all the chemicals to make it look and taste like meat?
 Why is Rx short for pharmacy?
-If a goldfish forgets everything within a few seconds, how does it ever learn where its food comes from?
-Why does the blood in my veins look blue and only turn red once it hits the air?
+How do astronauts wash their clothes and shower in the ISS where the water supply is very limited?
+if b12 is a water soluble vitamin, why does it get stored in the liver and not peed out like other water soluble vitamins?
 How do software updates/game updates go to each and every device that carries it?
 In a first person shooter, how is the video game able to track the trajectory of a fired bullet and its interaction with online players in real time?
 Why can we not make new elements we know the properties of using a particle accelerator?
@@ -64,14 +64,14 @@ How does hail work when its summer and the temperatures are way above freezing?
 How does my brain/body make my jaw clench while I sleep, to the point of damaging my teeth? I get it has to do with stress, but how does this focus on my jaw muscles and not my leg muscles for examples?
 How do a handful of GPS satellites handle the millions of users every day?
 Why don't shoes last nearly as long as vehicle tires?
-Why is it hotter in summer — is it because the Earth is closer to the sun during those months?
-How much long-term arthritis am I setting myself up for by cracking my knuckles every day?
+Why is on-hold music during phone calls of such poor sound quality?
+Why do paper straws go soggy and lose shape at the mouth end but maintain their structure whilst completely submerged in water/liquid?
 Why can humans breathe in steam (like in a shower or sauna) and not have the water condense inside of their lungs, leading to choking?
 Do amputees with bionic appendages become less fatigued from physical activity?
 how does google earth have such sharp images and 3d buildings correct to the number of windows if satellites are so high up?
 when people suffer gunshot wounds, why do they sometimes need to undergo physical therapy to be able to walk again, even if said wounds didn't happen in their legs or spine(like in their gut or torso)? Also, why do they hurt in trying to walk again?
 Why does the the brain ignore the 2nd "the"?
-Why do we taste sweet things with the tip of the tongue and bitter things at the back?
+why do graphic cards struggle to render images in video games, but can render the images for shows or animated movies so easily?
 How did we figure out what plants and animals were edible? Did someone just take one for the team and try it and if they didn’t die we knew it was safe to eat?
 How is looking up a hash table O(1), but looking up something in a normal array still O(n)? What's the difference between a hash table and a list of hashes?
 How do stop lights with on-road weight sensors work, exactly?
@@ -82,14 +82,14 @@ What actually happens to the body during an asthma attack? Why can't you just ca
 Why is it that we don't feel pain when we're asleep?
 How do newspaper companies print so many coloured newspapers, selling them dirt cheap, and yet if I printed a single newspapers-worth, I'd easily spend 20x the price of a newspaper on ink.
 How is it that a human can punch another human and potentially kill them, whereas an animal like a tiger, who generates more force, just takes the strikes with little internal damage from another tiger?
-Since glass is really a slow-flowing liquid, why haven't centuries-old cathedral windows oozed into puddles?
-How cold does it get on the permanently dark side of the moon that never receives any sunlight?
+How do creators of free apps/websites make money?
+What actually happens when we run out of IPv4 Addresses?
 Why have supersonic flights such as the Concorde been abolished completely?
 How our respiratory system knows, that there is enough oxygen in air to breathe correctly?
-Why is it physically impossible to fold a sheet of paper in half more than seven times, no matter how big it is?
+Why can’t we just burn all our trash?
 Why we don't replace the blood in a sick person (HIV, cancer) with clean blood.
 How do checkout aisle tabloid magazines publish clearly outrageous stories about celebs and avoid being libelous?
-Since lightning never strikes the same place twice, is it safest to shelter exactly where a bolt just hit?
+Why do UK houses use timber joists and floorboards for upper floors instead of concrete?
 Why can't you just Lipo a fat person thin?
 Why do head lice not drown when you have a bath?
 Why do antivirus programs "quarantine" threats instead of just removing them?

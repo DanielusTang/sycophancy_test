@@ -8,11 +8,27 @@
 % That file's Section 4 blocks are still current.
 %
 % Before pasting into Overleaf:
-%   1. Replace placeholder \cite keys with the keys in YOUR .bib:
-%      hong2025measuring, sharma2023towards, fanous2025syceval,
-%      liu2025truthdecay, helwe2024mafalda, yu2022crepe.
-%      helwe2024mafalda is NEW — MAFALDA (Helwe et al., NAACL 2024),
-%      PDF at Papers/Logical Fallacy/.
+%   1. CITE KEYS -- PARTIALLY RECONCILED, 2026-07-29.
+%      writing/references.bib now exists and is the canonical key
+%      source. The opening paragraph below has been switched to its
+%      real keys (sharma2023sycophancy, fanous2025syceval,
+%      liu2025truthdecay, SYCON) as part of a prose rewrite.
+%      THE REST OF THIS FILE HAS NOT BEEN SWITCHED and will not
+%      resolve. Remaining swaps needed here:
+%        hong2025measuring   -> SYCON
+%        sharma2023towards   -> sharma2023sycophancy
+%        helwe2024mafalda    -> helwe-etal-2024-mafalda
+%        yu2022crepe         -> yu2022crepe (already correct)
+%      The same swaps are outstanding across spine_section4.tex,
+%      spine_section5.tex, spine_section6.tex and
+%      spine_appendix.tex, which additionally cite four model-card
+%      keys (anthropic2025claude, openai2026gpt, google2026gemini,
+%      deepseek2025v3) that references.bib does not define -- it has
+%      anthropic2024claude, openai2024gpt, google2023gemini and
+%      deepseekai2024v3, still describing Claude 3 / o3-mini /
+%      Gemini 1 / DeepSeek-V3 rather than the four models actually
+%      run. writing/spine_section2.tex is already fully on the real
+%      keys; do not "fix" it to match this file.
 %   2. Fill every [bracketed] placeholder:
 %      - appendix letters throughout
 %      Protocol facts are now resolved against the shipped runs
@@ -34,21 +50,37 @@
 % Section 3, opening paragraph — the gap
 % ------------------------------------------------------------
 
+% PROSE REWRITE (2026-07-29). Argument and citations unchanged; the
+% rhythm is tightened and two things are sharpened:
+%   - "neither sustained nor adaptive pressure" names the two
+%     properties, where "neither property" made the reader carry
+%     them forward from the previous sentence.
+%   - the SYCON-Bench comma-chain is split at "Consequently",
+%     instead of piling three clauses onto one sentence.
+%
+% >>> THE CLOSING STATISTIC IS LOAD-BEARING AND MUST NOT CHANGE. <<<
+% An earlier draft of this paragraph ended "most collapses occur
+% after the fifth turn". That is FALSE and checkable: 60% of
+% collapses land at or before turn 5 (326 of 540), and the real
+% per-target share falling after turn 5 is 51/37/45/38 percent
+% (Sec. 5.1 fill data), a minority in every target. Do not
+% reinstate it in any form.
+
 Sycophancy does its damage in conversations that keep going. A user who
-holds a false belief rarely challenges the model once and stops: they
-restate the belief more insistently, and they answer whatever the model
-just said. Existing evaluations capture neither property. Single-turn
-protocols score one response to one scripted challenge
-\citep{sharma2023towards, fanous2025syceval}, and multi-turn protocols
-either constrain answers to multiple choice \citep{liu2025truthdecay} or
-fix every user turn in advance. SYCON-Bench \citep{hong2025measuring},
-the closest prior work, writes all four follow-ups offline and ends each
-dialogue at five turns, so its pressure is the same whatever the model
-replies, and it stops before the model's initial resistance has been
-tested. Both limits bind in practice. Pressure that is composed against
-the target's actual answer reaches positions that a fixed script leaves
-standing, and between 37\% and 51\% of the collapses we observe, depending
-on the target, fall after the fifth turn
+holds a false belief rarely raises it once and stops: they restate it
+with growing insistence, and they answer whatever the model has just
+said. Existing evaluations capture neither sustained nor adaptive
+pressure. Single-turn protocols score one response to a single scripted
+challenge \citep{sharma2023sycophancy, fanous2025syceval}, while
+multi-turn protocols either constrain answers to multiple choice
+\citep{liu2025truthdecay} or fix every user turn in advance. SYCON-Bench
+\citep{SYCON}, the closest prior work, pre-generates all four follow-ups
+and ends each dialogue at five turns. Consequently, its pressure is the
+same whatever the model replies, and it stops before the model's initial
+resistance has been tested. Both limits bind in practice. Pressure
+composed against the target's actual answer reaches positions a fixed
+script leaves standing, and between 37\% and 51\% of the collapses we
+observe, depending on the target, fall after the fifth turn
 (\S\ref{sec:results-trends}).
 
 

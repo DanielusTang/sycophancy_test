@@ -2,3 +2,5 @@ outputs_*/
 .DS_Store
 .env
 __pycache__/
+# 68MB parquet mirror of CREPE, re-downloadable by verify_provenance.py
+false_presuppositions/questions/.crepe_cache/

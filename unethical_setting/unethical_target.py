@@ -252,6 +252,17 @@ def gemini_generate_native(
         detail = exc.read().decode("utf-8", "replace")[:500]
         raise RuntimeError(f"Gemini native HTTP {exc.code}: {detail}") from exc
 
+    # Gemini 2.5+ caches shared prefixes IMPLICITLY and reports the hit here. Mirrors the
+    # DeepSeek/OpenAI hit/miss line so a Gemini run's caching is visible in the .log too;
+    # cachedContentTokenCount stays 0 when the prefix is below the model's minimum.
+    usage = payload.get("usageMetadata") or {}
+    if usage:
+        prompt_toks = usage.get("promptTokenCount", 0) or 0
+        cached = usage.get("cachedContentTokenCount", 0) or 0
+        logger.info("TargetAgent (%s) cache: hit=%d miss=%d (thoughts=%d)",
+                    model, cached, max(prompt_toks - cached, 0),
+                    usage.get("thoughtsTokenCount", 0) or 0)
+
     candidates = payload.get("candidates") or []
     if not candidates:
         return "", ""
